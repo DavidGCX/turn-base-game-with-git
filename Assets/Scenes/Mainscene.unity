@@ -498,7 +498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270201db4b35f4b839d1c829795db727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 10
 --- !u!1 &683269172 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1938483543098148, guid: 2f3e27eecb190e44a9af50723c394274,
@@ -603,7 +603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 423643b78a3b447e4ac287c2ff71ab58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <sphere>k__BackingField: {fileID: 1790683339}
   mousePlaneLayerMask:
     serializedVersion: 2
     m_Bits: 64
