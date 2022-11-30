@@ -1,2 +1,3 @@
 # turn-base-game-with-git
-I have made some changes here
+I have made some changes her
+Second change 
