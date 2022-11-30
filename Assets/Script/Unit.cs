@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,16 +20,14 @@ public class Unit : MonoBehaviour
     {
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
         if(Vector3.Distance(transform.position, targetPosition) > stopDistance) {
-            transform.LookAt(moveDirection);
+            transform.LookAt(targetPosition);
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
         }
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Vector3 a = new Vector3 (1,0,1);
-            Move(transform.position + a);
+        if (Input.GetMouseButtonDown(0)) {
+            Move(MouseWorld.GetMousePosition());
         }
     }
     private void Move(Vector3 targetPosition) {
         this.targetPosition  = targetPosition;
-
     }
 }

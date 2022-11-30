@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class MouseWorld : MonoBehaviour
 {
-    [field: SerializeField] public Transform sphere {get; private set;}
+    private static MouseWorld instance;
     [SerializeField] private LayerMask mousePlaneLayerMask;
+    private void Awake() {
+        instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -15,10 +18,14 @@ public class MouseWorld : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.position = GetMousePosition();
+    }
+
+    public static Vector3 GetMousePosition() {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit rayCastHit, float.MaxValue, mousePlaneLayerMask)) {
+        if(Physics.Raycast(ray, out RaycastHit rayCastHit, float.MaxValue, instance.mousePlaneLayerMask)) {
             Debug.Log("hit");
-            sphere.position = rayCastHit.point;
         }
+        return rayCastHit.point;
     }
 }
