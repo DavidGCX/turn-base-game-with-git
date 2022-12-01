@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+   
     [SerializeField] private Animator animator; 
     private Vector3 targetPosition;
     private const float stopDistance = 0.3f;
@@ -15,6 +16,10 @@ public class Unit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+    }
+    private void Awake()
+    {
+        targetPosition = transform.position;
     }
     // Update is called once per frame
     void Update()
