@@ -16,7 +16,6 @@ public class Unit : MonoBehaviour
     void Start()
     {
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -37,11 +36,11 @@ public class Unit : MonoBehaviour
         } else {
             animator.SetFloat("IdleToRun", 0, 0.1f, Time.deltaTime);
         }
-        if (Input.GetMouseButtonDown(0)) {
+        /* if (Input.GetMouseButtonDown(0)) {
             Move(MouseWorld.GetMousePosition());
-        }
+        } */
     }
-    private void Move(Vector3 targetPosition) {
+    public void Move(Vector3 targetPosition) {
         this.targetPosition  = targetPosition;
     }
 }
