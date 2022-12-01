@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    [SerializeField] private Animator animator; 
     private Vector3 targetPosition;
     private const float stopDistance = 0.1f;
     [SerializeField] private float moveSpeed;
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -24,6 +24,7 @@ public class Unit : MonoBehaviour
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
         }
         if (Input.GetMouseButtonDown(0)) {
+
             Move(MouseWorld.GetMousePosition());
         }
     }
