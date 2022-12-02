@@ -9,11 +9,24 @@ public class UnitselectedVisual : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UnitActionsystem.Instance.SelectEvent += Select;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateVisual();
+    }
+
+    private void Select() {
+        UpdateVisual();
+    }
+
+    private void UpdateVisual() {
+        if (UnitActionsystem.Instance.GetSelectedUnit() == unit) {
+            meshRenderer.enabled = true;
+        } else {
+            meshRenderer.enabled = false;
+        }
     }
 }
