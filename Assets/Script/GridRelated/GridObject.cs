@@ -11,4 +11,9 @@ public class GridObject
         gridPosition = b;
         gridSystem = a;
     }
+
+    public override string ToString()
+    {
+        return gridPosition.ToString();
+    }
 }

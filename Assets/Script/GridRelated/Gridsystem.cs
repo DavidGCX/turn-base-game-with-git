@@ -23,13 +23,13 @@ public class GridSystem
             {
                 GridPosition gridPosition = new GridPosition(x, z);
                 gridObjectArray[x,z] = new GridObject(this, gridPosition);
-                Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z) + Vector3.right *0.3f, Color.red, 1000);
+                Debug.DrawLine(GetWorldPosition(gridPosition), GetWorldPosition(gridPosition) + Vector3.right *0.3f, Color.red, 1000);
             }
         }
     }
 
-    public Vector3 GetWorldPosition(int x, int z) {
-        return new Vector3(x, 0, z) * cellSize;
+    public Vector3 GetWorldPosition(GridPosition gridPosition) {
+        return new Vector3(gridPosition.x, 0, gridPosition.z) * cellSize;
     }
 
     public GridPosition GetGridPosition(Vector3 worldPosition) {
@@ -44,11 +44,16 @@ public class GridSystem
         {
             for (int z = 0; z < height; z++)
             {
-                Transform debugObject= GameObject.Instantiate(debugPrefab, GetWorldPosition(x, z), Quaternion.identity);
-                TMP_Text text = debugObject.GetComponentInChildren<TMP_Text>();
-                text.text = $"x:{x}, z:{z}";
+                GridPosition gridPosition = new GridPosition(x, z);
+                Transform debugObject= GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity);
+                GridDebugObject gridDebugObject = debugObject.GetComponent<GridDebugObject>();
+                gridDebugObject.SetGridDebugObject(gridObjectArray[x,z]);
             }
             
         }
+    }
+
+    public GridObject GetGridObject(GridPosition gridPosition){
+        return gridObjectArray[gridPosition.x, gridPosition.z];
     }
 }
