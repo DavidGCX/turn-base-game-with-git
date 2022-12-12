@@ -12,7 +12,7 @@ Material:
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -39,9 +39,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - OverlayAmount: 0.5
+    - OverlayAmount: 0.496
     - _Falloff: 50
-    - _GridScale: 1
+    - _GridScale: 0.5
     - _OverlayAmount: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0

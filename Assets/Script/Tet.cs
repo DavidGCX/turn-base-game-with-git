@@ -7,7 +7,7 @@ public class Tet : MonoBehaviour
 {
     
     [SerializeField] private Transform debugPrefab;
-    public GridSystem grid;
+    private GridSystem grid;
     // Start is called before the first frame update
     void Start()
     {

@@ -1,6 +1,8 @@
+using System.Net.Mime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GridSystem
 {
@@ -14,6 +16,7 @@ public class GridSystem
         this.cellSize = cellSize;
         this.width = width;
         this.height = height;
+        gridObjectArray = new GridObject[width, height];
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
@@ -41,7 +44,9 @@ public class GridSystem
         {
             for (int z = 0; z < height; z++)
             {
-                GameObject.Instantiate(debugPrefab, GetWorldPosition(x, z), Quaternion.identity);
+                Transform debugObject= GameObject.Instantiate(debugPrefab, GetWorldPosition(x, z), Quaternion.identity);
+                TMP_Text text = debugObject.GetComponentInChildren<TMP_Text>();
+                text.text = $"x:{x}, z:{z}";
             }
             
         }
