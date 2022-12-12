@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GridObject
 {
+    private Unit unit;
     private GridPosition gridPosition;
     private GridSystem gridSystem;
 
@@ -12,8 +13,16 @@ public class GridObject
         gridSystem = a;
     }
 
+    public void SetUnit(Unit unit) {
+        this.unit = unit;
+    }
+
+    public Unit GetUnit() {
+        return unit;
+    }
+
     public override string ToString()
     {
-        return gridPosition.ToString();
+        return gridPosition.ToString() + $"/n {unit.name}";
     }
 }
