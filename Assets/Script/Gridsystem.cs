@@ -9,7 +9,7 @@ public class GridSystem
     private int cellSize;
     private GridObject[,] gridObjectArray;
 
-    [SerializeField] private Transform debugPrefab;
+    
     public GridSystem(int width, int height, int cellSize) {
         this.cellSize = cellSize;
         this.width = width;
@@ -41,7 +41,7 @@ public class GridSystem
         {
             for (int z = 0; z < height; z++)
             {
-                Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPosition(x, z), Quaternion.identity);
+                GameObject.Instantiate(debugPrefab, GetWorldPosition(x, z), Quaternion.identity);
             }
             
         }
