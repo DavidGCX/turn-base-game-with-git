@@ -12,22 +12,22 @@ public class LevelGrid : MonoBehaviour
         gridSystem = new GridSystem(10, 10, 2);
         gridSystem.CreateDebugObject(debugPrefab);
     }
-    public void SetUnitAtGridPosition(GridPosition gridPosition, Unit unit) {
+    public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit) {
         GridObject CurrentGridObject = gridSystem.GetGridObject(gridPosition);
-        CurrentGridObject.SetUnit(unit);
+        CurrentGridObject.AddUnit(unit);
     }
-    public Unit GetUnitAtGridPosition(GridPosition gridPosition) {
+    public List<Unit> GetUnitListAtGridPosition(GridPosition gridPosition) {
         GridObject CurrentGridObject = gridSystem.GetGridObject(gridPosition);
-        return CurrentGridObject.GetUnit();
+        return CurrentGridObject.GetUnitList();
     }
-    public void ClearUnitAtGridPosition(GridPosition gridPosition) {
+    public void RemoveUnitAtGridPosition(GridPosition gridPosition, Unit unit) {
         GridObject CurrentGridObject = gridSystem.GetGridObject(gridPosition);
-        CurrentGridObject.SetUnit(null);
+        CurrentGridObject.RemoveUnit(unit );
     }
 
     public void UnitMoveGridPosition(Unit unit, GridPosition from, GridPosition to){
-        ClearUnitAtGridPosition(from);
-        SetUnitAtGridPosition(to, unit);
+        RemoveUnitAtGridPosition(from, unit);
+        AddUnitAtGridPosition(to, unit);
     }
 
     public GridPosition GetGridPosition(Vector3 worldpos) => gridSystem.GetGridPosition(worldpos);

@@ -4,25 +4,35 @@ using UnityEngine;
 
 public class GridObject
 {
-    private Unit unit;
+    private List<Unit> unitList;
     private GridPosition gridPosition;
     private GridSystem gridSystem;
 
     public GridObject(GridSystem a, GridPosition b) {
         gridPosition = b;
         gridSystem = a;
+        unitList = new List<Unit>();
     }
 
-    public void SetUnit(Unit unit) {
-        this.unit = unit;
+    public void AddUnit(Unit unit) {
+        unitList.Add(unit);
     }
 
-    public Unit GetUnit() {
-        return unit;
+    public void RemoveUnit(Unit unit) {
+        unitList.Remove(unit);
+    }
+
+    public List<Unit> GetUnitList() {
+        return unitList;
     }
 
     public override string ToString()
     {
-        return gridPosition.ToString() + "\n"+unit;
+        string unitString = "";
+        foreach (Unit unit in unitList)
+        {
+            unitString += "\n" + unit;
+        }
+        return gridPosition.ToString() +unitString;
     }
 }
