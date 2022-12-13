@@ -23,6 +23,6 @@ public class GridObject
 
     public override string ToString()
     {
-        return gridPosition.ToString() + $"/n {unit.name}";
+        return gridPosition.ToString() + "\n"+unit;
     }
 }
