@@ -10,8 +10,8 @@ public class Unit : MonoBehaviour
     [SerializeField] private Animator animator; 
     private Vector3 targetPosition;
     private const float stopDistance = 0.3f;
-    private const float turnspeed = 0.6f;
-    private const float stopRotate = 3f;
+    private const float turnspeed = 5f;
+    private const float stopRotate = 10f;
     private GridPosition lastGridPosition;
     [SerializeField] private float moveSpeed;
     // Start is called before the first frame update
@@ -28,6 +28,8 @@ public class Unit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(GetComponentInChildren<CharacterController>().transform.position);
+        transform.position = GetComponentInChildren<CharacterController>().transform.position;
         Vector3 position = new Vector3(transform.position.x, 0f, transform.position.z);
         transform.position = position;
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
@@ -37,12 +39,12 @@ public class Unit : MonoBehaviour
             //Debug.Log(quaDir); 
             float angle = Quaternion.Angle(transform.rotation, quaDir);
             if (angle > stopRotate) {
-                animator.SetFloat("IdleToRun", 5, 0.1f, Time.deltaTime);
-                transform.position += moveDirection * Time.deltaTime * moveSpeed*0.5f;
+                animator.SetFloat("IdleToRun", 8, 0.1f, Time.deltaTime);
+                //transform.position += moveDirection * Time.deltaTime * moveSpeed*0.5f;
                 transform.rotation = Quaternion.Lerp(transform.rotation,quaDir,Time.fixedDeltaTime*turnspeed);
             } else {
                 transform.LookAt(targetPosition);
-                transform.position += moveDirection * Time.deltaTime * moveSpeed;
+                //transform.position += moveDirection * Time.deltaTime * moveSpeed;
                 animator.SetFloat("IdleToRun", 10, 0.1f, Time.deltaTime);
             }
         } else {
