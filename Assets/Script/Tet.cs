@@ -16,6 +16,9 @@ public class Tet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+        if(Input.GetKeyDown(KeyCode.T)) {
+            MoveAction.Instance.GetValidGridPositionList();
+        }
+        
     }
 }

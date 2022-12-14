@@ -4,26 +4,31 @@ using UnityEngine;
 
 public class MoveAction : MonoBehaviour
 {
+    public static MoveAction Instance;
     [SerializeField] private Animator animator; 
+    private Unit unit;
     private Vector3 targetPosition;
     private const float stopDistance = 0.3f;
     private const float turnspeed = 5f;
     private const float stopRotate = 10f;
+    [SerializeField] private int maxMoveDistance = 4;
     [SerializeField] private float moveSpeed;
     private void Awake()
     {
+        unit = GetComponent<Unit>();
         targetPosition = transform.position;
+        Instance = this;
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(GetComponentInChildren<CharacterController>().transform.position);
+        //Debug.Log(GetComponentInChildren<CharacterController>().transform.position);
         transform.position = GetComponentInChildren<CharacterController>().transform.position;
         Vector3 position = new Vector3(transform.position.x, 0f, transform.position.z);
         transform.position = position;
@@ -46,8 +51,29 @@ public class MoveAction : MonoBehaviour
             animator.SetFloat("IdleToRun", 0, 0.1f, Time.deltaTime);
         }
         
+        
     }
     public void Move(Vector3 targetPosition) {
         this.targetPosition  = targetPosition;
+    }
+
+    public List<GridPosition> GetValidGridPositionList() {
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
+        
+        for (int i = -maxMoveDistance; i <=maxMoveDistance; i++) {
+            for (int j = -maxMoveDistance; j <=+maxMoveDistance; j++)
+            {
+                GridPosition offsetGridpos = new GridPosition(i,j);
+                GridPosition resultGridpos = unit.GetGridPosition() + offsetGridpos;
+                if (LevelGrid.instance.IsAValidGridPosition(resultGridpos)) {
+                    validGridPositionList.Add(resultGridpos);
+                }
+            }
+        }
+        foreach (var item in validGridPositionList)
+        {
+            Debug.Log(item);
+        }
+        return validGridPositionList;
     }
 }
