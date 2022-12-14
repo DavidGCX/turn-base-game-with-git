@@ -32,6 +32,8 @@ public class LevelGrid : MonoBehaviour
 
     public GridPosition GetGridPosition(Vector3 worldpos) => gridSystem.GetGridPosition(worldpos);
 
+    public Vector3 GetWorldPosition(GridPosition gridPosition) => gridSystem.GetWorldPosition(gridPosition);
+
     public bool IsAValidGridPosition(GridPosition gridPosition) {
         return gridSystem.IsAValidGridPosition(gridPosition) && 
         GetUnitListAtGridPosition(gridPosition).Count == 0;
