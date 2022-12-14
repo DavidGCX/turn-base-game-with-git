@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1595463447070556529}
   - component: {fileID: 6786480151154143738}
   - component: {fileID: 1068252231}
+  - component: {fileID: 548935090}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -48,8 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270201db4b35f4b839d1c829795db727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1269197333682091283}
-  moveSpeed: 3
 --- !u!65 &1595463447070556529
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -90,6 +89,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 1209592109790939585}
   meshRenderer: {fileID: 996598789841921613}
+--- !u!114 &548935090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209592109790939599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510834eb0f1a54e02b7bcc8928926adc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1269197333682091283}
+  moveSpeed: 0
 --- !u!1 &1209972007506803119
 GameObject:
   m_ObjectHideFlags: 0

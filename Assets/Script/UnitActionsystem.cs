@@ -26,7 +26,7 @@ public class UnitActionsystem : MonoBehaviour
             if (TryHandleUnitSelection()) {
                 return;
             } else {
-                selectedUnit.Move(MouseWorld.GetMousePosition());
+                selectedUnit.GetMoveAction().Move(MouseWorld.GetMousePosition());
             } 
         } 
     }
