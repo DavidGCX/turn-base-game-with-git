@@ -9,10 +9,12 @@ public class MoveAction : MonoBehaviour
     private Unit unit;
     private Vector3 targetPosition;
     private const float stopDistance = 0.3f;
-    private const float turnspeed = 5f;
-    private const float stopRotate = 10f;
+    private const float turnspeed = 4f;
+    private const float stopRotate = 1f;
     [SerializeField] private int maxMoveDistance = 4;
     [SerializeField] private float moveSpeed;
+
+    [SerializeField] private Transform model;
     private void Awake()
     {
         unit = GetComponent<Unit>();
@@ -39,15 +41,17 @@ public class MoveAction : MonoBehaviour
             //Debug.Log(quaDir); 
             float angle = Quaternion.Angle(transform.rotation, quaDir);
             if (angle > stopRotate) {
-                animator.SetFloat("IdleToRun", 8, 0.1f, Time.deltaTime);
-                //transform.position += moveDirection * Time.deltaTime * moveSpeed*0.5f;
+                animator.SetFloat("IdleToRun", 0, 0.1f, Time.deltaTime);
+                transform.position += moveDirection * Time.deltaTime * moveSpeed*0.5f;
                 transform.rotation = Quaternion.Lerp(transform.rotation,quaDir,Time.fixedDeltaTime*turnspeed);
             } else {
-                transform.LookAt(targetPosition);
-                //transform.position += moveDirection * Time.deltaTime * moveSpeed;
+                transform.rotation = quaDir;
+                //transform.LookAt(targetPosition);
+                transform.position += moveDirection * Time.deltaTime * moveSpeed;
                 animator.SetFloat("IdleToRun", 10, 0.1f, Time.deltaTime);
             }
         } else {
+            model.position = targetPosition;
             animator.SetFloat("IdleToRun", 0, 0.1f, Time.deltaTime);
         }
         
