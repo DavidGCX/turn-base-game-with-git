@@ -69,6 +69,7 @@ public class CameraController : MonoBehaviour
         {
             inputMoveDir.x = 1;
         } 
+        
         Vector3 moveVector = transform.forward * inputMoveDir.z + transform.right * inputMoveDir.x;
         targetPosition += moveVector * cameraMoveSpeed * Time.deltaTime;
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothfactor);
