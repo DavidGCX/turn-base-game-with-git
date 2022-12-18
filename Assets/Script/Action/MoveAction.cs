@@ -78,10 +78,11 @@ public class MoveAction : MonoBehaviour
                 validGridPositionList.Add(resultGridpos);
             }
         }
-        foreach (var item in validGridPositionList)
+        /* foreach (var item in validGridPositionList)
         {
             Debug.Log(item);
-        }
+        } */
+        
         return validGridPositionList;
     }
 
