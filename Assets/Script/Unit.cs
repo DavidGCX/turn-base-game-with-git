@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour
         moveAction = GetComponent<MoveAction>();
     }
 
+    
     private void Start()
     {
         GridPosition gridPosition = LevelGrid.instance.GetGridPosition(transform.position);
