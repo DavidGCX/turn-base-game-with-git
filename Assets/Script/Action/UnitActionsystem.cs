@@ -9,27 +9,30 @@ public class UnitActionsystem : MonoBehaviour
     public event Action SelectEvent;
     [SerializeField] private LayerMask UnitySelectLayerMask;
     [SerializeField] Unit selectedUnit;
+
+    private bool isBusy = false;
     private void Awake() {
         Instance = this;
     }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
+        if(isBusy == true) {
+            return;
+        }
         if (Input.GetMouseButtonDown(0)) {
             if (TryHandleUnitSelection()) {
                 return;
             } else {
+                SetBusy();
                 GridPosition convertedPosition = LevelGrid.instance.GetGridPosition(MouseWorld.GetMousePosition());
                 if(selectedUnit.GetMoveAction().IsValidMoveGridPosition(convertedPosition))
-                selectedUnit.GetMoveAction().Move(convertedPosition);
+                selectedUnit.GetMoveAction().Move(convertedPosition, ClearBusy);
             } 
+        }
+        if (Input.GetMouseButtonDown(1)) {
+            SetBusy();
+            selectedUnit.GetSpinAction().Spin(ClearBusy);
         } 
     }
 
@@ -51,5 +54,13 @@ public class UnitActionsystem : MonoBehaviour
 
     public Unit GetSelectedUnit() {
         return selectedUnit;
+    }
+
+    private void SetBusy() {
+        isBusy = true;
+    }
+
+    private void ClearBusy() {
+        isBusy = false;
     }
 }

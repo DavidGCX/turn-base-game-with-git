@@ -58,14 +58,16 @@ public class MoveAction : BaseAction
             animator.SetFloat("IdleToRun", -1, 0.1f, Time.deltaTime);
             if (animator.GetFloat("IdleToRun") <=0 ) {
                 IsActive = false;
+                OnActionComplete();
             }
             
         }
         
         
     }
-    public void Move(GridPosition targetPosition) {
+    public void Move(GridPosition targetPosition, Action OnActionComplete) {
         IsActive = true;
+        this.OnActionComplete = OnActionComplete;
         this.targetPosition  = LevelGrid.instance.GetWorldPosition(targetPosition);
     }
 

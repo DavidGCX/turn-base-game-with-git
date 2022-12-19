@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    private SpinAction spinAction;
     private MoveAction moveAction;
 
     private GridPosition lastGridPosition;
@@ -13,6 +14,7 @@ public class Unit : MonoBehaviour
     private void Awake()
     {
         moveAction = GetComponent<MoveAction>();
+        spinAction = GetComponent<SpinAction>();
     }
 
     
@@ -45,6 +47,10 @@ public class Unit : MonoBehaviour
 
     public MoveAction GetMoveAction() {
         return moveAction;
+    }
+
+     public SpinAction GetSpinAction() {
+        return spinAction;
     }
     
     public GridPosition GetGridPosition() => lastGridPosition;
