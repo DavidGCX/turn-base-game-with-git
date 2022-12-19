@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Tet : MonoBehaviour
 {
-    
+    [SerializeField] private Unit unit;
     
     // Start is called before the first frame update
     void Start()
@@ -18,7 +18,9 @@ public class Tet : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.T)) {
-            MoveAction.Instance.GetValidGridPositionList();
+            GridsystemVisual.instance.HideAllGridPosition();
+            GridsystemVisual.instance.ShowGridPositonList(unit.GetMoveAction().GetValidGridPositionList());
+            //MoveAction.Instance.GetValidGridPositionList();
         }
         
     }

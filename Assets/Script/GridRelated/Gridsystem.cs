@@ -61,4 +61,7 @@ public class GridSystem
         !(gridPosition.x < 0 || gridPosition.z < 0) && 
         gridPosition.x < width &&
         gridPosition.z < height;
+
+    public int Getwidth() => width;
+    public int Getheight() => height;
 }
