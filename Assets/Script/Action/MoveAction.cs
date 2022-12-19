@@ -18,6 +18,7 @@ public class MoveAction : BaseAction
     {
         base.Awake();
         targetPosition = transform.position;
+        name = "Move";
         //Instance = this;
     }
     // Start is called before the first frame update

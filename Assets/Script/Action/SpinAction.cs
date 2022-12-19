@@ -7,6 +7,9 @@ public class SpinAction : BaseAction
 {
     public delegate void SpinDelegate();
 
+    private void Start() {
+        name = "Spin";
+    }
     private float totalSpinAmount;
     private void Update()
     {

@@ -8,6 +8,8 @@ public abstract class BaseAction : MonoBehaviour
 
     protected Unit unit;
     protected bool IsActive;
+
+    protected string name;
     [SerializeField] protected Animator animator; 
 
     protected Action OnActionComplete;
@@ -16,4 +18,6 @@ public abstract class BaseAction : MonoBehaviour
     {
         unit = GetComponent<Unit>();
     }
+
+    public string GetName() => name;
 }

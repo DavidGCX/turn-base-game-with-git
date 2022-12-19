@@ -9,14 +9,16 @@ public class Unit : MonoBehaviour
     private SpinAction spinAction;
     private MoveAction moveAction;
 
+    private BaseAction[] baseActions;
     private GridPosition lastGridPosition;
    
     private void Awake()
     {
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
+        baseActions = GetComponents<BaseAction>();
     }
-
+    
     
     private void Start()
     {
@@ -57,4 +59,6 @@ public class Unit : MonoBehaviour
 
     public Vector3 convertedPosition(Vector3 Mouse) => 
     LevelGrid.instance.GetWorldPosition(LevelGrid.instance.GetGridPosition(Mouse));
+
+    public BaseAction[] GetBaseActions() => baseActions;
 }
