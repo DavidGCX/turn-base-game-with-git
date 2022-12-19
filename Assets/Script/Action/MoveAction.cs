@@ -1,12 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAction : MonoBehaviour
+public class MoveAction : BaseAction
 {
-    public static MoveAction Instance;
-    [SerializeField] private Animator animator; 
-    private Unit unit;
+    //public static MoveAction Instance;
+    
     private Vector3 targetPosition;
     private const float stopDistance = 0.3f;
     private const float turnspeed = 4f;
@@ -14,28 +14,31 @@ public class MoveAction : MonoBehaviour
     [SerializeField] private int maxMoveDistance = 4;
     [SerializeField] private float moveSpeed;
 
-    [SerializeField] private Transform model;
-    private void Awake()
+    protected override void Awake()
     {
-        unit = GetComponent<Unit>();
+        base.Awake();
         targetPosition = transform.position;
-        Instance = this;
+        //Instance = this;
     }
     // Start is called before the first frame update
     void Start()
     {
-
+        IsActive = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Debug.Log(GetComponentInChildren<CharacterController>().transform.position);
-        transform.position = GetComponentInChildren<CharacterController>().transform.position;
-        Vector3 position = new Vector3(transform.position.x, 0f, transform.position.z);
-        transform.position = position;
-        Vector3 moveDirection = (targetPosition - transform.position).normalized;
+        //transform.position = GetComponentInChildren<CharacterController>().transform.position;
+        //Vector3 position = new Vector3(transform.position.x, 0f, transform.position.z);
+        //transform.position = position;
+        
         //Debug.Log(moveDirection);
+        if (!IsActive) {
+            return;
+        }
+        Vector3 moveDirection = (targetPosition - transform.position).normalized;
         if(Vector3.Distance(transform.position, targetPosition) > stopDistance) {
             Quaternion quaDir = Quaternion.LookRotation(moveDirection,Vector3.up);
             //Debug.Log(quaDir); 
@@ -51,13 +54,18 @@ public class MoveAction : MonoBehaviour
                 animator.SetFloat("IdleToRun", 10, 0.1f, Time.deltaTime);
             }
         } else {
-            model.position = targetPosition;
-            animator.SetFloat("IdleToRun", 0, 0.1f, Time.deltaTime);
+            transform.position = targetPosition;
+            animator.SetFloat("IdleToRun", -1, 0.1f, Time.deltaTime);
+            if (animator.GetFloat("IdleToRun") <=0 ) {
+                IsActive = false;
+            }
+            
         }
         
         
     }
     public void Move(GridPosition targetPosition) {
+        IsActive = true;
         this.targetPosition  = LevelGrid.instance.GetWorldPosition(targetPosition);
     }
 
