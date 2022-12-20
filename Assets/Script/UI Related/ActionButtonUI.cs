@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ActionButtonUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    [SerializeField] private TMP_Text text;
+    [SerializeField] private Button button;
+    private void Start() {
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-    
+    public void SetUpBaseAction (BaseAction baseAction) {
+        text.text = baseAction.GetActionName();
+    } 
 }

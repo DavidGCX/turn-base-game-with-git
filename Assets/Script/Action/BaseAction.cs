@@ -19,5 +19,5 @@ public abstract class BaseAction : MonoBehaviour
         unit = GetComponent<Unit>();
     }
 
-    public string GetName() => name;
+    public abstract string GetActionName();
 }
