@@ -8,14 +8,19 @@ public class UnitActionsystem : MonoBehaviour
     public static UnitActionsystem Instance {get; private set; }
     public event Action SelectEvent;
     [SerializeField] private LayerMask UnitySelectLayerMask;
-    [SerializeField] Unit selectedUnit;
+    [SerializeField] private Unit selectedUnit;
+
+    private BaseAction selectedAction;
 
     private bool isBusy = false;
     private void Awake() {
         Instance = this;
     }
 
-    void Update()
+    private void Start() {
+        SetSelectedUnit(selectedUnit);
+    }
+    private void Update()
     {
         if(isBusy == true) {
             return;
@@ -49,11 +54,21 @@ public class UnitActionsystem : MonoBehaviour
 
     private void SetSelectedUnit(Unit unit) {
         selectedUnit = unit;
+        SetSelectedAction(unit.GetMoveAction());
         SelectEvent?.Invoke();
     }
 
     public Unit GetSelectedUnit() {
         return selectedUnit;
+    }
+
+    public void SetSelectedAction(BaseAction baseAction) {
+        selectedAction = baseAction;
+    }
+
+    private void HandleSelectedAction() {
+        if(Input.GetMouseButtonDown(0)) {
+        }
     }
 
     private void SetBusy() {
@@ -63,4 +78,6 @@ public class UnitActionsystem : MonoBehaviour
     private void ClearBusy() {
         isBusy = false;
     }
+
+
 }
