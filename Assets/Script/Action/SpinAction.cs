@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class SpinAction : BaseAction
 {
-    public delegate void SpinDelegate();
 
-    private void Start() {
+    private void Awake() {
         name = "Spin";
+        actionPointRequirement = 1;
     }
     private float totalSpinAmount;
     private void Update()
@@ -27,11 +27,6 @@ public class SpinAction : BaseAction
             OnActionComplete();
         }
     }
-
-    public void Spin(Action onActionComplete) {
-        
-    }
-
     public override string GetActionName() => "Spin"; 
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)

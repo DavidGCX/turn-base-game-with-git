@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour
     private SpinAction spinAction;
     private MoveAction moveAction;
 
+    private int actionPoint = 2;
 
     private BaseAction[] baseActions;
     private GridPosition lastGridPosition;
@@ -62,4 +63,22 @@ public class Unit : MonoBehaviour
     LevelGrid.instance.GetWorldPosition(LevelGrid.instance.GetGridPosition(Mouse));
 
     public BaseAction[] GetBaseActions() => baseActions;
+
+    public bool CanSpendActionPoint(BaseAction baseAction) {
+        if (baseAction.GetActionSpent() >= actionPoint) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public bool TrySpendActionPoint(BaseAction baseAction) {
+        if (CanSpendActionPoint(baseAction)) {
+            actionPoint -= baseAction.GetActionSpent();
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
+

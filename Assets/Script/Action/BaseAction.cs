@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class BaseAction : MonoBehaviour
 {
-
+    protected int actionPointRequirement = 1;
     protected Unit unit;
     protected bool IsActive;
 
@@ -26,5 +26,6 @@ public abstract class BaseAction : MonoBehaviour
 
     public virtual bool IsValidMoveGridPosition(GridPosition gridPosition) => GetValidGridPositionList().Contains(gridPosition);
 
+    public int GetActionSpent() => actionPointRequirement;
     
 }
