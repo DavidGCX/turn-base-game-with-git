@@ -84,5 +84,7 @@ public class Unit : MonoBehaviour
     }
 
     public int GetCurrentActionPoint() => currentActionPoint;
+
+    public int GetMaxActionPoint() => maximumActionPoint;
 }
 

@@ -11,6 +11,8 @@ public class UnitActionsystem : MonoBehaviour
 
     public event Action OnSelectedActionChange;
 
+    public event Action FinishAction;
+
     [SerializeField] private LayerMask UnitySelectLayerMask;
     private Unit selectedUnit;
 
@@ -100,6 +102,7 @@ public class UnitActionsystem : MonoBehaviour
         isBusy = false;
         SetSelectedAction(selectedUnit.GetMoveAction());
         BusyUI.SetActive(false);
+
     }
 
 
