@@ -9,6 +9,8 @@ public class GridSystem
     private int width;
     private int height;
     private int cellSize;
+
+
     private GridObject[,] gridObjectArray;
 
     
