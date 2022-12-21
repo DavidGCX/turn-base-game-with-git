@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class BaseAction : MonoBehaviour
 {
-    protected int actionPointRequirement = 1;
+    [SerializeField] protected int actionPointRequirement = 1;
     protected Unit unit;
     protected bool IsActive;
 

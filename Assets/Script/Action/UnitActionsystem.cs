@@ -15,6 +15,8 @@ public class UnitActionsystem : MonoBehaviour
     public event Action StartAction;
     public event Action FinishAction;
 
+    public event Action UnitDeselect;
+
     [SerializeField] private LayerMask UnitySelectLayerMask;
     private Unit selectedUnit;
 
@@ -96,6 +98,7 @@ public class UnitActionsystem : MonoBehaviour
     }
 
     private void SetSelectedUnit(Unit unit) {
+        UnitDeselect?.Invoke();
         selectedUnit = unit;
         if (selectedUnit == null) {return;}
         SetSelectedAction(selectedUnit.GetMoveAction());
