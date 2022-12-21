@@ -9,9 +9,9 @@ public class Unit : MonoBehaviour
     private SpinAction spinAction;
     private MoveAction moveAction;
 
-    [SerializeField]private int currentActionPoint = 2;
+    [SerializeField]private int currentActionPoint = 5;
 
-    [SerializeField] private int maximumActionPoint = 2;
+    [SerializeField] private int maximumActionPoint = 5;
 
     private BaseAction[] baseActions;
     private GridPosition lastGridPosition;

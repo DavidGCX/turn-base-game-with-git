@@ -23,35 +23,41 @@ public class GridSystemVisualSingle : MonoBehaviour
     } 
 
     public void UpdateActionPoint(Unit unit, int selectedAmount) {
+        ClearPanel();
         int max = unit.GetMaxActionPoint();
         int current = unit.GetCurrentActionPoint() - selectedAmount;
         int used = max - current - selectedAmount;
-        for (int i = 0; i < selectedAmount; i++)
-        {
-            Instantiate(ActionPointSelectedPrefab,ActionPointContainer);
+        //Debug.Log(used);
+        if(current >= 0) {
+            for (int i = 0; i < selectedAmount; i++)
+            {
+                Instantiate(ActionPointSelectedPrefab,ActionPointContainer);
+            }
+            for (int j = 0; j < current; j++)
+            {
+                Instantiate(ActionPointReadyPrefab,ActionPointContainer);
+            }
+            for (int k = 0; k < used; k++)
+            {
+                Instantiate(ActionPointUsedPrefab,ActionPointContainer);
+            }
+        } else {
+            for (int i = 0; i < max; i++)
+            {
+                 Instantiate(ActionPointUsedPrefab,ActionPointContainer);
+            }
         }
-        for (int j = 0; j < current; j++)
-        {
-            Instantiate(ActionPointReadyPrefab,ActionPointContainer);
-        }
-        for (int k = 0; k < used; k++)
-        {
-            Instantiate(ActionPointUsedPrefab,ActionPointContainer);
-        }
+        
+        
 
     }
 
-    public void UpdateActionPoint(Unit unit) {
-        int max = unit.GetMaxActionPoint();
-        int current = unit.GetCurrentActionPoint();
-         int used = max - current;
-        for (int j = 0; j < current; j++)
+
+    public void ClearPanel() {
+        //Debug.Log("This one is called");
+        foreach (Transform item in ActionPointContainer)
         {
-            Instantiate(ActionPointReadyPrefab,ActionPointContainer);
-        }
-        for (int k = 0; k < used; k++)
-        {
-            Instantiate(ActionPointUsedPrefab,ActionPointContainer);
+            Destroy(item.gameObject);
         }
     }
 }

@@ -11,9 +11,9 @@ public class GridsystemVisual : MonoBehaviour
     
     private void Awake() {
         instance = this;
-    }
-    private void Start()
-    {
+        UnitActionsystem.Instance.SelectEvent += UnitActionsystem_OnSelectedEvent_UpdateActionPoint;
+        UnitActionsystem.Instance.OnSelectedActionChange += UnitActionsystem_OnSelectedEvent_UpdateActionPoint;
+        UnitActionsystem.Instance.StartAction += UnitActionsystem_OnStart_Action_UpdateActionPoint;
        // Debug.Log("This one is called");
         visualSingles = new GridSystemVisualSingle[LevelGrid.instance.GetWidth(), LevelGrid.instance.GetWidth()];
         for (int x = 0; x < LevelGrid.instance.GetWidth(); x++)
@@ -56,7 +56,18 @@ public class GridsystemVisual : MonoBehaviour
         UpdateGridVisual();
     }
     public void UnitActionsystem_OnSelectedEvent_UpdateActionPoint() {
-    
+        Unit unit = UnitActionsystem.Instance.GetSelectedUnit();
+        BaseAction baseAction = UnitActionsystem.Instance.GetSelectedAction();
+        GridPosition gridPosition = unit.GetGridPosition();
+        visualSingles[gridPosition.x, gridPosition.z].UpdateActionPoint(unit, baseAction.GetActionSpent());
     }
+
+    public void UnitActionsystem_OnStart_Action_UpdateActionPoint() {
+        Unit unit = UnitActionsystem.Instance.GetSelectedUnit();
+        if (unit == null) {return;}
+        BaseAction baseAction = UnitActionsystem.Instance.GetSelectedAction();
+        GridPosition gridPosition = unit.GetGridPosition();
+        visualSingles[gridPosition.x, gridPosition.z].ClearPanel();
+    } 
 
 }

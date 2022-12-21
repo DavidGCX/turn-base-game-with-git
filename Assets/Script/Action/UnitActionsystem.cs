@@ -11,6 +11,7 @@ public class UnitActionsystem : MonoBehaviour
 
     public event Action OnSelectedActionChange;
 
+    public event Action StartAction;
     public event Action FinishAction;
 
     [SerializeField] private LayerMask UnitySelectLayerMask;
@@ -20,9 +21,24 @@ public class UnitActionsystem : MonoBehaviour
 
     private bool isBusy = false;
 
+    private List<Unit> totalUnits;
     [SerializeField] private GameObject BusyUI;
+    [SerializeField] private Transform NotEnough;
+
+    [SerializeField] private Transform unitPrefab;
+
+    [SerializeField] Unit testUnitOne;
+    [SerializeField] Unit testUnitTwo;
+
     private void Awake() {
         Instance = this;
+        totalUnits = new List<Unit>();
+        if (testUnitOne != null) {
+            totalUnits.Add(testUnitOne);
+        }
+        if (testUnitTwo != null) {
+            totalUnits.Add(testUnitTwo);
+        }
     }
 
     private void Start() {
@@ -30,14 +46,26 @@ public class UnitActionsystem : MonoBehaviour
     }
     private void Update()
     {
+
         if(isBusy == true || 
         TryHandleUnitSelection() ||
         EventSystem.current.IsPointerOverGameObject()) {
             return;
         }
-
+        TryHandleUnitSpawn();
         HandleSelectedAction();
 
+    }
+
+    private void TryHandleUnitSpawn() {
+        if (Input.GetMouseButtonDown(1) && 
+        !LevelGrid.instance.HasAnyUnitOnGridPosition(new GridPosition(0, 0))) {
+            Vector3 spawnPlace = LevelGrid.instance.GetWorldPosition(new GridPosition(0, 0));  
+            Transform newUnit = Instantiate(unitPrefab, spawnPlace, Quaternion.identity);
+            Unit spawnUnit = newUnit.GetComponent<Unit>();
+            totalUnits.Add(spawnUnit);
+            SetSelectedUnit(spawnUnit);
+        }
     }
 
     private bool TryHandleUnitSelection() {
@@ -59,6 +87,7 @@ public class UnitActionsystem : MonoBehaviour
 
     private void SetSelectedUnit(Unit unit) {
         selectedUnit = unit;
+        if (selectedUnit == null) {return;}
         SetSelectedAction(selectedUnit.GetMoveAction());
         SelectEvent?.Invoke();
     }
@@ -85,9 +114,11 @@ public class UnitActionsystem : MonoBehaviour
                 return;
             }
             if(!selectedUnit.TrySpendActionPoint(selectedAction)){
-                Debug.Log(selectedUnit.GetCurrentActionPoint());
+                Debug.Log("no enough action Point");
+                NotEnough.gameObject.SetActive(true);
                 return;   
             }
+            StartAction?.Invoke();
             SetBusy();
             selectedAction.TakeAction(convertedPosition, ClearBusy);
         }
@@ -102,7 +133,7 @@ public class UnitActionsystem : MonoBehaviour
         isBusy = false;
         SetSelectedAction(selectedUnit.GetMoveAction());
         BusyUI.SetActive(false);
-
+        FinishAction?.Invoke();
     }
 
 

@@ -47,6 +47,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Quad: {fileID: 3084785990300747526}
+  ActionPointContainer: {fileID: 1890765126850542018}
+  ActionPointReadyPrefab: {fileID: 7578361611850125100, guid: bf35c90878fd24709a315a4e2aa5322e,
+    type: 3}
+  ActionPointSelectedPrefab: {fileID: 3278884546690021128, guid: ea9a9065a377e4d8889b54bd23f83736,
+    type: 3}
+  ActionPointUsedPrefab: {fileID: 1591246942336640019, guid: 50eedb3a0d7484459ad6e170e763aee5,
+    type: 3}
 --- !u!1 &6400036887384366916
 GameObject:
   m_ObjectHideFlags: 0
