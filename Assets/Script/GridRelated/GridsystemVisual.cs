@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class GridsystemVisual : MonoBehaviour
 {
-    public static GridsystemVisual instance {get; private set;}
     private GridSystemVisualSingle[,] visualSingles;
     [SerializeField] private Transform gridSystemVisualSinglePrefab;
+    [SerializeField] private Transform visualContainer;
     // Start is called before the first frame update
     
     private void Awake() {
-        instance = this;
         UnitActionsystem.Instance.SelectEvent += UnitActionsystem_OnSelectedEvent_UpdateActionPoint;
         UnitActionsystem.Instance.OnSelectedActionChange += UnitActionsystem_OnSelectedEvent_UpdateActionPoint;
         UnitActionsystem.Instance.StartAction += UnitActionsystem_OnStart_Action_UpdateActionPoint;
@@ -21,7 +20,7 @@ public class GridsystemVisual : MonoBehaviour
             for (int z = 0; z < LevelGrid.instance.GetHeight(); z++)
             {
                 GridPosition gridPosition = new GridPosition(x, z);
-                Transform gridVisualSingleTransform = Instantiate(gridSystemVisualSinglePrefab, LevelGrid.instance.GetWorldPosition(gridPosition), Quaternion.identity);
+                Transform gridVisualSingleTransform = Instantiate(gridSystemVisualSinglePrefab, LevelGrid.instance.GetWorldPosition(gridPosition), Quaternion.identity, visualContainer);
                 Debug.Log(gridPosition+" the gridposition");
                 visualSingles[x, z] = gridVisualSingleTransform.GetComponent<GridSystemVisualSingle>();
                 

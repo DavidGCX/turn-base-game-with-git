@@ -1,17 +1,36 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LevelGrid : MonoBehaviour
 {
     public static LevelGrid instance {get; private set;}
     [SerializeField] private Transform debugPrefab;
 
-    private int cellSize = 2; 
+    [SerializeField] private int cellSize = 2; 
+    [SerializeField] private int width = 10; 
+    [SerializeField] private int height = 10; 
+    public event Action newGridSystemGenerated;
+    [SerializeField] private Transform debugContainer;
     private GridSystem gridSystem;
     private void Awake() {
+        if(instance != null) {
+            Debug.Log("You should delete the old LevelGrid");
+            return;
+        }
         instance = this;
-        gridSystem = new GridSystem(10, 10, 2, transform.position, new Vector3(0, transform.position.y, 0));
+        gridSystem = new GridSystem(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), debugContainer);
+        gridSystem.CreateDebugObject(debugPrefab);
+    }
+
+    public void CreateANewGridSystem(Transform transform) {
+        foreach (GridDebugObject item in debugContainer.GetComponentsInChildren<GridDebugObject>())
+        {
+            Destroy(item.gameObject);
+        }
+        gridSystem = new GridSystem(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), debugContainer);
         gridSystem.CreateDebugObject(debugPrefab);
     }
     public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit) {

@@ -31,6 +31,8 @@ public class UnitActionsystem : MonoBehaviour
     [SerializeField] Unit testUnitOne;
     [SerializeField] Unit testUnitTwo;
 
+    [SerializeField] Transform unitContainer;
+
     private void Awake() {
         Instance = this;
         totalUnits = new List<Unit>();
@@ -55,14 +57,16 @@ public class UnitActionsystem : MonoBehaviour
         }
         TryHandleUnitSpawn();
         HandleSelectedAction();
-
+        if(Input.GetKeyDown(KeyCode.N)) {
+            LevelGrid.instance.CreateANewGridSystem(testUnitOne.transform);
+        }
     }
 
     private void TryHandleUnitSpawn() {
         if (Input.GetMouseButtonDown(1)) {
             if (!LevelGrid.instance.HasAnyUnitOnGridPosition(new GridPosition(0, 0))) {
                 Vector3 spawnPlace = LevelGrid.instance.GetWorldPosition(new GridPosition(0, 0));  
-                Transform newUnit = Instantiate(unitPrefab, spawnPlace, Quaternion.identity);
+                Transform newUnit = Instantiate(unitPrefab, spawnPlace, Quaternion.identity, unitContainer);
                 Unit spawnUnit = newUnit.GetComponent<Unit>();
                 totalUnits.Add(spawnUnit);
                 SetSelectedUnit(spawnUnit);

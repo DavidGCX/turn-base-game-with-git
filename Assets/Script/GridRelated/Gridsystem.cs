@@ -14,14 +14,15 @@ public class GridSystem
     private Vector3 StandarizeVectior = new Vector3(0 ,0 ,0);
 
     private GridObject[,] gridObjectArray;
-
+    private Transform debugContainer;
     
-    public GridSystem(int width, int height, int cellSize, Vector3 stVector, Vector3 hgVector) {
+    public GridSystem(int width, int height, int cellSize, Vector3 stVector, Vector3 hgVector, Transform debugContainer) {
         this.cellSize = cellSize;
         this.width = width;
         this.height = height;
         this.StandarizeVectior = GetWorldPosition(GetGridPosition(stVector));
         this.heightAdjustMent = hgVector;
+        this.debugContainer = debugContainer;
         gridObjectArray = new GridObject[width, height];
         for (int x = 0; x < width; x++)
         {
@@ -29,7 +30,7 @@ public class GridSystem
             {
                 GridPosition gridPosition = new GridPosition(x, z);
                 gridObjectArray[x,z] = new GridObject(this, gridPosition);
-                Debug.DrawLine(GetWorldPosition(gridPosition), GetWorldPosition(gridPosition) + Vector3.right *0.3f, Color.red, 1000);
+                //Debug.DrawLine(GetWorldPosition(gridPosition), GetWorldPosition(gridPosition) + Vector3.right *0.3f, Color.red, 1000);
             }
         }
     }
@@ -54,7 +55,7 @@ public class GridSystem
             for (int z = 0; z < height; z++)
             {
                 GridPosition gridPosition = new GridPosition(x, z);
-                Transform debugObject= GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity);
+                Transform debugObject= GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity, debugContainer);
                 GridDebugObject gridDebugObject = debugObject.GetComponent<GridDebugObject>();
                 gridDebugObject.SetGridDebugObject(gridObjectArray[x,z]);
             }
