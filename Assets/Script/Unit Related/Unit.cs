@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour
     private SpinAction spinAction;
     private MoveAction moveAction;
 
+
     private BaseAction[] baseActions;
     private GridPosition lastGridPosition;
    
@@ -51,9 +52,9 @@ public class Unit : MonoBehaviour
         return moveAction;
     }
 
-     public SpinAction GetSpinAction() {
+    /* public SpinAction GetSpinAction() {
         return spinAction;
-    }
+    }*/
     
     public GridPosition GetGridPosition() => lastGridPosition;
 
