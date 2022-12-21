@@ -14,6 +14,14 @@ public class GridsystemVisual : MonoBehaviour
         UnitActionsystem.Instance.OnSelectedActionChange += UnitActionsystem_OnSelectedEvent_UpdateActionPoint;
         UnitActionsystem.Instance.StartAction += UnitActionsystem_OnStart_Action_UpdateActionPoint;
        // Debug.Log("This one is called");
+        GridSystemVisualGenerate();
+    }
+
+    public void GridSystemVisualGenerate() {
+        foreach (var item in visualContainer.GetComponentsInChildren<GridSystemVisualSingle>())
+        {
+            Destroy(item.gameObject);
+        }
         visualSingles = new GridSystemVisualSingle[LevelGrid.instance.GetWidth(), LevelGrid.instance.GetWidth()];
         for (int x = 0; x < LevelGrid.instance.GetWidth(); x++)
         {
@@ -21,7 +29,7 @@ public class GridsystemVisual : MonoBehaviour
             {
                 GridPosition gridPosition = new GridPosition(x, z);
                 Transform gridVisualSingleTransform = Instantiate(gridSystemVisualSinglePrefab, LevelGrid.instance.GetWorldPosition(gridPosition), Quaternion.identity, visualContainer);
-                Debug.Log(gridPosition+" the gridposition");
+                //Debug.Log(gridPosition+" the gridposition");
                 visualSingles[x, z] = gridVisualSingleTransform.GetComponent<GridSystemVisualSingle>();
                 
             }

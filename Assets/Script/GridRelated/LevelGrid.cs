@@ -14,6 +14,7 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private int height = 10; 
     public event Action newGridSystemGenerated;
     [SerializeField] private Transform debugContainer;
+    [SerializeField] private GridsystemVisual gridSystemVisual;
     private GridSystem gridSystem;
     private void Awake() {
         if(instance != null) {
@@ -31,6 +32,7 @@ public class LevelGrid : MonoBehaviour
             Destroy(item.gameObject);
         }
         gridSystem = new GridSystem(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), debugContainer);
+        gridSystemVisual.GridSystemVisualGenerate();
         gridSystem.CreateDebugObject(debugPrefab);
     }
     public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit) {
