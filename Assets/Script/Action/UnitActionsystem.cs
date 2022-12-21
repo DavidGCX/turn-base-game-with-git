@@ -13,6 +13,8 @@ public class UnitActionsystem : MonoBehaviour
     private BaseAction selectedAction;
 
     private bool isBusy = false;
+
+    [SerializeField] private GameObject BusyUI;
     private void Awake() {
         Instance = this;
     }
@@ -29,16 +31,9 @@ public class UnitActionsystem : MonoBehaviour
             if (TryHandleUnitSelection()) {
                 return;
             } else {
-                SetBusy();
-                GridPosition convertedPosition = LevelGrid.instance.GetGridPosition(MouseWorld.GetMousePosition());
-                if(selectedUnit.GetMoveAction().IsValidMoveGridPosition(convertedPosition))
-                selectedUnit.GetMoveAction().Move(convertedPosition, ClearBusy);
-            } 
+                HandleSelectedAction();
+            }
         }
-        if (Input.GetMouseButtonDown(1)) {
-            SetBusy();
-            selectedUnit.GetSpinAction().Spin(ClearBusy);
-        } 
     }
 
     private bool TryHandleUnitSelection() {
@@ -63,20 +58,32 @@ public class UnitActionsystem : MonoBehaviour
     }
 
     public void SetSelectedAction(BaseAction baseAction) {
-        selectedAction = baseAction;
+        if(!isBusy) {
+            selectedAction = baseAction;
+        }
+        
     }
+
+    public BaseAction GetSelectedAction() => selectedAction;
 
     private void HandleSelectedAction() {
         if(Input.GetMouseButtonDown(0)) {
+            GridPosition convertedPosition = LevelGrid.instance.GetGridPosition(MouseWorld.GetMousePosition());
+            if(selectedAction.IsValidMoveGridPosition(convertedPosition)) {
+                SetBusy();
+                selectedAction.TakeAction(convertedPosition, ClearBusy);
+            }
         }
     }
 
     private void SetBusy() {
         isBusy = true;
+        BusyUI.SetActive(true);
     }
 
     private void ClearBusy() {
         isBusy = false;
+        BusyUI.SetActive(false);
     }
 
 

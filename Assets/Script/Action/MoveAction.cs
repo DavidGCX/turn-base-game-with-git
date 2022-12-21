@@ -66,13 +66,8 @@ public class MoveAction : BaseAction
         
         
     }
-    public void Move(GridPosition targetPosition, Action OnActionComplete) {
-        IsActive = true;
-        this.OnActionComplete = OnActionComplete;
-        this.targetPosition  = LevelGrid.instance.GetWorldPosition(targetPosition);
-    }
 
-    public List<GridPosition> GetValidGridPositionList() {
+    public override List<GridPosition> GetValidGridPositionList() {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         
         for (int i = -maxMoveDistance; i <=maxMoveDistance; i++) {
@@ -98,7 +93,12 @@ public class MoveAction : BaseAction
     }
     
 
-    public bool IsValidMoveGridPosition(GridPosition gridPosition) => GetValidGridPositionList().Contains(gridPosition);
+    public override string GetActionName() => "Move";
 
-    public override string GetActionName() => "Move"; 
+    public override void TakeAction(GridPosition targetPosition, Action ActionComplete)
+    {
+        IsActive = true;
+        this.OnActionComplete = ActionComplete;
+        this.targetPosition  = LevelGrid.instance.GetWorldPosition(targetPosition);
+    }
 }
