@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class UnitActionsystem : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class UnitActionsystem : MonoBehaviour
 
     private List<Unit> totalUnits;
     [SerializeField] private GameObject BusyUI;
-    [SerializeField] private Transform NotEnough;
+    [SerializeField] private Transform Notification;
 
     [SerializeField] private Transform unitPrefab;
 
@@ -58,14 +59,19 @@ public class UnitActionsystem : MonoBehaviour
     }
 
     private void TryHandleUnitSpawn() {
-        if (Input.GetMouseButtonDown(1) && 
-        !LevelGrid.instance.HasAnyUnitOnGridPosition(new GridPosition(0, 0))) {
-            Vector3 spawnPlace = LevelGrid.instance.GetWorldPosition(new GridPosition(0, 0));  
-            Transform newUnit = Instantiate(unitPrefab, spawnPlace, Quaternion.identity);
-            Unit spawnUnit = newUnit.GetComponent<Unit>();
-            totalUnits.Add(spawnUnit);
-            SetSelectedUnit(spawnUnit);
-        }
+        if (Input.GetMouseButtonDown(1)) {
+            if (!LevelGrid.instance.HasAnyUnitOnGridPosition(new GridPosition(0, 0))) {
+                Vector3 spawnPlace = LevelGrid.instance.GetWorldPosition(new GridPosition(0, 0));  
+                Transform newUnit = Instantiate(unitPrefab, spawnPlace, Quaternion.identity);
+                Unit spawnUnit = newUnit.GetComponent<Unit>();
+                totalUnits.Add(spawnUnit);
+                SetSelectedUnit(spawnUnit);
+            } else {
+                SendNotification("Grid has already occupied by a unit");
+            }
+        } 
+
+        
     }
 
     private bool TryHandleUnitSelection() {
@@ -114,8 +120,7 @@ public class UnitActionsystem : MonoBehaviour
                 return;
             }
             if(!selectedUnit.TrySpendActionPoint(selectedAction)){
-                Debug.Log("no enough action Point");
-                NotEnough.gameObject.SetActive(true);
+                SendNotification("Not enough action point");
                 return;   
             }
             StartAction?.Invoke();
@@ -136,5 +141,8 @@ public class UnitActionsystem : MonoBehaviour
         FinishAction?.Invoke();
     }
 
-
+    private void SendNotification(string words) {
+        Notification.gameObject.SetActive(true);
+        Notification.gameObject.GetComponent<TMP_Text>().text = words;
+    }
 }
