@@ -6,8 +6,9 @@ using UnityEngine;
 public class SpinAction : BaseAction
 {
 
-    private void Awake() {
-        name = "Spin";
+    protected override void Awake() {
+        base.Awake();
+        nameOfAction = "Spin";
         actionPointRequirement = 1;
     }
     private float totalSpinAmount;

@@ -18,7 +18,7 @@ public class MoveAction : BaseAction
     {
         base.Awake();
         targetPosition = transform.position;
-        name = "Move";
+        nameOfAction = "Move";
         actionPointRequirement = 1;
         //Instance = this;
     }

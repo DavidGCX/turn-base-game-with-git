@@ -9,7 +9,9 @@ public class Unit : MonoBehaviour
     private SpinAction spinAction;
     private MoveAction moveAction;
 
-    private int actionPoint = 2;
+    [SerializeField]private int currentActionPoint = 2;
+
+    [SerializeField] private int maximumActionPoint = 2;
 
     private BaseAction[] baseActions;
     private GridPosition lastGridPosition;
@@ -65,7 +67,7 @@ public class Unit : MonoBehaviour
     public BaseAction[] GetBaseActions() => baseActions;
 
     public bool CanSpendActionPoint(BaseAction baseAction) {
-        if (baseAction.GetActionSpent() >= actionPoint) {
+        if (baseAction.GetActionSpent() > currentActionPoint) {
             return false;
         } else {
             return true;
@@ -74,11 +76,13 @@ public class Unit : MonoBehaviour
 
     public bool TrySpendActionPoint(BaseAction baseAction) {
         if (CanSpendActionPoint(baseAction)) {
-            actionPoint -= baseAction.GetActionSpent();
+            currentActionPoint -= baseAction.GetActionSpent();
             return true;
         } else {
             return false;
         }
     }
+
+    public int GetCurrentActionPoint() => currentActionPoint;
 }
 

@@ -25,7 +25,7 @@ public class ActionButtonUI : MonoBehaviour
     public void UpdateSelectedVisual(){
         //Debug.Log("This one is called");
         BaseAction selectedOne = UnitActionsystem.Instance.GetSelectedAction();
-        Debug.Log(selectedOne == baseAction);
+        //Debug.Log(selectedOne == baseAction);
         selectedVisual.SetActive(selectedOne == baseAction);
     }
 
