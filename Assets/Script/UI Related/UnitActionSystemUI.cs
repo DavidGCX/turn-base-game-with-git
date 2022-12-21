@@ -49,7 +49,7 @@ public class UnitActionSystemUI : MonoBehaviour
     }
 
     private void UpdateSelectedVisual() {
-        Debug.Log("Called");
+        //Debug.Log("Called");
         foreach (var buttonUI in actionButtonUIs)
         {
             buttonUI.UpdateSelectedVisual();
