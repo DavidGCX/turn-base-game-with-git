@@ -6,26 +6,13 @@ public class LevelGrid : MonoBehaviour
 {
     public static LevelGrid instance {get; private set;}
     [SerializeField] private Transform debugPrefab;
-    private Vector3 StandarlizeVector;
-
-    private Vector3 worldPosition;
 
     private int cellSize = 2; 
     private GridSystem gridSystem;
     private void Awake() {
-        worldPosition = transform.position;
         instance = this;
-        gridSystem = new GridSystem(10, 10, cellSize);
+        gridSystem = new GridSystem(10, 10, 2, transform.position, new Vector3(0, transform.position.y, 0));
         gridSystem.CreateDebugObject(debugPrefab);
-        
-        GridPosition Level  = new GridPosition (
-            Mathf.RoundToInt(worldPosition.x / cellSize),
-            Mathf.RoundToInt(worldPosition.z / cellSize)
-        );
-        StandarlizeVector = new Vector3(Level.x, 0, Level.z) * cellSize;
-    }
-    private void Start() {
-        StandarlizeVector = GetWorldPosition(GetGridPosition(transform.position));
     }
     public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit) {
         GridObject CurrentGridObject = gridSystem.GetGridObject(gridPosition);
@@ -45,9 +32,9 @@ public class LevelGrid : MonoBehaviour
         AddUnitAtGridPosition(to, unit);
     }
 
-    public GridPosition GetGridPosition(Vector3 worldpos) => gridSystem.GetGridPosition(worldpos) - gridSystem.GetGridPosition(StandarlizeVector);
+    public GridPosition GetGridPosition(Vector3 worldpos) => gridSystem.GetGridPosition(worldpos);
 
-    public Vector3 GetWorldPosition(GridPosition gridPosition) => gridSystem.GetWorldPosition(gridPosition) + StandarlizeVector;
+    public Vector3 GetWorldPosition(GridPosition gridPosition) => gridSystem.GetWorldPosition(gridPosition);
 
     public bool IsAValidGridPosition(GridPosition gridPosition) => gridSystem.IsAValidGridPosition(gridPosition);
 
