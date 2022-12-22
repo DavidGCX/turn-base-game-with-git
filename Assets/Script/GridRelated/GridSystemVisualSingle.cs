@@ -36,8 +36,7 @@ public class GridSystemVisualSingle : MonoBehaviour
             }
             for (int j = 0; j < current; j++)
             {
-                
-                StartCoroutine("ButtonGenerateFadeIn", current);
+                Instantiate(ActionPointReadyPrefab,ActionPointContainer);
             }
             for (int k = 0; k < used; k++)
             {
@@ -59,10 +58,6 @@ public class GridSystemVisualSingle : MonoBehaviour
 
     }
 
-    IEnumerator ButtonGenerateFadeIn(int current) {
-        Instantiate(ActionPointReadyPrefab,ActionPointContainer);
-        yield return new WaitForSeconds(20f);
-    }
     public void ClearPanel() {
         //Debug.Log("This one is called");
         foreach (Transform item in ActionPointContainer)
