@@ -25,7 +25,9 @@ public class UnitActionsystem : MonoBehaviour
 
     private bool isBusy = false;
 
-    private List<Unit> totalUnits;
+    private List<Unit> totalPlayerUnits;
+
+    private List<Unit> totalEnemyUnits;
     [SerializeField] private GameObject BusyUI;
     [SerializeField] private Transform Notification;
 
@@ -38,12 +40,13 @@ public class UnitActionsystem : MonoBehaviour
 
     private void Awake() {
         Instance = this;
-        totalUnits = new List<Unit>();
+        totalPlayerUnits = new List<Unit>();
+        totalEnemyUnits = new List<Unit>();
         if (testUnitOne != null) {
-            totalUnits.Add(testUnitOne);
+            totalPlayerUnits.Add(testUnitOne);
         }
         if (testUnitTwo != null) {
-            totalUnits.Add(testUnitTwo);
+            totalEnemyUnits.Add(testUnitTwo);
         }
     }
 
@@ -72,7 +75,7 @@ public class UnitActionsystem : MonoBehaviour
                 Vector3 spawnPlace = LevelGrid.instance.GetWorldPosition(new GridPosition(0, 0));  
                 Transform newUnit = Instantiate(unitPrefab, spawnPlace, Quaternion.identity, unitContainer);
                 Unit spawnUnit = newUnit.GetComponent<Unit>();
-                totalUnits.Add(spawnUnit);
+                totalPlayerUnits.Add(spawnUnit);
                 SetSelectedUnit(spawnUnit);
             } else {
                 SendNotification("Grid has already occupied by a unit");
@@ -160,5 +163,19 @@ public class UnitActionsystem : MonoBehaviour
     public Unit GetSelectedUnit() => selectedUnit;
     public BaseAction GetSelectedAction() => selectedAction;
 
-    public List<Unit> GetUnitList() => totalUnits;
+    public List<Unit> GetUnitList() => add(totalPlayerUnits, totalEnemyUnits);
+
+    public List<Unit> add(List<Unit> a, List<Unit> b) {
+        List<Unit> c = new List<Unit>();
+        foreach (var item in a)
+        {
+            c.Add(item);
+        }
+        foreach (var item in b)
+        {
+            c.Add(item);
+        }
+        return c;
+        
+    }
 }

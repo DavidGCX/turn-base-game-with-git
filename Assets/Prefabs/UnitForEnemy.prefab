@@ -75,7 +75,12 @@ PrefabInstance:
     - target: {fileID: 1209592109790939599, guid: c4d020c992b7f4af1bb087749590a9c9,
         type: 3}
       propertyPath: m_Name
-      value: Unit (1)
+      value: UnitForEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 1234019182951780637, guid: c4d020c992b7f4af1bb087749590a9c9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7d22fc6b9a431b043a917fb89a80bcfc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4d020c992b7f4af1bb087749590a9c9, type: 3}
