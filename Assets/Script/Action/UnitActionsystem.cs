@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,6 +49,7 @@ public class UnitActionsystem : MonoBehaviour
 
     private void Start() {
         //SetSelectedUnit(selectedUnit);
+        TurnSystem.instance.OnTurnChange += TurnChange;
     }
     private void Update()
     {
@@ -100,14 +102,12 @@ public class UnitActionsystem : MonoBehaviour
     private void SetSelectedUnit(Unit unit) {
         UnitDeselect?.Invoke();
         selectedUnit = unit;
-        if (selectedUnit == null) {return;}
+        if (selectedUnit == null) {UnitActionSystemUI.Instance.DestroyAllButton();return;}
         SetSelectedAction(selectedUnit.GetMoveAction());
         SelectEvent?.Invoke();
     }
 
-    public Unit GetSelectedUnit() {
-        return selectedUnit;
-    }
+
 
     public void SetSelectedAction(BaseAction baseAction) {
         if(!isBusy) {
@@ -116,9 +116,7 @@ public class UnitActionsystem : MonoBehaviour
         OnSelectedActionChange.Invoke();
         
     }
-
-    public BaseAction GetSelectedAction() => selectedAction;
-
+    
     private void HandleSelectedAction() {
         if(selectedAction == null) return;
         if(Input.GetMouseButtonDown(0)) {
@@ -155,4 +153,12 @@ public class UnitActionsystem : MonoBehaviour
         Notification.gameObject.SetActive(true);
         Notification.gameObject.GetComponent<TMP_Text>().text = words;
     }
+
+    public void TurnChange() {
+        SetSelectedUnit(null);
+    }
+    public Unit GetSelectedUnit() => selectedUnit;
+    public BaseAction GetSelectedAction() => selectedAction;
+
+    public List<Unit> GetUnitList() => totalUnits;
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UnitActionSystemUI : MonoBehaviour
 {
 
+    public static UnitActionSystemUI Instance {get; private set;}
     [SerializeField] private Transform ButtonUI;
     [SerializeField] private Transform ButtonUIContainer;
 
@@ -13,26 +14,21 @@ public class UnitActionSystemUI : MonoBehaviour
 
     private void Awake() {
         actionButtonUIs = new List<ActionButtonUI>();
+        Instance = this;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        foreach (Transform item in ButtonUIContainer)
-        {
-            Destroy(item.gameObject);
-        }
+        DestroyAllButton();
         UnitActionsystem.Instance.SelectEvent += UnitActionSystem_OnSelectionChange;
         UnitActionsystem.Instance.OnSelectedActionChange += UpdateSelectedVisual;
     }
 
     private void CreateUnitActionButton() {
-        foreach (Transform item in ButtonUIContainer)
-        {
-            Destroy(item.gameObject);
-        }
-        actionButtonUIs.Clear();
+        DestroyAllButton();
         Unit SelectedUnit = UnitActionsystem.Instance.GetSelectedUnit();
+        if (SelectedUnit == null) {return;}
         foreach (var baseAction in SelectedUnit.GetBaseActions()) {
             Transform actionButtonTransform = Instantiate(ButtonUI, ButtonUIContainer);
             ActionButtonUI actionButtonUI = actionButtonTransform.GetComponent<ActionButtonUI>();
@@ -54,5 +50,13 @@ public class UnitActionSystemUI : MonoBehaviour
         {
             buttonUI.UpdateSelectedVisual();
         }
+    }
+
+    public  void DestroyAllButton() {
+        foreach (Transform item in ButtonUIContainer)
+        {
+            Destroy(item.gameObject);
+        }
+        actionButtonUIs.Clear();
     }
 }

@@ -14,6 +14,7 @@ public class GridsystemVisual : MonoBehaviour
         UnitActionsystem.Instance.OnSelectedActionChange += UnitActionsystem_OnSelectedEvent_UpdateActionPoint;
         UnitActionsystem.Instance.StartAction += UnitActionsystem_OnStart_Action_UpdateActionPoint;
         UnitActionsystem.Instance.UnitDeselect += UnitActionsystem_OnUnitDeSelectedEvent_UpdateActionPoint;
+        Unit.ActionPointChangeDueToTurnEnd += UnitActionsystem_NewTurn_UpdateActionPoint;
        // Debug.Log("This one is called");
         GridSystemVisualGenerate();
     }
@@ -90,5 +91,14 @@ public class GridsystemVisual : MonoBehaviour
         GridPosition gridPosition = unit.GetGridPosition();
         visualSingles[gridPosition.x, gridPosition.z].ClearPanel();
     } 
+
+    public void UnitActionsystem_NewTurn_UpdateActionPoint() {
+        foreach (Unit unit in UnitActionsystem.Instance.GetUnitList())
+        {
+            if (unit == null) {return;}
+            GridPosition gridPosition = unit.GetGridPosition();
+            visualSingles[gridPosition.x, gridPosition.z].UpdateActionPoint(unit, 0);
+        }
+    }
 
 }

@@ -8,7 +8,7 @@ public class NotEnoghControl : MonoBehaviour
     private bool active;
     private void Start() {
         time = Time.fixedTime;
-        Debug.Log("Start Called");
+        //Debug.Log("Start Called");
         active = false;
     }
 

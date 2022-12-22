@@ -15,6 +15,8 @@ public class Unit : MonoBehaviour
 
     private BaseAction[] baseActions;
     private GridPosition lastGridPosition;
+
+    public static event Action ActionPointChangeDueToTurnEnd;
    
     private void Awake()
     {
@@ -29,6 +31,8 @@ public class Unit : MonoBehaviour
         GridPosition gridPosition = LevelGrid.instance.GetGridPosition(transform.position);
         lastGridPosition = gridPosition;
         LevelGrid.instance.AddUnitAtGridPosition(gridPosition, this);
+        TurnSystem.instance.OnTurnChange += NewTurn;
+
     }
     
     void Update()
@@ -46,25 +50,14 @@ public class Unit : MonoBehaviour
             LevelGrid.instance.UnitMoveGridPosition(this, lastGridPosition, gridPosition);
             lastGridPosition = gridPosition;
         }
-        /* if (Input.GetMouseButtonDown(0)) {
-            Move(MouseWorld.GetMousePosition());
-        } */
     }
 
-    public MoveAction GetMoveAction() {
-        return moveAction;
-    }
+
 
     /* public SpinAction GetSpinAction() {
         return spinAction;
     }*/
     
-    public GridPosition GetGridPosition() => lastGridPosition;
-
-    public Vector3 convertedPosition(Vector3 Mouse) => 
-    LevelGrid.instance.GetWorldPosition(LevelGrid.instance.GetGridPosition(Mouse));
-
-    public BaseAction[] GetBaseActions() => baseActions;
 
     public bool CanSpendActionPoint(BaseAction baseAction) {
         if (baseAction.GetActionSpent() > currentActionPoint) {
@@ -83,9 +76,21 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void NewTurn() {
+        currentActionPoint = maximumActionPoint;
+        ActionPointChangeDueToTurnEnd?.Invoke();
+    }
 
+
+    public GridPosition GetGridPosition() => lastGridPosition;
+
+    public Vector3 convertedPosition(Vector3 Mouse) => 
+    LevelGrid.instance.GetWorldPosition(LevelGrid.instance.GetGridPosition(Mouse));
+
+    public BaseAction[] GetBaseActions() => baseActions;
     public int GetCurrentActionPoint() => currentActionPoint;
 
     public int GetMaxActionPoint() => maximumActionPoint;
+        public MoveAction GetMoveAction() => moveAction;
 }
 

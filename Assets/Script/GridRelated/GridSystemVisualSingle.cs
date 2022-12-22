@@ -42,13 +42,14 @@ public class GridSystemVisualSingle : MonoBehaviour
                 Instantiate(ActionPointUsedPrefab,ActionPointContainer);
             }
         } else {
-            for (int j = 0; j < current + selectedAmount; j++)
+            current += selectedAmount;
+            for (int j = 0; j < current; j++)
             {
                 Instantiate(ActionPointReadyPrefab,ActionPointContainer);
             }
-            for (int i = 0; i < max; i++)
+            for (int i = 0; i < max - current; i++)
             {
-                 Instantiate(ActionPointUsedPrefab,ActionPointContainer);
+                Instantiate(ActionPointUsedPrefab,ActionPointContainer);
             }
         }
         
