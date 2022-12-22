@@ -12,11 +12,19 @@ public class ActionButtonUI : MonoBehaviour
     [SerializeField] private Button button;
 
     [SerializeField] private GameObject selectedVisual;
+
+    [SerializeField] private Transform actionPointButtonVisual;
+
+    [SerializeField] private Transform actionPointButtonVisualContainer;
     private BaseAction baseAction;
     
     public void SetUpBaseAction (BaseAction baseAction) {
         this.baseAction = baseAction;
         text.text = baseAction.GetActionName();
+        for (int i = 0; i < baseAction.GetActionSpent(); i++)
+        {
+            Instantiate(actionPointButtonVisual, actionPointButtonVisualContainer);
+        }
         button.onClick.AddListener(() => {
             if (UnitActionsystem.Instance.GetSelectedUnit().CanSpendActionPoint(baseAction)) {
                 UnitActionsystem.Instance.SetSelectedAction(baseAction);
