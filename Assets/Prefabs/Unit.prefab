@@ -50,8 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270201db4b35f4b839d1c829795db727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentActionPoint: 3
-  maximumActionPoint: 3
+  currentActionPoint: 7
+  maximumActionPoint: 7
 --- !u!65 &1595463447070556529
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 510834eb0f1a54e02b7bcc8928926adc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionPointRequirement: 2
   animator: {fileID: 1269197333682091283}
   maxMoveDistance: 4
   moveSpeed: 3
@@ -119,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e9dae6ca42894632b147cfc8c3cacae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionPointRequirement: 1
   animator: {fileID: 0}
 --- !u!1 &1209972007506803119
 GameObject:

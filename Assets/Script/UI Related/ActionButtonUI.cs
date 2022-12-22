@@ -18,7 +18,11 @@ public class ActionButtonUI : MonoBehaviour
         this.baseAction = baseAction;
         text.text = baseAction.GetActionName();
         button.onClick.AddListener(() => {
-            UnitActionsystem.Instance.SetSelectedAction(baseAction);
+            if (UnitActionsystem.Instance.GetSelectedUnit().CanSpendActionPoint(baseAction)) {
+                UnitActionsystem.Instance.SetSelectedAction(baseAction);
+            } else {
+                UnitActionsystem.Instance.SendNotification("This action needs more action point than this unit have");
+            }
         });
     }
 

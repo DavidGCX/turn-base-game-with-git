@@ -36,10 +36,10 @@ public class Unit : MonoBehaviour
         GridPosition gridPosition = LevelGrid.instance.GetGridPosition(transform.position);
         if (gridPosition.x < 0) {
             gridPosition.x = 0;
-             Debug.Log($"Out of Boundary, current pos is {LevelGrid.instance.GetGridPosition(transform.position)}");
+            // Debug.Log($"Out of Boundary, current pos is {LevelGrid.instance.GetGridPosition(transform.position)}");
         } 
         if (gridPosition.z < 0) {
-            Debug.Log($"Out of Boundary, current pos is {LevelGrid.instance.GetGridPosition(transform.position)}");
+            //Debug.Log($"Out of Boundary, current pos is {LevelGrid.instance.GetGridPosition(transform.position)}");
             gridPosition.z = 0;
         }
         if (lastGridPosition != gridPosition) {
@@ -82,6 +82,7 @@ public class Unit : MonoBehaviour
             return false;
         }
     }
+
 
     public int GetCurrentActionPoint() => currentActionPoint;
 

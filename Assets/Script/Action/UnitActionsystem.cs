@@ -144,11 +144,14 @@ public class UnitActionsystem : MonoBehaviour
     private void ClearBusy() {
         isBusy = false;
         SetSelectedAction(selectedUnit.GetMoveAction());
+        if(!selectedUnit.CanSpendActionPoint(selectedAction)){
+            SetSelectedAction(null); 
+        }
         BusyUI.SetActive(false);
         FinishAction?.Invoke();
     }
 
-    private void SendNotification(string words) {
+    public void SendNotification(string words) {
         Notification.gameObject.SetActive(true);
         Notification.gameObject.GetComponent<TMP_Text>().text = words;
     }

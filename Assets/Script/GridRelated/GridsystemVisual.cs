@@ -68,7 +68,12 @@ public class GridsystemVisual : MonoBehaviour
         Unit unit = UnitActionsystem.Instance.GetSelectedUnit();
         BaseAction baseAction = UnitActionsystem.Instance.GetSelectedAction();
         GridPosition gridPosition = unit.GetGridPosition();
-        visualSingles[gridPosition.x, gridPosition.z].UpdateActionPoint(unit, baseAction.GetActionSpent());
+        if(baseAction == null) {
+            visualSingles[gridPosition.x, gridPosition.z].UpdateActionPoint(unit, 0);
+        } else {
+            visualSingles[gridPosition.x, gridPosition.z].UpdateActionPoint(unit, baseAction.GetActionSpent());
+        }
+        
     }
 
     public void UnitActionsystem_OnUnitDeSelectedEvent_UpdateActionPoint() {
