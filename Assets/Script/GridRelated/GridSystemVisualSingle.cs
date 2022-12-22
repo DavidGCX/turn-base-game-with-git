@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GridSystemVisualSingle : MonoBehaviour
 {
+
     [SerializeField] private MeshRenderer Quad;
 
     [SerializeField] private Transform ActionPointContainer;
@@ -35,7 +36,8 @@ public class GridSystemVisualSingle : MonoBehaviour
             }
             for (int j = 0; j < current; j++)
             {
-                Instantiate(ActionPointReadyPrefab,ActionPointContainer);
+                
+                StartCoroutine("ButtonGenerateFadeIn", current);
             }
             for (int k = 0; k < used; k++)
             {
@@ -57,7 +59,10 @@ public class GridSystemVisualSingle : MonoBehaviour
 
     }
 
-
+    IEnumerator ButtonGenerateFadeIn(int current) {
+        Instantiate(ActionPointReadyPrefab,ActionPointContainer);
+        yield return new WaitForSeconds(20f);
+    }
     public void ClearPanel() {
         //Debug.Log("This one is called");
         foreach (Transform item in ActionPointContainer)
