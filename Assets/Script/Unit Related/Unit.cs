@@ -91,6 +91,6 @@ public class Unit : MonoBehaviour
     public int GetCurrentActionPoint() => currentActionPoint;
 
     public int GetMaxActionPoint() => maximumActionPoint;
-        public MoveAction GetMoveAction() => moveAction;
+    public MoveAction GetMoveAction() => moveAction;
 }
 
