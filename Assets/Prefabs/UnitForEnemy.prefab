@@ -64,6 +64,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1209592109790939585, guid: c4d020c992b7f4af1bb087749590a9c9,
         type: 3}
+      propertyPath: isEmemy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1209592109790939585, guid: c4d020c992b7f4af1bb087749590a9c9,
+        type: 3}
       propertyPath: currentActionPoint
       value: 1
       objectReference: {fileID: 0}
@@ -84,3 +89,21 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 7d22fc6b9a431b043a917fb89a80bcfc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4d020c992b7f4af1bb087749590a9c9, type: 3}
+--- !u!1 &9011135509910415123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1209592109790939599, guid: c4d020c992b7f4af1bb087749590a9c9,
+    type: 3}
+  m_PrefabInstance: {fileID: 7909633340165730012}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-5462821472825962439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9011135509910415123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c88c79c22a6f5478bdd55b05049888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

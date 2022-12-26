@@ -8,6 +8,8 @@ public class TurnSystem : MonoBehaviour
     private int TurnNumber = 0;
     public event Action OnTurnChange;
 
+    private bool PlayersTurn = false;
+
     [SerializeField] private Animator TurnAnimator;
     // Start is called before the first frame update
     
@@ -20,8 +22,11 @@ public class TurnSystem : MonoBehaviour
     }
     public void NextTurn(){
         TurnNumber++;
+        PlayersTurn = !PlayersTurn;
         OnTurnChange?.Invoke();
         TurnAnimator.gameObject.SetActive(false);
         TurnAnimator.gameObject.SetActive(true);    
     }
+
+    public bool IsPlayerTurn() => PlayersTurn;
 }

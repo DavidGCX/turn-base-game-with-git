@@ -51,7 +51,9 @@ public class UnitActionsystem : MonoBehaviour
     }
     private void Update()
     {
-
+        if(!TurnSystem.instance.IsPlayerTurn()) {
+            return;
+        }
         if(isBusy == true || 
         TryHandleUnitSelection() ||
         EventSystem.current.IsPointerOverGameObject()) {
@@ -87,6 +89,9 @@ public class UnitActionsystem : MonoBehaviour
             if(Physics.Raycast(ray, out RaycastHit rayCastHit, float.MaxValue, UnitySelectLayerMask)) {
                 if(rayCastHit.transform.TryGetComponent<Unit>(out Unit unit)) {
                     if(unit == selectedUnit) {
+                        return false;
+                    }
+                    if(unit.GetUnitType()) {
                         return false;
                     }
                     SetSelectedUnit(unit);

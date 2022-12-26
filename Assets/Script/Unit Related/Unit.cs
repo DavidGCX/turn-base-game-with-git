@@ -22,10 +22,11 @@ public class Unit : MonoBehaviour
 
     [SerializeField] private TMP_Text ActionPointCount;
 
+    [SerializeField] private bool isEmemy = false;
+
     private BaseAction[] baseActions;
     private GridPosition lastGridPosition;
 
-    public static event Action ActionPointChangeDueToTurnEnd;
 
    
     private void Awake()
@@ -88,8 +89,10 @@ public class Unit : MonoBehaviour
     }
 
     public void NewTurn() {
-        currentActionPoint = maximumActionPoint;
-        ActionPointChangeDueToTurnEnd?.Invoke();
+        if(isEmemy && !TurnSystem.instance.IsPlayerTurn() ||
+        !isEmemy && TurnSystem.instance.IsPlayerTurn()) {
+            currentActionPoint = maximumActionPoint;
+        }
     }
 
     public void HandleActionPoint() {
@@ -152,5 +155,8 @@ public class Unit : MonoBehaviour
 
     public int GetMaxActionPoint() => maximumActionPoint;
     public MoveAction GetMoveAction() => moveAction;
+
+    public bool GetUnitType() => isEmemy;
+    public void SetUnitType(bool type) {isEmemy = type;}
 }
 
