@@ -13,11 +13,6 @@ public class UnitActionsystem : MonoBehaviour
 
     public event Action OnSelectedActionChange;
 
-    public event Action StartAction;
-    public event Action FinishAction;
-
-    public event Action UnitDeselect;
-
     [SerializeField] private LayerMask UnitySelectLayerMask;
     private Unit selectedUnit;
 
@@ -103,7 +98,6 @@ public class UnitActionsystem : MonoBehaviour
     }
 
     private void SetSelectedUnit(Unit unit) {
-        UnitDeselect?.Invoke();
         selectedUnit = unit;
         if (selectedUnit == null) {UnitActionSystemUI.Instance.DestroyAllButton();return;}
         SetSelectedAction(selectedUnit.GetMoveAction());
@@ -131,8 +125,7 @@ public class UnitActionsystem : MonoBehaviour
                 SendNotification("Not enough action point");
                 return;   
             }
-            StartAction?.Invoke();
-            SetBusy();
+            //SetBusy();
             selectedAction.TakeAction(convertedPosition, ClearBusy);
         }
     }
@@ -149,7 +142,6 @@ public class UnitActionsystem : MonoBehaviour
             SetSelectedAction(null); 
         }
         BusyUI.SetActive(false);
-        FinishAction?.Invoke();
     }
 
     public void SendNotification(string words) {

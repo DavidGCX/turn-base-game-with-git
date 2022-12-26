@@ -10,12 +10,6 @@ public class GridsystemVisual : MonoBehaviour
     // Start is called before the first frame update
     
     private void Awake() {
-        UnitActionsystem.Instance.SelectEvent += UnitActionsystem_OnSelectedEvent_UpdateActionPoint;
-        UnitActionsystem.Instance.OnSelectedActionChange += UnitActionsystem_OnSelectedEvent_UpdateActionPoint;
-        UnitActionsystem.Instance.StartAction += UnitActionsystem_OnStart_Action_UpdateActionPoint;
-        UnitActionsystem.Instance.UnitDeselect += UnitActionsystem_OnUnitDeSelectedEvent_UpdateActionPoint;
-        Unit.ActionPointChangeDueToTurnEnd += UnitActionsystem_NewTurn_UpdateActionPoint;
-       // Debug.Log("This one is called");
         GridSystemVisualGenerate();
     }
 
@@ -64,41 +58,6 @@ public class GridsystemVisual : MonoBehaviour
 
     private void Update() {
         UpdateGridVisual();
-    }
-    public void UnitActionsystem_OnSelectedEvent_UpdateActionPoint() {
-        Unit unit = UnitActionsystem.Instance.GetSelectedUnit();
-        BaseAction baseAction = UnitActionsystem.Instance.GetSelectedAction();
-        GridPosition gridPosition = unit.GetGridPosition();
-        if(baseAction == null) {
-            visualSingles[gridPosition.x, gridPosition.z].UpdateActionPoint(unit, 0);
-        } else {
-            visualSingles[gridPosition.x, gridPosition.z].UpdateActionPoint(unit, baseAction.GetActionSpent());
-        }
-        
-    }
-
-    public void UnitActionsystem_OnUnitDeSelectedEvent_UpdateActionPoint() {
-        Unit unit = UnitActionsystem.Instance.GetSelectedUnit();
-        if (unit == null) {return;}
-        GridPosition gridPosition = unit.GetGridPosition();
-        visualSingles[gridPosition.x, gridPosition.z].UpdateActionPoint(unit, 0);
-    }
-
-    public void UnitActionsystem_OnStart_Action_UpdateActionPoint() {
-        Unit unit = UnitActionsystem.Instance.GetSelectedUnit();
-        if (unit == null) {return;}
-        BaseAction baseAction = UnitActionsystem.Instance.GetSelectedAction();
-        GridPosition gridPosition = unit.GetGridPosition();
-        visualSingles[gridPosition.x, gridPosition.z].ClearPanel();
-    } 
-
-    public void UnitActionsystem_NewTurn_UpdateActionPoint() {
-        foreach (Unit unit in UnitActionsystem.Instance.GetUnitList())
-        {
-            if (unit == null) {return;}
-            GridPosition gridPosition = unit.GetGridPosition();
-            visualSingles[gridPosition.x, gridPosition.z].UpdateActionPoint(unit, 0);
-        }
     }
 
 }
