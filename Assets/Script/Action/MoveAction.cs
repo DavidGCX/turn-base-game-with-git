@@ -11,7 +11,6 @@ public class MoveAction : BaseAction
     private const float stopDistance = 0.3f;
     private const float turnspeed = 4f;
     private const float stopRotate = 1f;
-    [SerializeField] private int maxMoveDistance = 4;
     [SerializeField] private float moveSpeed;
 
     protected override void Awake()
@@ -70,12 +69,15 @@ public class MoveAction : BaseAction
     public override List<GridPosition> GetValidGridPositionList() {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         
-        for (int i = -maxMoveDistance; i <=maxMoveDistance; i++) {
-            for (int j = -maxMoveDistance; j <=+maxMoveDistance; j++)
+        for (int i = -effectiveDistance; i <=effectiveDistance; i++) {
+            for (int j = -effectiveDistance; j <=+effectiveDistance; j++)
             {
                 GridPosition offsetGridpos = new GridPosition(i,j);
                 GridPosition resultGridpos = unit.GetGridPosition() + offsetGridpos;
                 if (!LevelGrid.instance.IsAValidGridPosition(resultGridpos)) {
+                    continue;
+                }
+                 if(InvalidDistance(resultGridpos) && effectiveDistance != 1) {
                     continue;
                 }
                 if (LevelGrid.instance.HasAnyUnitOnGridPosition(resultGridpos)) {
@@ -93,7 +95,6 @@ public class MoveAction : BaseAction
     }
     
 
-    public override string GetActionName() => "Move";
 
     public override void TakeAction(GridPosition targetPosition, Action ActionComplete)
     {

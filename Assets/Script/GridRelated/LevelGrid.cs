@@ -63,5 +63,6 @@ public class LevelGrid : MonoBehaviour
 
     public int GetWidth() => gridSystem.Getwidth();
     public int GetHeight() => gridSystem.Getheight();
-
+    
+    public int GetCellSize() => cellSize;
 }

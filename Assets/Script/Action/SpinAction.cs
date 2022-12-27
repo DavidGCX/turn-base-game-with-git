@@ -28,7 +28,6 @@ public class SpinAction : BaseAction
             OnActionComplete();
         }
     }
-    public override string GetActionName() => "Spin"; 
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
