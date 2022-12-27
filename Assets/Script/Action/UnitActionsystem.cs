@@ -142,7 +142,7 @@ public class UnitActionsystem : MonoBehaviour
 
     private void ClearBusy() {
         isBusy = false;
-        SetSelectedAction(selectedUnit.GetMoveAction());
+        //SetSelectedAction(selectedUnit.GetMoveAction());
         if(!selectedUnit.CanSpendActionPoint(selectedAction)){
             SetSelectedAction(null); 
         }
