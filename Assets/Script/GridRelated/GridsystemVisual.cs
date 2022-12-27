@@ -53,6 +53,9 @@ public class GridsystemVisual : MonoBehaviour
         Unit unit = UnitActionsystem.Instance.GetSelectedUnit();
         if(unit == null) {return;}
         if(UnitActionsystem.Instance.GetSelectedAction() == null) {return;}
+        if(UnitActionsystem.Instance.GetSelectedAction().GetActionName() == "Shoot") {
+            
+        }
         ShowGridPositonList(UnitActionsystem.Instance.GetSelectedAction().GetValidGridPositionList());
     }
 

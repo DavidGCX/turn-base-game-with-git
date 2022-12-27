@@ -7,6 +7,8 @@ public class GridSystemVisualSingle : MonoBehaviour
 
     [SerializeField] private MeshRenderer Quad;
 
+    [SerializeField] private MeshRenderer EnemyQuad;
+
 
     // Start is called before the first frame update
 

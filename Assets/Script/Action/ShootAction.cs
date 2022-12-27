@@ -38,14 +38,11 @@ public class ShootAction : BaseAction
                     continue;
                 }
                 if(InvalidDistance(resultGridpos) && effectiveDistance != 1) {
+                    // Not in distance
                     continue;
                 }
-                validGridPositionList.Add(resultGridpos);
-                if (!LevelGrid.instance.HasAnyUnitOnGridPosition(resultGridpos)) {
-                    continue;
-                }
-                Unit targetUnit = LevelGrid.instance.GetUnitListAtGridPosition(resultGridpos)[0];
-                if(targetUnit.GetUnitType() == unit.GetUnitType()) {
+                if (LevelGrid.instance.HasAnyUnitOnGridPosition(resultGridpos)) {\
+                    //has unit
                     continue;
                 }
                 validGridPositionList.Add(resultGridpos);
@@ -56,6 +53,33 @@ public class ShootAction : BaseAction
             Debug.Log(item);
         } */
         
+        return validGridPositionList;
+    }
+
+    public List<GridPosition> GetTargetGridPositionList()
+    {
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
+        for (int i = -effectiveDistance; i <=effectiveDistance; i++) {
+            for (int j = -effectiveDistance; j <=+effectiveDistance; j++)
+            {
+                GridPosition offsetGridpos = new GridPosition(i,j);
+                GridPosition resultGridpos = unit.GetGridPosition() + offsetGridpos;
+                if (!LevelGrid.instance.IsAValidGridPosition(resultGridpos)) {
+                    continue;
+                }
+                if(InvalidDistance(resultGridpos) && effectiveDistance != 1) {
+                    continue;
+                }
+                if (!LevelGrid.instance.HasAnyUnitOnGridPosition(resultGridpos)) {
+                    continue;
+                }
+                Unit targetUnit = LevelGrid.instance.GetUnitListAtGridPosition(resultGridpos)[0];
+                if(targetUnit.GetUnitType() == unit.GetUnitType()) {
+                    continue;
+                }
+                validGridPositionList.Add(resultGridpos);
+            }
+        }
         return validGridPositionList;
     }
 }
