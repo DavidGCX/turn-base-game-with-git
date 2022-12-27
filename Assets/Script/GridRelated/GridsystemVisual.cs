@@ -47,6 +47,11 @@ public class GridsystemVisual : MonoBehaviour
             visualSingles[obj.x, obj.z].Show();
         }
     }
+     public void ShowAttackTargetGridPositionList(List<GridPosition> gridPositions) {
+        foreach(var obj in gridPositions) {
+            visualSingles[obj.x, obj.z].ShowtAttackTarget();
+        }
+    }
 
     private void UpdateGridVisual() {
         HideAllGridPosition();
@@ -54,9 +59,13 @@ public class GridsystemVisual : MonoBehaviour
         if(unit == null) {return;}
         if(UnitActionsystem.Instance.GetSelectedAction() == null) {return;}
         if(UnitActionsystem.Instance.GetSelectedAction().GetActionName() == "Shoot") {
-            
+            ShootAction shootAction = (ShootAction) UnitActionsystem.Instance.GetSelectedAction();
+            ShowGridPositonList(shootAction.GetTargetGridPositionList());
+            ShowAttackTargetGridPositionList(shootAction.GetValidGridPositionList());
+        } else {
+            ShowGridPositonList(UnitActionsystem.Instance.GetSelectedAction().GetValidGridPositionList());
         }
-        ShowGridPositonList(UnitActionsystem.Instance.GetSelectedAction().GetValidGridPositionList());
+        
     }
 
     private void Update() {

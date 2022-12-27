@@ -18,5 +18,10 @@ public class GridSystemVisualSingle : MonoBehaviour
 
     public void Hide() {
         Quad.enabled = false;
+        EnemyQuad.enabled = false;
     } 
+
+    public void ShowtAttackTarget() {
+        EnemyQuad.enabled = true;
+    }
 }

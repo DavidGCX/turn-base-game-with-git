@@ -25,7 +25,8 @@ public class ShootAction : BaseAction
         OnActionComplete();
     }
 
-    public override List<GridPosition> GetValidGridPositionList()
+    //Show grid in attack range but not the target grid;
+    public List<GridPosition> GetTargetGridPositionList()
     {
                 List<GridPosition> validGridPositionList = new List<GridPosition>();
         
@@ -41,7 +42,7 @@ public class ShootAction : BaseAction
                     // Not in distance
                     continue;
                 }
-                if (LevelGrid.instance.HasAnyUnitOnGridPosition(resultGridpos)) {\
+                if (LevelGrid.instance.HasAnyUnitOnGridPosition(resultGridpos)) {
                     //has unit
                     continue;
                 }
@@ -56,7 +57,8 @@ public class ShootAction : BaseAction
         return validGridPositionList;
     }
 
-    public List<GridPosition> GetTargetGridPositionList()
+    // show grid that can be used to attack;
+    public override List<GridPosition> GetValidGridPositionList()
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         for (int i = -effectiveDistance; i <=effectiveDistance; i++) {
