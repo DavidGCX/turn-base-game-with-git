@@ -9,20 +9,19 @@ public class ShootAction : BaseAction
         base.Awake();
         nameOfAction = "Shoot";
         actionPointRequirement = 1;
-        IsActive = false;
     }
     private void Update()
     {
         if(!IsActive) {
             return;
         }
+        EndAction();
     } 
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        this.OnActionComplete = onActionComplete;
-        IsActive = false;
-        OnActionComplete();
+      
+        StartAction(onActionComplete);
     }
 
     //Show grid in attack range but not the target grid;

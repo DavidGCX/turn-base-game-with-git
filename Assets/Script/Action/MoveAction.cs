@@ -21,10 +21,6 @@ public class MoveAction : BaseAction
         //Instance = this;
     }
     // Start is called before the first frame update
-    void Start()
-    {
-        IsActive = false;
-    }
 
     // Update is called once per frame
     void Update()
@@ -57,8 +53,7 @@ public class MoveAction : BaseAction
             transform.position = targetPosition;
             animator.SetFloat("IdleToRun", -1, 0.1f, Time.deltaTime);
             if (animator.GetFloat("IdleToRun") <=0 ) {
-                IsActive = false;
-                OnActionComplete();
+                EndAction();
             }
             
         }
@@ -98,8 +93,7 @@ public class MoveAction : BaseAction
 
     public override void TakeAction(GridPosition targetPosition, Action ActionComplete)
     {
-        IsActive = true;
-        this.OnActionComplete = ActionComplete;
+        StartAction(ActionComplete);
         this.targetPosition  = LevelGrid.instance.GetWorldPosition(targetPosition);
     }
 }

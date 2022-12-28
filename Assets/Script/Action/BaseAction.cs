@@ -19,11 +19,22 @@ public abstract class BaseAction : MonoBehaviour
     protected virtual void Awake()
     {
         unit = GetComponent<Unit>();
+        IsActive = false;
     }
 
     public string GetActionName() => nameOfAction;
 
     public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
+
+    public virtual void StartAction(Action onActionComplete) {
+        this.OnActionComplete = onActionComplete;
+        IsActive = true;
+    }
+
+    public virtual void EndAction() {
+        OnActionComplete();
+        IsActive = false;
+    }
     public abstract List<GridPosition> GetValidGridPositionList();
 
     public virtual bool IsValidMoveGridPosition(GridPosition gridPosition) => GetValidGridPositionList().Contains(gridPosition);
