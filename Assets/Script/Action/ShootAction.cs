@@ -20,7 +20,6 @@ public class ShootAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-      
         StartAction(onActionComplete);
     }
 
