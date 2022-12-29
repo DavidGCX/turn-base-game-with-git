@@ -35,7 +35,6 @@ public class ShootAction : BaseAction
             case State.Aiming:
                 if(!insideRoutine) {
                     StartCoroutine("Aiming");
-                    Debug.Log("After startCoroutine");
                 }
                 break;
             case State.Shooting:
@@ -72,7 +71,6 @@ public class ShootAction : BaseAction
         insideRoutine = true;
         Vector3 rotateDirection = (TargetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
         Tween a = transform.DOLookAt(TargetUnit.GetWorldPosition(), aimTime);
-        Debug.Log("Routine Get");
         yield return a.WaitForCompletion();
         stateComplete = true;
     }
