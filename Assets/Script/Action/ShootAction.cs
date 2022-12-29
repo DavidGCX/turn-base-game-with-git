@@ -71,9 +71,9 @@ public class ShootAction : BaseAction
     public IEnumerator Aiming() {
         insideRoutine = true;
         Vector3 rotateDirection = (TargetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
-        transform.DOLookAt(TargetUnit.GetWorldPosition(), aimTime);
+        Tween a = transform.DOLookAt(TargetUnit.GetWorldPosition(), aimTime);
         Debug.Log("Routine Get");
-        yield return new WaitForSeconds(aimTime);
+        yield return a.WaitForCompletion();
         stateComplete = true;
     }
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)

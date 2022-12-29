@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class MoveAction : BaseAction
 {
@@ -33,7 +34,7 @@ public class MoveAction : BaseAction
         //Debug.Log(moveDirection);
         if (!IsActive) {
             return;
-        }
+        };
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
         if(Vector3.Distance(transform.position, targetPosition) > stopDistance) {
             Quaternion quaDir = Quaternion.LookRotation(moveDirection,Vector3.up);
