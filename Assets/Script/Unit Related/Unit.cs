@@ -149,8 +149,6 @@ public class Unit : MonoBehaviour
 
      public Vector3 GetWorldPosition() => LevelGrid.instance.GetWorldPosition(lastGridPosition);
 
-    public Vector3 convertedPosition(Vector3 Mouse) => 
-    LevelGrid.instance.GetWorldPosition(LevelGrid.instance.GetGridPosition(Mouse));
 
     public BaseAction[] GetBaseActions() => baseActions;
     public int GetCurrentActionPoint() => currentActionPoint;

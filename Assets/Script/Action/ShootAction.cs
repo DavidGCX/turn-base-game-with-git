@@ -5,6 +5,16 @@ using UnityEngine;
 
 public class ShootAction : BaseAction
 {
+    private enum State {
+        Aiming,
+        Shooting,
+        Cooloff,
+    }
+
+    private State state;
+    private bool stateComplete;
+    private Unit TargetUnit;
+
      protected override void Awake() {
         base.Awake();
         nameOfAction = "Shoot";
@@ -15,12 +25,57 @@ public class ShootAction : BaseAction
         if(!IsActive) {
             return;
         }
-        EndAction();
+
+        switch (state)
+        {
+            case State.Aiming:
+            stateComplete = true;
+                break;
+            case State.Shooting:
+            stateComplete = true;
+                break;
+            case State.Cooloff:
+                break;
+        }
+        if (stateComplete) {
+            stateComplete = false;
+            NextState();
+        }
+        
     } 
 
+    private void NextState() {
+        switch (state)
+        {
+            case State.Aiming:
+                state = State.Shooting;
+                break;
+            case State.Shooting:
+                state = State.Cooloff;
+                break;
+            case State.Cooloff:
+                EndAction();
+                break;
+        }
+        Debug.Log(state);
+    }
+
+    public IEnumerator Aiming() {
+        yield return RotateToTarget();
+    }
+
+    public IEnumerator RotateToTarget(){
+        Vector3 rotateDirection = (TargetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
+        //float rotate speed = 
+        yield return null;
+    } 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
+        state = State.Aiming;
+        Debug.Log(state);
+        TargetUnit = LevelGrid.instance.GetUnitAtGridPosition(gridPosition);
         StartAction(onActionComplete);
+
     }
 
     //Show grid in attack range but not the target grid;
@@ -73,7 +128,7 @@ public class ShootAction : BaseAction
                 if (!LevelGrid.instance.HasAnyUnitOnGridPosition(resultGridpos)) {
                     continue;
                 }
-                Unit targetUnit = LevelGrid.instance.GetUnitListAtGridPosition(resultGridpos)[0];
+                Unit targetUnit = LevelGrid.instance.GetUnitAtGridPosition(resultGridpos);
                 if(targetUnit.GetUnitType() == unit.GetUnitType()) {
                     continue;
                 }

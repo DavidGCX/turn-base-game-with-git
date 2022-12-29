@@ -40,7 +40,7 @@ public class MoveAction : BaseAction
             //Debug.Log(quaDir); 
             float angle = Quaternion.Angle(transform.rotation, quaDir);
             if (angle > stopRotate) {
-                animator.SetFloat("IdleToRun", 0, 0.1f, Time.deltaTime);
+                animator.SetFloat("IdleToRun", -1, 0.1f, Time.deltaTime);
                 transform.position += moveDirection * Time.deltaTime * moveSpeed*0.5f;
                 transform.rotation = Quaternion.Lerp(transform.rotation,quaDir,Time.fixedDeltaTime*turnspeed);
             } else {
@@ -58,8 +58,8 @@ public class MoveAction : BaseAction
             
         }
         
-        
     }
+    
 
     public override List<GridPosition> GetValidGridPositionList() {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
