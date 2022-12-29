@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using System;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -57,6 +58,8 @@ public class CameraController : MonoBehaviour
 
     private void HandleMove()
     {
+        Vector3 mouseScreenPosition = TranslateMouseScreenPosition();
+
         Vector3 inputMoveDir = new Vector3(0, 0, 0);  
         if (Input.GetKey(KeyCode.W))
         {
@@ -74,11 +77,20 @@ public class CameraController : MonoBehaviour
         {
             inputMoveDir.x = 1;
         } 
-        
+
+        //Still Optional
+        //if (mouseScreenPosition.magnitude >= 0.8f && !EventSystem.current.IsPointerOverGameObject()) {
+            inputMoveDir.x = mouseScreenPosition.x;
+            inputMoveDir.z = mouseScreenPosition.z;
+        //}
+
         Vector3 moveVector = transform.forward * inputMoveDir.z + transform.right * inputMoveDir.x;
         targetPosition += moveVector * cameraMoveSpeed * Time.deltaTime;
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothfactor);
     }
+
+    private Vector3 TranslateMouseScreenPosition() => new Vector3((Input.mousePosition.x - Screen.width * 1/2)/(Screen.width * 1/2),0,
+        (Input.mousePosition.y - Screen.height * 1/2)/(Screen.height * 1/2));
 
     private void HandleZoom()
     {
