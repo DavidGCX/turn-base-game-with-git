@@ -12,7 +12,7 @@ public class UnitActionsystem : MonoBehaviour
     public event Action SelectEvent;
 
     public event Action OnSelectedActionChange;
-
+    
     [SerializeField] private LayerMask UnitySelectLayerMask;
     private Unit selectedUnit;
 
@@ -107,6 +107,7 @@ public class UnitActionsystem : MonoBehaviour
         if (selectedUnit == null) {UnitActionSystemUI.Instance.DestroyAllButton();return;}
         SetSelectedAction(selectedUnit.GetMoveAction());
         SelectEvent?.Invoke();
+        CameraController.Instance.FocusOnWorldPositon(unit.GetWorldPosition());
     }
 
 

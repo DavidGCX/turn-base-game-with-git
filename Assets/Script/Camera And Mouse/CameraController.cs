@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController Instance;
     [SerializeField] private float cameraMoveSpeed = 5f;
     [SerializeField] private float cameraRotateSpeed = 100f;
 
@@ -24,6 +25,10 @@ public class CameraController : MonoBehaviour
     private Vector3 targetPosition;
     private float smoothfactor = 5f;
 
+    void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         cinemachineTransposerCamera = cameraVirtual.GetCinemachineComponent<CinemachineTransposer>();
@@ -36,10 +41,11 @@ public class CameraController : MonoBehaviour
         HandleRotate();
         HandleMove();
         HandleZoom();
-        if(Input.GetKey(KeyCode.Space)) {
-            targetPosition = new Vector3(0, 0, 2);
-        }
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothfactor);     
+    }
+
+    public void FocusOnWorldPositon(Vector3 worldPosition) {
+        targetPosition = worldPosition + 2 * transform.forward;
     }
 
     private void HandleRotate()
@@ -79,14 +85,14 @@ public class CameraController : MonoBehaviour
         } 
 
         //Still Optional
-        //if (mouseScreenPosition.magnitude >= 0.8f && !EventSystem.current.IsPointerOverGameObject()) {
+        /*if (mouseScreenPosition.magnitude >= 0.8f && !EventSystem.current.IsPointerOverGameObject()) {
             inputMoveDir.x = mouseScreenPosition.x;
             inputMoveDir.z = mouseScreenPosition.z;
-        //}
+        }*/
 
         Vector3 moveVector = transform.forward * inputMoveDir.z + transform.right * inputMoveDir.x;
         targetPosition += moveVector * cameraMoveSpeed * Time.deltaTime;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothfactor);
+        //transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothfactor);
     }
 
     private Vector3 TranslateMouseScreenPosition() => new Vector3((Input.mousePosition.x - Screen.width * 1/2)/(Screen.width * 1/2),0,
