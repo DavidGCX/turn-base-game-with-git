@@ -19,6 +19,8 @@ public class ShootAction : BaseAction
     private bool insideRoutine;
     private Unit TargetUnit;
 
+    private bool canShoot;
+
      protected override void Awake() {
         base.Awake();
         nameOfAction = "Shoot";
@@ -38,13 +40,18 @@ public class ShootAction : BaseAction
                 }
                 break;
             case State.Shooting:
-            stateComplete = true;
+                if(!insideRoutine) {
+                    StartCoroutine("Shooting");
+                }
                 break;
             case State.Cooloff:
-            stateComplete = true;
+                if(!insideRoutine) {
+                    StartCoroutine("CoolOff");
+                }
                 break;
         }
         if (stateComplete) {
+            insideRoutine = false;
             stateComplete = false;
             NextState();
         }
@@ -74,6 +81,19 @@ public class ShootAction : BaseAction
         yield return a.WaitForCompletion();
         stateComplete = true;
     }
+
+    public IEnumerator Shooting() {
+        insideRoutine = true;
+        TargetUnit.Damage();
+        yield return new WaitForSeconds(.2f);
+        stateComplete = true;
+    }
+
+     public IEnumerator CoolOff() {
+        insideRoutine = true;
+        yield return new WaitForSeconds(.5f);
+        stateComplete = true;
+    }
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         state = State.Aiming;
@@ -81,8 +101,8 @@ public class ShootAction : BaseAction
         insideRoutine = false;
         stateComplete = false;
         TargetUnit = LevelGrid.instance.GetUnitAtGridPosition(gridPosition);
+        
         StartAction(onActionComplete);
-
     }
 
     //Show grid in attack range but not the target grid;
@@ -144,4 +164,19 @@ public class ShootAction : BaseAction
         }
         return validGridPositionList;
     }
+
+    public override string GenerateUnitStateErrorMessage()
+    {
+        return "Still can not shoot, Check the status bar";
+    }
+
+    public override bool HandleUnitState(){
+        if(unit.CheckStatus(Unit.UnitStatus.CanNotShoot)) {
+            unit.RemoveStatus(Unit.UnitStatus.CanNotShoot);
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
 }

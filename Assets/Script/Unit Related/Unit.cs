@@ -22,15 +22,21 @@ public class Unit : MonoBehaviour
 
     [SerializeField] private TMP_Text ActionPointCount;
 
-    [SerializeField] private bool isEmemy = false;
+    [SerializeField] private bool isEnemy = false;
 
     private BaseAction[] baseActions;
     private GridPosition lastGridPosition;
 
+    [SerializeField]private List<UnitStatus> statusList;
+
+    public enum UnitStatus {
+        CanNotShoot,
+    }
 
    
     private void Awake()
     {
+        statusList = new List<UnitStatus>();
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
         baseActions = GetComponents<BaseAction>();
@@ -89,8 +95,8 @@ public class Unit : MonoBehaviour
     }
 
     public void NewTurn() {
-        if(isEmemy && !TurnSystem.instance.IsPlayerTurn() ||
-        !isEmemy && TurnSystem.instance.IsPlayerTurn()) {
+        if(isEnemy && !TurnSystem.instance.IsPlayerTurn() ||
+        !isEnemy && TurnSystem.instance.IsPlayerTurn()) {
             currentActionPoint = maximumActionPoint;
         }
     }
@@ -145,6 +151,24 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void Damage() {
+        Debug.Log("Damage");
+    }
+
+    public void ClearStatus() {
+        statusList.Clear();
+    }
+
+    public void AddStatus(UnitStatus unitStatus) {
+        statusList?.Add(unitStatus);
+    }
+
+    public void RemoveStatus(UnitStatus unitStatus) {
+        statusList?.Remove(unitStatus);
+    }
+
+    public bool CheckStatus(UnitStatus unitStatus) => statusList.Contains(unitStatus);
+
     public GridPosition GetGridPosition() => lastGridPosition;
 
      public Vector3 GetWorldPosition() => LevelGrid.instance.GetWorldPosition(lastGridPosition);
@@ -156,7 +180,7 @@ public class Unit : MonoBehaviour
     public int GetMaxActionPoint() => maximumActionPoint;
     public MoveAction GetMoveAction() => moveAction;
 
-    public bool GetUnitType() => isEmemy;
-    public void SetUnitType(bool type) {isEmemy = type;}
+    public bool GetUnitType() => isEnemy;
+    public void SetUnitType(bool type) {isEnemy = type;}
 }
 

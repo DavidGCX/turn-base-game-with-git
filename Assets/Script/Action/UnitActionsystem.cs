@@ -130,6 +130,10 @@ public class UnitActionsystem : MonoBehaviour
                 SendNotification("Not enough action point");
                 return;   
             }
+            if(!selectedAction.HandleUnitState()) {
+                SendNotification(selectedAction.GenerateUnitStateErrorMessage());
+                return;
+            }
             SetBusy();
             selectedAction.TakeAction(convertedPosition, ClearBusy);
         }

@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float cameraMoveSpeed = 5f;
     [SerializeField] private float cameraRotateSpeed = 100f;
 
-    [SerializeField] private CinemachineVirtualCamera camera;
+    [SerializeField] private CinemachineVirtualCamera cameraVirtual;
     private CinemachineTransposer cinemachineTransposerCamera;
     [SerializeField] private float zoomAmount = 1f;
     
@@ -25,15 +25,20 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        cinemachineTransposerCamera = camera.GetCinemachineComponent<CinemachineTransposer>();
+        cinemachineTransposerCamera = cameraVirtual.GetCinemachineComponent<CinemachineTransposer>();
         targetOffset = cinemachineTransposerCamera.m_FollowOffset;
         targetPosition = transform.position;
     }
     void Update()
     {
+
         HandleRotate();
         HandleMove();
         HandleZoom();
+        if(Input.GetKey(KeyCode.Space)) {
+            targetPosition = new Vector3(0, 0, 2);
+        }
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothfactor);     
     }
 
     private void HandleRotate()
