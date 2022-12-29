@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ShootAction : BaseAction
 {
@@ -10,9 +11,12 @@ public class ShootAction : BaseAction
         Shooting,
         Cooloff,
     }
+    [SerializeField] private float aimTime = 0.5f;
 
     private State state;
     private bool stateComplete;
+
+    private bool insideRoutine;
     private Unit TargetUnit;
 
      protected override void Awake() {
@@ -29,12 +33,16 @@ public class ShootAction : BaseAction
         switch (state)
         {
             case State.Aiming:
-            stateComplete = true;
+                if(!insideRoutine) {
+                    StartCoroutine("Aiming");
+                    Debug.Log("After startCoroutine");
+                }
                 break;
             case State.Shooting:
             stateComplete = true;
                 break;
             case State.Cooloff:
+            stateComplete = true;
                 break;
         }
         if (stateComplete) {
@@ -61,18 +69,19 @@ public class ShootAction : BaseAction
     }
 
     public IEnumerator Aiming() {
-        yield return RotateToTarget();
-    }
-
-    public IEnumerator RotateToTarget(){
+        insideRoutine = true;
         Vector3 rotateDirection = (TargetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
-        //float rotate speed = 
-        yield return null;
-    } 
+        transform.DOLookAt(TargetUnit.GetWorldPosition(), aimTime);
+        Debug.Log("Routine Get");
+        yield return new WaitForSeconds(aimTime);
+        stateComplete = true;
+    }
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         state = State.Aiming;
         Debug.Log(state);
+        insideRoutine = false;
+        stateComplete = false;
         TargetUnit = LevelGrid.instance.GetUnitAtGridPosition(gridPosition);
         StartAction(onActionComplete);
 
