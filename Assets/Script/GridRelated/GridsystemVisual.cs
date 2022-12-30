@@ -59,7 +59,7 @@ public class GridsystemVisual : MonoBehaviour
         if(unit == null) {return;}
         if(UnitActionsystem.Instance.GetSelectedAction() == null) {return;}
         if(UnitActionsystem.Instance.GetSelectedAction().GetActionName() == "Shoot") {
-            ShootAction shootAction = (ShootAction) UnitActionsystem.Instance.GetSelectedAction();
+            AttackAction shootAction = (AttackAction) UnitActionsystem.Instance.GetSelectedAction();
             ShowGridPositonList(shootAction.GetTargetGridPositionList());
             ShowAttackTargetGridPositionList(shootAction.GetValidGridPositionList());
         } else {

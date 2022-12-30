@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class ShootAction : BaseAction
+public class AttackAction : BaseAction
 {
     private enum State {
         Aiming,
@@ -23,9 +23,9 @@ public class ShootAction : BaseAction
     [SerializeField] private float DamageRandomRate = 20f;
     private bool canShoot;
 
-     protected override void Awake() {
+    protected override void Awake() {
         base.Awake();
-        nameOfAction = "Shoot";
+        nameOfAction = "Attack";
         actionPointRequirement = 1;
     }
     private void Update()
@@ -84,7 +84,7 @@ public class ShootAction : BaseAction
         stateComplete = true;
     }
 
-    public IEnumerator Attacking() {
+    protected virtual IEnumerator Attacking() {
         insideRoutine = true;
         TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
         yield return new WaitForSeconds(.2f);
@@ -173,8 +173,8 @@ public class ShootAction : BaseAction
     }
 
     public override bool HandleUnitState(){
-        if(unit.CheckStatus(Unit.CurrentStatus.CanNotShoot)) {
-            unit.RemoveStatus(Unit.CurrentStatus.CanNotShoot);
+        if(unit.CheckStatus( UnitStatsAndStatus.CurrentStatus.CanNotShoot)) {
+            unit.RemoveStatus( UnitStatsAndStatus.CurrentStatus.CanNotShoot);
             return false;
         } else {
             return true;

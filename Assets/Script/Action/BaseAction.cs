@@ -47,10 +47,10 @@ public abstract class BaseAction : MonoBehaviour
         return Mathf.RoundToInt(testDistance-CIRCLE_ADJUST_FACTOR) > effectiveDistance * LevelGrid.instance.GetCellSize();
     }
 
-    private void OnDrawGizmosSelected() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + new Vector3(0, 0.1f, 0),effectiveDistance * LevelGrid.instance.GetCellSize());
-    }
+    //private void OnDrawGizmosSelected() {
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position + new Vector3(0, 0.1f, 0),effectiveDistance * LevelGrid.instance.GetCellSize());
+   // }
 
     public virtual bool HandleUnitState() => true;
     public virtual string GenerateUnitStateErrorMessage() => "";
