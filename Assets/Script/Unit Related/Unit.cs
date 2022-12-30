@@ -10,9 +10,9 @@ public class Unit : MonoBehaviour
 {
     private SpinAction spinAction;
     private MoveAction moveAction;
-    private const  int MINIMUMATTACK = 10;
-    private const  int MINIMUMDENFENSE = 10;
-    [SerializeField]private int currentActionPoint = 5;
+    private const int MINIMUMATTACK = 10;
+    private const int MINIMUMDENFENSE = 10;
+    [SerializeField] private int currentActionPoint = 5;
 
     [SerializeField] private int maximumActionPoint = 5;
     [SerializeField] private int attack = 25;
