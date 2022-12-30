@@ -6,6 +6,40 @@ using DG.Tweening;
 
 public class AttackAction : BaseAction
 {
+
+    /*Do not use this script directly, use this as the base class for attacking,
+    You should override or set the following to make an actual attack:
+    (以下请在面板（inspector）修改)
+
+    nameOfAction (the name of that attack) 
+
+    effectiveDistance  (will be like a circle, check it in play mode or use Gizmoz to draw a cirle to view the idea)
+                        (The actual implementation is in the BaseAction Class, check it for detail or change it)
+
+    actionPointRequirement (Action point required)
+
+    BaseWeaponDamage (Base weapon damage)
+
+    ApWeaponDamage (Armor penetration damage)
+
+    DamageRandomRate (伤害随机上下浮动 DamageRandomRate%) (只有这个是浮点数float)
+
+    (以下请写在脚本里修改)
+    
+    IEnumerator Attacking() 
+        Include all attack animation, attack effect here. You need to call targetunit.damage inside.
+        所有攻击的东西都放在这里处理
+    
+    How to calculate the damage （伤害是怎么计算的)    
+    Total Damage = (ApWeaponDamage + BaseWeaponDamage * (1 - {The Armor of Unit} / 200)) * (1 + Random(-DamageRandomRate, DamageRandomRate)) 
+
+
+    Animator has been included in the BaseAction class, you should use the one attached to the unit and add animation there.
+     
+    ***********************************************************************************************************************************
+        *****for all stats change it in the inspector (去面板改变单位属性, 包括单位攻击防御武器威力等，不要在脚本中直接修改，会难以debug)*****
+    ***********************************************************************************************************************************
+    */
     private enum State {
         Aiming,
         Attacking,
@@ -25,7 +59,6 @@ public class AttackAction : BaseAction
 
     protected override void Awake() {
         base.Awake();
-        nameOfAction = "Attack";
     }
     private void Update()
     {

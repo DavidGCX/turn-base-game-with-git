@@ -18,7 +18,6 @@ public class MoveAction : BaseAction
     {
         base.Awake();
         targetPosition = transform.position;
-        nameOfAction = "Move";
         //Instance = this;
     }
     // Start is called before the first frame update
@@ -35,6 +34,8 @@ public class MoveAction : BaseAction
         if (!IsActive) {
             return;
         };
+
+        //以下为转向移动目标和实际移动，使用unity自带功能，可以用DOTween插件加上协程大幅减少（见AttackAciton），此处仅作为展示使用
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
         if(Vector3.Distance(transform.position, targetPosition) > stopDistance) {
             Quaternion quaDir = Quaternion.LookRotation(moveDirection,Vector3.up);
@@ -82,11 +83,6 @@ public class MoveAction : BaseAction
                 validGridPositionList.Add(resultGridpos);
             }
         }
-        /* foreach (var item in validGridPositionList)
-        {
-            Debug.Log(item);
-        } */
-        
         return validGridPositionList;
     }
     

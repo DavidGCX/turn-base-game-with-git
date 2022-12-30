@@ -11,7 +11,7 @@ public abstract class BaseAction : MonoBehaviour
     protected Unit unit;
     protected bool IsActive;
     private float CIRCLE_ADJUST_FACTOR = 0.3f;
-    protected string nameOfAction;
+     [SerializeField] protected string nameOfAction;
     [SerializeField] protected Animator animator; 
 
     protected Action OnActionComplete;

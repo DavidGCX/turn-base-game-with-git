@@ -8,7 +8,6 @@ public class SpinAction : BaseAction
 
     protected override void Awake() {
         base.Awake();
-        nameOfAction = "Spin";
     }
     private float totalSpinAmount;
     private void Update()
