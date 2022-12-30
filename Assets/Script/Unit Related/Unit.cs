@@ -168,7 +168,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void Damage(int baseDamage, int apDamage, int totalAttack) {
+    public void Damage(int baseDamage, int apDamage, int totalAttack, float damageRandomRate) {
         int currentAttack;
         int currentDefense;
         currentDefense = defense < 10 ? MINIMUMDENFENSE : defense;
@@ -180,7 +180,8 @@ public class Unit : MonoBehaviour
         }
 
         Debug.Log($"Attack Hit the Base Damage is {baseDamage}, the AP damage is {apDamage}");
-        int totalDamage = apDamage + CalculateBaseDamageAfterArmor(baseDamage);
+        float randomDamageRate = UnityEngine.Random.Range(- damageRandomRate,  damageRandomRate)/ 100f;
+        int totalDamage =  Mathf.RoundToInt((apDamage + CalculateBaseDamageAfterArmor(baseDamage)) * (1 + randomDamageRate));
         Debug.Log($"Total Damage is {totalDamage}");
         if(health - totalDamage < 0){isDead = true;}
         health = health - totalDamage < 0? 0 : health - totalDamage;
@@ -189,6 +190,7 @@ public class Unit : MonoBehaviour
 
     private int CalculateBaseDamageAfterArmor(int baseDamage) {
         float reduceRate = ((float)armor) / 200f;
+        
         float resultDamage = ((float)baseDamage) * (1 - reduceRate);
         return Mathf.RoundToInt(resultDamage);
     }

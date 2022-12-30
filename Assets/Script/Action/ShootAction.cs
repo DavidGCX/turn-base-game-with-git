@@ -8,7 +8,7 @@ public class ShootAction : BaseAction
 {
     private enum State {
         Aiming,
-        Shooting,
+        Attacking,
         Cooloff,
     }
     [SerializeField] private float aimTime = 0.5f;
@@ -20,6 +20,7 @@ public class ShootAction : BaseAction
     private Unit TargetUnit;
     [SerializeField] private int BaseWeaponDamage = 20;
     [SerializeField] private int ApWeaponDamage = 10;
+    [SerializeField] private float DamageRandomRate = 20f;
     private bool canShoot;
 
      protected override void Awake() {
@@ -40,9 +41,9 @@ public class ShootAction : BaseAction
                     StartCoroutine("Aiming");
                 }
                 break;
-            case State.Shooting:
+            case State.Attacking:
                 if(!insideRoutine) {
-                    StartCoroutine("Shooting");
+                    StartCoroutine("Attacking");
                 }
                 break;
             case State.Cooloff:
@@ -63,9 +64,9 @@ public class ShootAction : BaseAction
         switch (state)
         {
             case State.Aiming:
-                state = State.Shooting;
+                state = State.Attacking;
                 break;
-            case State.Shooting:
+            case State.Attacking:
                 state = State.Cooloff;
                 break;
             case State.Cooloff:
@@ -83,9 +84,9 @@ public class ShootAction : BaseAction
         stateComplete = true;
     }
 
-    public IEnumerator Shooting() {
+    public IEnumerator Attacking() {
         insideRoutine = true;
-        TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal());
+        TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
         yield return new WaitForSeconds(.2f);
         stateComplete = true;
     }
@@ -179,5 +180,5 @@ public class ShootAction : BaseAction
             return true;
         }
     }
-    
+
 }
