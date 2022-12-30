@@ -71,7 +71,7 @@ public class ShootAction : BaseAction
                 EndAction();
                 break;
         }
-        Debug.Log(state);
+        //Debug.Log(state);
     }
 
     public IEnumerator Aiming() {
