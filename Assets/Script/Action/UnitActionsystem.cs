@@ -89,6 +89,7 @@ public class UnitActionsystem : MonoBehaviour
             if(Physics.Raycast(ray, out RaycastHit rayCastHit, float.MaxValue, UnitySelectLayerMask)) {
                 if(rayCastHit.transform.TryGetComponent<Unit>(out Unit unit)) {
                     if(unit == selectedUnit) {
+                        CameraController.Instance.FocusOnWorldPositon(selectedUnit.GetWorldPosition());
                         return false;
                     }
                     if(unit.GetUnitType()) {
@@ -107,7 +108,7 @@ public class UnitActionsystem : MonoBehaviour
         if (selectedUnit == null) {UnitActionSystemUI.Instance.DestroyAllButton();return;}
         SetSelectedAction(selectedUnit.GetMoveAction());
         SelectEvent?.Invoke();
-        CameraController.Instance.FocusOnWorldPositon(unit.GetWorldPosition());
+        CameraController.Instance.FocusOnWorldPositon(selectedUnit.GetWorldPosition());
     }
 
 

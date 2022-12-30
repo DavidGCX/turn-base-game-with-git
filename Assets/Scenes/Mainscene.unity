@@ -7476,6 +7476,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9011135509910415133, guid: 63d599ecd2bac45e89b74f23275572f1,
         type: 3}
+      propertyPath: armor
+      value: 190
+      objectReference: {fileID: 0}
+    - target: {fileID: 9011135509910415133, guid: 63d599ecd2bac45e89b74f23275572f1,
+        type: 3}
+      propertyPath: defense
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9011135509910415133, guid: 63d599ecd2bac45e89b74f23275572f1,
+        type: 3}
       propertyPath: isEnemy
       value: 1
       objectReference: {fileID: 0}

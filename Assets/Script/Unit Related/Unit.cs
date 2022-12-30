@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.ComponentModel;
 using System;
 using System.Collections;
@@ -9,10 +10,16 @@ public class Unit : MonoBehaviour
 {
     private SpinAction spinAction;
     private MoveAction moveAction;
-
+    private const  int MINIMUMATTACK = 10;
+    private const  int MINIMUMDENFENSE = 10;
     [SerializeField]private int currentActionPoint = 5;
 
     [SerializeField] private int maximumActionPoint = 5;
+    [SerializeField] private int attack = 25;
+    [SerializeField] private int defense = 0;
+    [SerializeField] private int baseAttack = 40;
+    [SerializeField] private int armor = 30;
+    [SerializeField] private int health = 100;
     [SerializeField] private Transform ActionPointContainer;
 
     [SerializeField] private Transform ActionPointReadyPrefab;
@@ -24,22 +31,32 @@ public class Unit : MonoBehaviour
 
     [SerializeField] private bool isEnemy = false;
 
+    private bool isDead = false;
+
     private BaseAction[] baseActions;
     private GridPosition lastGridPosition;
 
-    [SerializeField]private List<UnitStatus> statusList;
+    [SerializeField]private List<CurrentStatus> statusList;
 
-    public enum UnitStatus {
-        CanNotShoot,
+    public enum CurrentStatus {
+      CanNotShoot,
+    }
+
+    public enum Stats {
+        attack,
+        defense,
+        armor,
+        health,
     }
 
    
     private void Awake()
     {
-        statusList = new List<UnitStatus>();
+        statusList = new List<CurrentStatus>();
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
         baseActions = GetComponents<BaseAction>();
+        isDead = false;
     }
     
     
@@ -151,23 +168,78 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void Damage() {
-        Debug.Log("Damage");
+    public void Damage(int baseDamage, int apDamage, int totalAttack) {
+        int currentAttack;
+        int currentDefense;
+        currentDefense = defense < 10 ? MINIMUMDENFENSE : defense;
+        currentAttack = totalAttack - currentDefense < MINIMUMATTACK? MINIMUMATTACK:totalAttack - currentDefense;
+        int randomNumber = UnityEngine.Random.Range(1, 101);
+        if (currentAttack < randomNumber) {
+            Debug.Log($"The attack was defensed \n with attack: {currentAttack} randomNumber: {randomNumber}");
+            return;
+        }
+
+        Debug.Log($"Attack Hit the Base Damage is {baseDamage}, the AP damage is {apDamage}");
+        int totalDamage = apDamage + CalculateBaseDamageAfterArmor(baseDamage);
+        Debug.Log($"Total Damage is {totalDamage}");
+        if(health - totalDamage < 0){isDead = true;}
+        health = health - totalDamage < 0? 0 : health - totalDamage;
+        Debug.Log($"Current Health is {health}");
+    }
+
+    private int CalculateBaseDamageAfterArmor(int baseDamage) {
+        float reduceRate = ((float)armor) / 200f;
+        float resultDamage = ((float)baseDamage) * (1 - reduceRate);
+        return Mathf.RoundToInt(resultDamage);
     }
 
     public void ClearStatus() {
         statusList.Clear();
     }
 
-    public void AddStatus(UnitStatus unitStatus) {
+    public void AddStatus(CurrentStatus unitStatus) {
         statusList?.Add(unitStatus);
     }
 
-    public void RemoveStatus(UnitStatus unitStatus) {
+    public void RemoveStatus(CurrentStatus unitStatus) {
         statusList?.Remove(unitStatus);
     }
 
-    public bool CheckStatus(UnitStatus unitStatus) => statusList.Contains(unitStatus);
+    public void SetStats(int amount, Stats stat){
+        switch (stat)
+        {
+            case Stats.armor:
+                armor = amount;
+                break;
+            case Stats.attack:
+                attack = amount;
+                break;
+            case Stats.defense:
+                defense = amount;
+                break;
+            case Stats.health:
+                health = amount;
+                break;
+        }
+    }
+
+    public int GetStats(Stats stat){
+        switch (stat)
+        {
+            case Stats.armor:
+                return armor;
+            case Stats.attack:
+                return attack;
+            case Stats.defense:
+                return defense;
+            case Stats.health:
+                return health;
+            default:
+                Debug.Log("Get Wrong Stats");
+                return -1;
+        }
+    }
+    public bool CheckStatus(CurrentStatus unitStatus) => statusList.Contains(unitStatus);
 
     public GridPosition GetGridPosition() => lastGridPosition;
 
@@ -182,5 +254,8 @@ public class Unit : MonoBehaviour
 
     public bool GetUnitType() => isEnemy;
     public void SetUnitType(bool type) {isEnemy = type;}
+
+    public int GetUnitAttackTotal() => baseAttack + attack;
+    public int GetUnitAttackBase() => baseAttack;
 }
 

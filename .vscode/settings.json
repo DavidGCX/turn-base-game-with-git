@@ -53,12 +53,16 @@
         "Temp/":true
     },
     "cSpell.words": [
+        "Actionsystem",
         "Behaviour",
         "Cinemachine",
         "Cooloff",
         "Gridpos",
         "Lerp",
         "Mathf",
+        "MINIMUMATTACK",
+        "Positon",
+        "Raycast",
         "smoothfactor",
         "turnspeed",
         "Tweening"

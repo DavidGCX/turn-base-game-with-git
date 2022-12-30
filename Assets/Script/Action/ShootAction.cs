@@ -18,7 +18,8 @@ public class ShootAction : BaseAction
 
     private bool insideRoutine;
     private Unit TargetUnit;
-
+    [SerializeField] private int BaseWeaponDamage = 20;
+    [SerializeField] private int ApWeaponDamage = 10;
     private bool canShoot;
 
      protected override void Awake() {
@@ -84,7 +85,7 @@ public class ShootAction : BaseAction
 
     public IEnumerator Shooting() {
         insideRoutine = true;
-        TargetUnit.Damage();
+        TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal());
         yield return new WaitForSeconds(.2f);
         stateComplete = true;
     }
@@ -171,8 +172,8 @@ public class ShootAction : BaseAction
     }
 
     public override bool HandleUnitState(){
-        if(unit.CheckStatus(Unit.UnitStatus.CanNotShoot)) {
-            unit.RemoveStatus(Unit.UnitStatus.CanNotShoot);
+        if(unit.CheckStatus(Unit.CurrentStatus.CanNotShoot)) {
+            unit.RemoveStatus(Unit.CurrentStatus.CanNotShoot);
             return false;
         } else {
             return true;
