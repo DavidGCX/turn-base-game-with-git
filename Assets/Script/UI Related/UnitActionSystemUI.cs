@@ -21,13 +21,13 @@ public class UnitActionSystemUI : MonoBehaviour
     void Start()
     {
         DestroyAllButton();
-        UnitActionsystem.Instance.SelectEvent += UnitActionSystem_OnSelectionChange;
-        UnitActionsystem.Instance.OnSelectedActionChange += UpdateSelectedVisual;
+        UnitActionSystem.Instance.SelectEvent += UnitActionSystem_OnSelectionChange;
+        UnitActionSystem.Instance.OnSelectedActionChange += UpdateSelectedVisual;
     }
 
     private void CreateUnitActionButton() {
         DestroyAllButton();
-        Unit SelectedUnit = UnitActionsystem.Instance.GetSelectedUnit();
+        Unit SelectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
         if (SelectedUnit == null) {return;}
         foreach (var baseAction in SelectedUnit.GetBaseActions()) {
             Transform actionButtonTransform = Instantiate(ButtonUI, ButtonUIContainer);

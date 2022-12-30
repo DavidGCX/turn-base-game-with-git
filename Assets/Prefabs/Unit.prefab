@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 548935090}
   - component: {fileID: 1697659289}
   - component: {fileID: 3251260692521854547}
+  - component: {fileID: 9105169950951395963}
+  - component: {fileID: 622477638968772617}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -52,17 +54,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270201db4b35f4b839d1c829795db727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentActionPoint: 7
-  maximumActionPoint: 7
-  ActionPointContainer: {fileID: 4030826930519921789}
-  ActionPointReadyPrefab: {fileID: 7578361611850125100, guid: bf35c90878fd24709a315a4e2aa5322e,
-    type: 3}
-  ActionPointSelectedPrefab: {fileID: 3278884546690021128, guid: ea9a9065a377e4d8889b54bd23f83736,
-    type: 3}
-  ActionPointUsedPrefab: {fileID: 1591246942336640019, guid: 50eedb3a0d7484459ad6e170e763aee5,
-    type: 3}
-  ActionPointCount: {fileID: 8845763203093050800}
-  isEnemy: 0
 --- !u!65 &1595463447070556529
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -150,6 +141,50 @@ MonoBehaviour:
   effectiveDistance: 4
   animator: {fileID: 0}
   aimTime: 0.5
+  BaseWeaponDamage: 20
+  ApWeaponDamage: 10
+  DamageRandomRate: 20
+--- !u!114 &9105169950951395963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209592109790939599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e40af168e99c1438271f2a080c8dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActionPointContainer: {fileID: 4030826930519921789}
+  ActionPointReadyPrefab: {fileID: 7578361611850125100, guid: bf35c90878fd24709a315a4e2aa5322e,
+    type: 3}
+  ActionPointSelectedPrefab: {fileID: 3278884546690021128, guid: ea9a9065a377e4d8889b54bd23f83736,
+    type: 3}
+  ActionPointUsedPrefab: {fileID: 1591246942336640019, guid: 50eedb3a0d7484459ad6e170e763aee5,
+    type: 3}
+  ActionPointCount: {fileID: 8845763203093050800}
+--- !u!114 &622477638968772617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209592109790939599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a271df6d88b2f24c8480223ab5d515f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attack: 25
+  defense: 0
+  baseAttack: 40
+  armor: 30
+  health: 100
+  currentActionPoint: 5
+  maximumActionPoint: 5
+  isEnemy: 0
+  statusList: 
 --- !u!1 &1209972007506803119
 GameObject:
   m_ObjectHideFlags: 0
@@ -2177,7 +2212,7 @@ Animator:
   m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
     are already bound by a Humanoid avatar. These transforms can only be changed
     by Humanoid clips.\n\tTransform 'Hand_L'\n\tFrom animation clip 'rifile run can
-    read'"
+    read'\n\tFrom animation clip 'reloading'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -2192,13 +2227,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.93
-  m_Radius: 0.24
+  m_Height: 1.8
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.03
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1.05, z: 0}
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!1 &1210897813233695321
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,6 +24,8 @@ public abstract class BaseAction : MonoBehaviour
 
     public string GetActionName() => nameOfAction;
 
+    public virtual bool IsAttackAction() => false;
+
     public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
 
     public virtual void StartAction(Action onActionComplete) {

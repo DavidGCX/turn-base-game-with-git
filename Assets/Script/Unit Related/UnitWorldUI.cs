@@ -22,11 +22,11 @@ public class UnitWorldUI : MonoBehaviour
     // Start is called before the first frame update
 
     public void HandleActionPoint() {
-        if (UnitActionsystem.Instance.GetSelectedUnit() != unit || 
-        UnitActionsystem.Instance.GetSelectedAction() == null){
+        if (UnitActionSystem.Instance.GetSelectedUnit() != unit || 
+        UnitActionSystem.Instance.GetSelectedAction() == null){
             UpdateActionPoint(0);
         } else{
-            UpdateActionPoint(UnitActionsystem.Instance.GetSelectedAction().GetActionSpent());
+            UpdateActionPoint(UnitActionSystem.Instance.GetSelectedAction().GetActionSpent());
         }
         int currentActionPoint = unit.GetCurrentActionPoint();
         int maximumActionPoint =unit.GetMaxActionPoint();

@@ -73,7 +73,7 @@ public class Unit : MonoBehaviour
     }
 
 
-
+    // Status related
     public void ClearStatus() {
         unitStatsAndStatus.ClearStatus();
     }
@@ -94,20 +94,31 @@ public class Unit : MonoBehaviour
   
     public bool CheckStatus(UnitStatsAndStatus.CurrentStatus unitStatus) => unitStatsAndStatus.CheckStatus(unitStatus);
 
+
+    // return position in grid base or world base
     public GridPosition GetGridPosition() => lastGridPosition;
 
-     public Vector3 GetWorldPosition() => LevelGrid.instance.GetWorldPosition(lastGridPosition);
+    public Vector3 GetWorldPosition() => LevelGrid.instance.GetWorldPosition(lastGridPosition);
 
 
+    //Use to generate the action button;
     public BaseAction[] GetBaseActions() => baseActions;
+
+
     public int GetCurrentActionPoint() => unitStatsAndStatus.GetCurrentActionPoint();
 
     public int GetMaxActionPoint() => unitStatsAndStatus.GetMaxActionPoint();
+
+    //use to set default to MoveAction, can be replaced with others.
     public MoveAction GetMoveAction() => moveAction;
 
+
+    // Use to check the unit type, if it is enemy or not
     public bool GetUnitType() => unitStatsAndStatus.GetUnitType();
     public void SetUnitType(bool type) {unitStatsAndStatus.SetUnitType(type);}
 
+
+    // Attack related, check Warharmmer for how this system works
     public int GetUnitAttackTotal() => unitStatsAndStatus.GetUnitAttackTotal();
     public int GetUnitAttackBase() => unitStatsAndStatus.GetUnitAttackBase();
 }

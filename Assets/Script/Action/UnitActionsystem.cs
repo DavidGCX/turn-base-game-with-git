@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class UnitActionsystem : MonoBehaviour
+public class UnitActionSystem : MonoBehaviour
 {
-    public static UnitActionsystem Instance {get; private set; }
+    public static UnitActionSystem Instance {get; private set; }
     public event Action SelectEvent;
 
     public event Action OnSelectedActionChange;
@@ -20,17 +20,24 @@ public class UnitActionsystem : MonoBehaviour
 
     private bool isBusy = false;
 
-    private List<Unit> totalPlayerUnits;
 
+
+    // for traking the units, could be use in the future
+    private List<Unit> totalPlayerUnits;
     private List<Unit> totalEnemyUnits;
+
+
     [SerializeField] private GameObject BusyUI;
     [SerializeField] private Transform Notification;
 
     [SerializeField] private Transform unitPrefab;
 
+
+    // current unit in the plane, for testing purpose, can be added or removed;
     [SerializeField] Unit testUnitOne;
     [SerializeField] Unit testUnitTwo;
 
+    // for storing the unit, no actual use
     [SerializeField] Transform unitContainer;
 
     private void Awake() {
@@ -66,6 +73,8 @@ public class UnitActionsystem : MonoBehaviour
         }
     }
 
+
+    // Used to generate unit
     private void TryHandleUnitSpawn() {
         if (Input.GetMouseButtonDown(1)) {
             if (!LevelGrid.instance.HasAnyUnitOnGridPosition(new GridPosition(0, 0))) {
@@ -82,6 +91,8 @@ public class UnitActionsystem : MonoBehaviour
         
     }
 
+
+    // check if the mouse click on the unselected unit.
     private bool TryHandleUnitSelection() {
 
         if (Input.GetMouseButtonDown(0)) {
@@ -103,6 +114,8 @@ public class UnitActionsystem : MonoBehaviour
         return false;
     }
 
+
+    // As the name described, select the passed in unit
     private void SetSelectedUnit(Unit unit) {
         selectedUnit = unit;
         if (selectedUnit == null) {UnitActionSystemUI.Instance.DestroyAllButton();return;}
@@ -112,7 +125,7 @@ public class UnitActionsystem : MonoBehaviour
     }
 
 
-
+    // As the name described, select the passed in action
     public void SetSelectedAction(BaseAction baseAction) {
         if(!isBusy) {
             selectedAction = baseAction;
@@ -121,6 +134,8 @@ public class UnitActionsystem : MonoBehaviour
         
     }
     
+    // Trigger the acion on valid grid depends on the each action's setting, check each action for 
+    // how to get the valid grid position
     private void HandleSelectedAction() {
         if(selectedAction == null) return;
         if(Input.GetMouseButtonDown(0)) {
@@ -141,11 +156,15 @@ public class UnitActionsystem : MonoBehaviour
         }
     }
 
+
+    // use to trigger the busy ui;
     private void SetBusy() {
         isBusy = true;
         BusyUI.SetActive(true);
     }
 
+
+    // use to hide busy ui, when action point is not enough for moving, set the selected action to null
     private void ClearBusy() {
         isBusy = false;
         //SetSelectedAction(selectedUnit.GetMoveAction());
@@ -155,17 +174,28 @@ public class UnitActionsystem : MonoBehaviour
         BusyUI.SetActive(false);
     }
 
+
+    // Send am actual notification using the bottom notification window, check this in play mode
     public void SendNotification(string words) {
         Notification.gameObject.SetActive(true);
         Notification.gameObject.GetComponent<TMP_Text>().text = words;
     }
 
+
+    // just to clear the selected unit when turn change, would not affect the selected action since the handle unit selection
+    // could deal with it to avoid problem
     public void TurnChange() {
         SetSelectedUnit(null);
     }
+
+
+
     public Unit GetSelectedUnit() => selectedUnit;
     public BaseAction GetSelectedAction() => selectedAction;
 
+
+
+    // No actual use for now, just to keep track of the units on the place
     public List<Unit> GetUnitList() => add(totalPlayerUnits, totalEnemyUnits);
 
     public List<Unit> add(List<Unit> a, List<Unit> b) {

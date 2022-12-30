@@ -26,17 +26,17 @@ public class ActionButtonUI : MonoBehaviour
             Instantiate(actionPointButtonVisual, actionPointButtonVisualContainer);
         }
         button.onClick.AddListener(() => {
-            if (UnitActionsystem.Instance.GetSelectedUnit().CanSpendActionPoint(baseAction)) {
-                UnitActionsystem.Instance.SetSelectedAction(baseAction);
+            if (UnitActionSystem.Instance.GetSelectedUnit().CanSpendActionPoint(baseAction)) {
+                UnitActionSystem.Instance.SetSelectedAction(baseAction);
             } else {
-                UnitActionsystem.Instance.SendNotification("This action needs more action point than this unit have");
+                UnitActionSystem.Instance.SendNotification("This action needs more action point than this unit have");
             }
         });
     }
 
     public void UpdateSelectedVisual(){
         //Debug.Log("This one is called");
-        BaseAction selectedOne = UnitActionsystem.Instance.GetSelectedAction();
+        BaseAction selectedOne = UnitActionSystem.Instance.GetSelectedAction();
         //Debug.Log(selectedOne == baseAction);
         selectedVisual.SetActive(selectedOne == baseAction);
     }

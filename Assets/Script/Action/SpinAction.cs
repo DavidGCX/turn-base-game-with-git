@@ -9,7 +9,6 @@ public class SpinAction : BaseAction
     protected override void Awake() {
         base.Awake();
         nameOfAction = "Spin";
-        actionPointRequirement = 1;
     }
     private float totalSpinAmount;
     private void Update()

@@ -55,15 +55,15 @@ public class GridsystemVisual : MonoBehaviour
 
     private void UpdateGridVisual() {
         HideAllGridPosition();
-        Unit unit = UnitActionsystem.Instance.GetSelectedUnit();
+        Unit unit = UnitActionSystem.Instance.GetSelectedUnit();
         if(unit == null) {return;}
-        if(UnitActionsystem.Instance.GetSelectedAction() == null) {return;}
-        if(UnitActionsystem.Instance.GetSelectedAction().GetActionName() == "Shoot") {
-            AttackAction shootAction = (AttackAction) UnitActionsystem.Instance.GetSelectedAction();
+        if(UnitActionSystem.Instance.GetSelectedAction() == null) {return;}
+        if(UnitActionSystem.Instance.GetSelectedAction().IsAttackAction()) {
+            AttackAction shootAction = (AttackAction) UnitActionSystem.Instance.GetSelectedAction();
             ShowGridPositonList(shootAction.GetTargetGridPositionList());
             ShowAttackTargetGridPositionList(shootAction.GetValidGridPositionList());
         } else {
-            ShowGridPositonList(UnitActionsystem.Instance.GetSelectedAction().GetValidGridPositionList());
+            ShowGridPositonList(UnitActionSystem.Instance.GetSelectedAction().GetValidGridPositionList());
         }
         
     }

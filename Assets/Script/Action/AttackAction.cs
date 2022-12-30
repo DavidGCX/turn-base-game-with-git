@@ -26,14 +26,13 @@ public class AttackAction : BaseAction
     protected override void Awake() {
         base.Awake();
         nameOfAction = "Attack";
-        actionPointRequirement = 1;
     }
     private void Update()
     {
         if(!IsActive) {
             return;
         }
-
+        //start each Coroutine depends on the state
         switch (state)
         {
             case State.Aiming:
@@ -60,6 +59,7 @@ public class AttackAction : BaseAction
         
     } 
 
+    //State change
     private void NextState() {
         switch (state)
         {
@@ -76,6 +76,7 @@ public class AttackAction : BaseAction
         //Debug.Log(state);
     }
 
+    // Turn to the target
     public IEnumerator Aiming() {
         insideRoutine = true;
         Vector3 rotateDirection = (TargetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
@@ -84,6 +85,7 @@ public class AttackAction : BaseAction
         stateComplete = true;
     }
 
+    // Attacking animation and calculation need to go here and override
     protected virtual IEnumerator Attacking() {
         insideRoutine = true;
         TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
@@ -95,7 +97,7 @@ public class AttackAction : BaseAction
         insideRoutine = true;
         yield return new WaitForSeconds(.5f);
         stateComplete = true;
-    }
+     }
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         state = State.Aiming;
@@ -131,11 +133,6 @@ public class AttackAction : BaseAction
                 validGridPositionList.Add(resultGridpos);
             }
         }
-        /* foreach (var item in validGridPositionList)
-        {
-            Debug.Log(item);
-        } */
-        
         return validGridPositionList;
     }
 
@@ -167,17 +164,21 @@ public class AttackAction : BaseAction
         return validGridPositionList;
     }
 
+    //Print a string for printing message
     public override string GenerateUnitStateErrorMessage()
     {
         return "Still can not shoot, Check the status bar";
     }
 
+    //Check if can shoot or not
     public override bool HandleUnitState(){
-        if(unit.CheckStatus( UnitStatsAndStatus.CurrentStatus.CanNotShoot)) {
-            unit.RemoveStatus( UnitStatsAndStatus.CurrentStatus.CanNotShoot);
+        if(unit.CheckStatus(UnitStatsAndStatus.CurrentStatus.CanNotShoot)) {
+            unit.RemoveStatus(UnitStatsAndStatus.CurrentStatus.CanNotShoot);
             return false;
         } else {
             return true;
         }
     }
+
+    public override bool IsAttackAction() => true;
 }
