@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NotEnoghControl : MonoBehaviour
+public class BottomMessage : MonoBehaviour
 {
     private float time;
     private bool active;
