@@ -124,13 +124,17 @@ public class AttackAction : BaseAction
         animator.Play("firing rifle");
         TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
         yield return new WaitForSeconds(.2f);
+        /*
+        animator.Play("reloading");
+        yield return new WaitForSeconds(3f);
+        Optional reloading animation
+        */ 
         stateComplete = true;
     }
 
      public IEnumerator CoolOff() {
         insideRoutine = true;
         yield return new WaitForSeconds(.5f);
-         animator.Play("reloading");
         stateComplete = true;
      }
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)

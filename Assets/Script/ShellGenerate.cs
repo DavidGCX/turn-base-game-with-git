@@ -13,9 +13,10 @@ public class ShellGenerate : MonoBehaviour
 
     private void OnEnable() {
        
-        Transform shell = Instantiate(shellPrefab, shellSpawningPlace.position, Quaternion.Euler(90, 0, 0));
+        Transform shell = Instantiate(shellPrefab, shellSpawningPlace);
         float resultForce = force * (1 - UnityEngine.Random.Range(-UpDownRate, UpDownRate)/ 100);
         shell.GetComponent<Rigidbody>().AddForce(shell.right * resultForce);
         shell.GetComponent<Rigidbody>().AddTorque(-shell.forward * resultForce);
+        shell.SetParent(null);
     }
 }
