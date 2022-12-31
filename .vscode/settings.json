@@ -61,6 +61,7 @@
         "Lerp",
         "Mathf",
         "MINIMUMATTACK",
+        "MINIMUMDENFENSE",
         "Positon",
         "Raycast",
         "smoothfactor",

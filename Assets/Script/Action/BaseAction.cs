@@ -12,7 +12,7 @@ public abstract class BaseAction : MonoBehaviour
     protected bool IsActive;
     private float CIRCLE_ADJUST_FACTOR = 0.3f;
      [SerializeField] protected string nameOfAction;
-    [SerializeField] protected Animator animator; 
+    protected Animator animator; 
 
     protected Action OnActionComplete;
     // Start is called before the first frame update
@@ -20,6 +20,7 @@ public abstract class BaseAction : MonoBehaviour
     {
         unit = GetComponent<Unit>();
         IsActive = false;
+        animator = GetComponentInChildren<Animator>();
     }
 
     public string GetActionName() => nameOfAction;

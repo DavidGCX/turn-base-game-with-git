@@ -121,6 +121,7 @@ public class AttackAction : BaseAction
     // Attacking animation and calculation need to go here and override
     protected virtual IEnumerator Attacking() {
         insideRoutine = true;
+        animator.Play("firing rifle");
         TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
         yield return new WaitForSeconds(.2f);
         stateComplete = true;
@@ -129,6 +130,7 @@ public class AttackAction : BaseAction
      public IEnumerator CoolOff() {
         insideRoutine = true;
         yield return new WaitForSeconds(.5f);
+         animator.Play("reloading");
         stateComplete = true;
      }
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
