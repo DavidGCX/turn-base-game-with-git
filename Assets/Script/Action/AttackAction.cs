@@ -121,8 +121,14 @@ public class AttackAction : BaseAction
     // Attacking animation and calculation need to go here and override. below is an example
     protected virtual IEnumerator Attacking() {
         insideRoutine = true;
-        animator.Play("firing rifle");
-        TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
+
+        //Can play animation like this:
+        // animator.Play("firing rifle");
+
+        // Causing Damage like this:
+        //TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
+        
+        // Use to wait for specific time, 0.2f in the below example
         yield return new WaitForSeconds(.2f);
         /*
         animator.Play("reloading");
