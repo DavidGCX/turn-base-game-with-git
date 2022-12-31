@@ -118,7 +118,7 @@ public class AttackAction : BaseAction
         stateComplete = true;
     }
 
-    // Attacking animation and calculation need to go here and override
+    // Attacking animation and calculation need to go here and override. below is an example
     protected virtual IEnumerator Attacking() {
         insideRoutine = true;
         animator.Play("firing rifle");
