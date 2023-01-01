@@ -55,6 +55,7 @@ public class AttackAction : BaseAction
     [SerializeField] private int BaseWeaponDamage = 20;
     [SerializeField] private int ApWeaponDamage = 10;
     [SerializeField] private float DamageRandomRate = 20f;
+
     private bool canShoot;
 
     protected override void Awake() {
@@ -123,20 +124,22 @@ public class AttackAction : BaseAction
         insideRoutine = true;
 
         //Can play animation like this:
-        // animator.Play("firing rifle");
-
+        animator.Play("firing rifle");
         // Causing Damage like this:
-        //TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
+        TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
         
         // Use to wait for specific time, 0.2f in the below example
         yield return new WaitForSeconds(.2f);
-        /*
+        
+        //Optional reloading animation
         animator.Play("reloading");
         yield return new WaitForSeconds(3f);
-        Optional reloading animation
-        */ 
+
+       
+         
         stateComplete = true;
     }
+
 
      public IEnumerator CoolOff() {
         insideRoutine = true;
