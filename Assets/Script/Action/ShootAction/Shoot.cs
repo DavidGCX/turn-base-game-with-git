@@ -12,6 +12,7 @@ public class Shoot : MonoBehaviour
     public void fire() {
         Transform bullet = Instantiate(bulletPrefab, front);
         Vector3 moveDirection = (front.position - back.position).normalized;
+    
         bullet.GetComponent<Rigidbody>().AddForce(moveDirection * speed);
         bullet.SetParent(null);
     }
