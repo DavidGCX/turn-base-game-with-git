@@ -4,22 +4,51 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    AttackAction AttackFrom;
+    private AttackAction attackFrom;
+    private Vector3 moveDriection;
+    private Vector3 targetPosition;
+    [SerializeField] GameObject bulletHitEffectPrefab;
     
     private void Awake() {
-        AttackFrom = (AttackAction) UnitActionSystem.Instance.GetSelectedAction();
+        attackFrom = (AttackAction) UnitActionSystem.Instance.GetSelectedAction();
     }
 
+    public void SetUp(AttackAction attackAction, Vector3 moveDirection, Vector3 targetPosition) {
+        this.attackFrom = attackAction;
+        this.moveDriection = moveDirection;
+        this.targetPosition = targetPosition;
+      
+    }
 
+    void Update()
+    {  
+        float MoveSpeed = 600f;
+        transform.position += MoveSpeed * moveDriection * Time.deltaTime;
+    }
+
+    
+
+    void OnTriggerStay(Collider other)
+    {
+        if(other.TryGetComponent<Unit> (out Unit unit)) {
+                Debug.Log(other);
+        }
+         
+    }
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other);
         if(other.tag == "Unit") {
             Debug.Log(other);
             if(other.TryGetComponent<Unit> (out Unit unit)) {
-                AttackFrom.CauseDamage(unit);
+                if (attackFrom.CauseDamage(unit)) {
+                    
+                }
+                Instantiate(bulletHitEffectPrefab, transform.position, Quaternion.identity);
             }
             
         }
+        //Destroy(gameObject);
         
     }
 

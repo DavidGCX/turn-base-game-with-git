@@ -26,7 +26,7 @@ public class AttackAction : BaseAction
 
     (以下请写在脚本里修改)
     
-    IEnumerator Attacking() 
+    IEnumerator SpecificAttack() 
         Include all attack animation, attack effect here. You need to call targetunit.damage inside.
         所有攻击的东西都放在这里处理
     
@@ -51,7 +51,7 @@ public class AttackAction : BaseAction
     private bool stateComplete;
 
     private bool insideRoutine;
-    private Unit TargetUnit;
+    protected Unit TargetUnit;
     [SerializeField] private int BaseWeaponDamage = 20;
     [SerializeField] private int ApWeaponDamage = 10;
     [SerializeField] private float DamageRandomRate = 20f;
@@ -108,7 +108,7 @@ public class AttackAction : BaseAction
     }
 
     // Turn to the target
-    public IEnumerator Aiming() {
+    private IEnumerator Aiming() {
         insideRoutine = true;
         Vector3 rotateDirection = (TargetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
         Tween a = transform.DOLookAt(TargetUnit.GetWorldPosition(), aimTime);
@@ -116,37 +116,43 @@ public class AttackAction : BaseAction
         stateComplete = true;
     }
 
-    // Attacking animation and calculation need to go here and override. below is an example
-    protected virtual IEnumerator Attacking() {
+    
+    private IEnumerator Attacking() {
         insideRoutine = true;
 
+      
+        yield return SpecificAttack();
+         
+        stateComplete = true;
+    }
+
+
+// Attacking animation and calculation need to go here and override. below is an example
+    protected virtual IEnumerator SpecificAttack() {
         //Can play animation like this:
         animator.Play("firing rifle");
         // Causing Damage like this:
         
-        
+        //CauseDamage();
+
         // Use to wait for specific time, 0.2f in the below example
         yield return new WaitForSeconds(.2f);
         
         //Optional reloading animation
         animator.Play("reloading");
         yield return new WaitForSeconds(3f);
-
-       
-         
-        stateComplete = true;
     }
 
 
-     public IEnumerator CoolOff() {
-        insideRoutine = true;
-        yield return new WaitForSeconds(.5f);
-        stateComplete = true;
-     }
+    private IEnumerator CoolOff() {
+       insideRoutine = true;
+       yield return new WaitForSeconds(.3f);
+       stateComplete = true;
+    }
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         state = State.Aiming;
-        Debug.Log(state);
+        //Debug.Log(state);
         insideRoutine = false;
         stateComplete = false;
         TargetUnit = LevelGrid.instance.GetUnitAtGridPosition(gridPosition);
@@ -215,7 +221,7 @@ public class AttackAction : BaseAction
         return "Still can not shoot, Check the status bar";
     }
 
-    //Check if can shoot or not
+    //Check if can shoot or not, you can write like this to use the status system;
     public override bool HandleUnitState(){
         if(unit.CheckStatus(UnitStatsAndStatus.CurrentStatus.CanNotShoot)) {
             unit.RemoveStatus(UnitStatsAndStatus.CurrentStatus.CanNotShoot);
@@ -225,12 +231,12 @@ public class AttackAction : BaseAction
         }
     }
 
-    public void CauseDamage() {
-        TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
+    public bool CauseDamage() {
+        return TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
     }
 
-    public void CauseDamage(Unit actualHitUnit) {
-        actualHitUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
+    public bool CauseDamage(Unit actualHitUnit) {
+         return actualHitUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
     }
 
     public override bool IsAttackAction() => true;

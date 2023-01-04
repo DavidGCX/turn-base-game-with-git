@@ -68,8 +68,8 @@ public class Unit : MonoBehaviour
 
 
     // See UnitStatsAndStatus.cs
-    public void Damage(int baseDamage, int apDamage, int totalAttack, float damageRandomRate) {
-        unitStatsAndStatus.Damage(baseDamage, apDamage, totalAttack, damageRandomRate);
+    public bool Damage(int baseDamage, int apDamage, int totalAttack, float damageRandomRate) {
+        return unitStatsAndStatus.Damage(baseDamage, apDamage, totalAttack, damageRandomRate);
     }
 
 

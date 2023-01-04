@@ -44,7 +44,7 @@ public class UnitStatsAndStatus : MonoBehaviour
 
     // Cause baseDamage + apDamage to the unit. with totalAttack hit chance and damageRandomRate to 
     // create +- damageRandomRate% random total Damage number
-    public void Damage(int baseDamage, int apDamage, int totalAttack, float damageRandomRate) {
+    public bool Damage(int baseDamage, int apDamage, int totalAttack, float damageRandomRate) {
         int currentAttack;
         int currentDefense;
         currentDefense = defense < 10 ? MINIMUMDENFENSE : defense;
@@ -52,7 +52,7 @@ public class UnitStatsAndStatus : MonoBehaviour
         int randomNumber = UnityEngine.Random.Range(1, 101);
         if (currentAttack < randomNumber) {
             Debug.Log($"The attack was defensed \n with attack: {currentAttack} randomNumber: {randomNumber}");
-            return;
+            return false;
         }
 
         Debug.Log($"Attack Hit the Base Damage is {baseDamage}, the AP damage is {apDamage}");
@@ -62,6 +62,7 @@ public class UnitStatsAndStatus : MonoBehaviour
         if(health - totalDamage < 0){isDead = true;}
         health = health - totalDamage < 0? 0 : health - totalDamage;
         Debug.Log($"Current Health is {health}");
+        return true;
     }
 
     private int CalculateBaseDamageAfterArmor(int baseDamage) {
