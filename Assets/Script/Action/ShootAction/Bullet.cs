@@ -31,21 +31,17 @@ public class Bullet : MonoBehaviour
 
     
 
-    void OnTriggerStay(Collider other)
-    {
-        if(other.TryGetComponent<Unit> (out Unit unit)) {
-                Debug.Log(other);
-        }
-         
-    }
+
     void OnCollisionEnter(Collision other)
     {
         //Instantiate(bulletHitEffectPrefab, transform.position, Quaternion.identity);
         if(other.gameObject.tag == "Unit") {
-            Debug.Log(other);
+            //Debug.Log(other);
             if(other.gameObject.TryGetComponent<Unit> (out Unit unit)) {
                 if (attackFrom.CauseDamage(unit)) {
-                     Instantiate(bulletHitEffectPrefab, transform.position, Quaternion.identity);
+                    Instantiate(bulletHitEffectPrefab, transform.position, Quaternion.identity);
+                } else {
+                    UnitActionSystem.Instance.SendNotification("The Attack Was Defensed");
                 }
                
             }

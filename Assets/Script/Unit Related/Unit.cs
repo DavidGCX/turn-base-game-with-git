@@ -32,6 +32,11 @@ public class Unit : MonoBehaviour
         GridPosition gridPosition = LevelGrid.instance.GetGridPosition(transform.position);
         lastGridPosition = gridPosition;
         LevelGrid.instance.AddUnitAtGridPosition(gridPosition, this);
+        UnitActionSystem.Instance.OnSelectedActionChange += HandleActionPoint;
+        UnitActionSystem.Instance.SelectEvent += HandleActionPoint;
+        UnitActionSystem.Instance.OnTakeAction += HandleActionPoint;
+        HandleActionPoint();
+        HandleHealth();
     }
     
     void Update()
@@ -49,12 +54,14 @@ public class Unit : MonoBehaviour
         if (lastGridPosition != gridPosition) {
             LevelGrid.instance.UnitMoveGridPosition(this, lastGridPosition, gridPosition);
             lastGridPosition = gridPosition;
-        }
-        HandleActionPoint();
+        }  
     }
 
     void OnDestroy()
     {
+        UnitActionSystem.Instance.OnSelectedActionChange -= HandleActionPoint;
+        UnitActionSystem.Instance.SelectEvent -= HandleActionPoint;
+        UnitActionSystem.Instance.OnTakeAction -= HandleActionPoint;
         LevelGrid.instance.RemoveUnitAtGridPosition(lastGridPosition, this);
         UnitActionSystem.Instance.RemoveUnitFromList(this, GetUnitType());
     }
@@ -69,11 +76,16 @@ public class Unit : MonoBehaviour
         unitWorldUI.HandleActionPoint();
     }
 
+    public void HandleHealth() {
+        unitWorldUI.HandleHealth(unitStatsAndStatus.GetNormalizedHealth());
+    }
 
 
     // See UnitStatsAndStatus.cs
     public bool Damage(int baseDamage, int apDamage, int totalAttack, float damageRandomRate) {
-        return unitStatsAndStatus.Damage(baseDamage, apDamage, totalAttack, damageRandomRate);
+        bool result = unitStatsAndStatus.Damage(baseDamage, apDamage, totalAttack, damageRandomRate);
+        HandleHealth();
+        return result;
     }
 
 
@@ -125,5 +137,7 @@ public class Unit : MonoBehaviour
     // Attack related, check Warharmmer for how this system works
     public int GetUnitAttackTotal() => unitStatsAndStatus.GetUnitAttackTotal();
     public int GetUnitAttackBase() => unitStatsAndStatus.GetUnitAttackBase();
+
+    public bool IsDead() => unitStatsAndStatus.IsDead();
 }
 

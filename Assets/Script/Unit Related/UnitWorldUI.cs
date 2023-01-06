@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using DG.Tweening;
 public class UnitWorldUI : MonoBehaviour
 {
 
@@ -13,6 +15,10 @@ public class UnitWorldUI : MonoBehaviour
     [SerializeField] private Transform ActionPointUsedPrefab;
 
     [SerializeField] private TMP_Text ActionPointCount;
+
+    [SerializeField] private Image healthBar;
+    [SerializeField] private Image healthBarDelay;
+
     private Unit unit;
 
     private void Awake()
@@ -71,4 +77,17 @@ public class UnitWorldUI : MonoBehaviour
             Destroy(item.gameObject);
         }
     }
+
+    public void HandleHealth(float amount) {
+        StartCoroutine(ChangeHealthBar(amount));
+    }
+
+    public IEnumerator ChangeHealthBar(float amount){
+        healthBar.DOFillAmount(amount, 0.8f);
+        Tween tween = healthBarDelay.DOFillAmount(amount, 1.6f);
+        yield return tween.WaitForCompletion();
+        if(unit.IsDead()) {
+            Destroy(gameObject);
+        }
+    } 
 }

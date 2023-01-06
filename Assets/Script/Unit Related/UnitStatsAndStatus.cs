@@ -8,7 +8,8 @@ public class UnitStatsAndStatus : MonoBehaviour
     [SerializeField] private int defense = 0;
     [SerializeField] private int baseAttack = 40;
     [SerializeField] private int armor = 30;
-    [SerializeField] private int health = 100;
+    [SerializeField] private int currentHealth = 100;
+     [SerializeField] private const int maxHealth = 100;
 
     [SerializeField] private int currentActionPoint = 5;
 
@@ -59,15 +60,16 @@ public class UnitStatsAndStatus : MonoBehaviour
         float randomDamageRate = UnityEngine.Random.Range(- damageRandomRate,  damageRandomRate)/ 100f;
         int totalDamage =  Mathf.RoundToInt((apDamage + CalculateBaseDamageAfterArmor(baseDamage)) * (1 + randomDamageRate));
         Debug.Log($"Total Damage is {totalDamage}");
-        if(health - totalDamage < 0){IsDead();}
-        health = health - totalDamage < 0? 0 : health - totalDamage;
-        Debug.Log($"Current Health is {health}");
+        if(currentHealth - totalDamage < 0){Dead();}
+        currentHealth = currentHealth - totalDamage < 0? 0 : currentHealth - totalDamage;
+        Debug.Log($"Current Health is {currentHealth}");
         return true;
     }
 
-    private void IsDead() {
+
+    //May have some features when died;
+    private void Dead() {
         isDead = true;
-        Destroy(gameObject);
     }
 
     private int CalculateBaseDamageAfterArmor(int baseDamage) {
@@ -102,7 +104,7 @@ public class UnitStatsAndStatus : MonoBehaviour
                 defense = amount;
                 break;
             case Stats.health:
-                health = amount;
+                currentHealth = amount;
                 break;
         }
     }
@@ -117,7 +119,7 @@ public class UnitStatsAndStatus : MonoBehaviour
             case Stats.defense:
                 return defense;
             case Stats.health:
-                return health;
+                return currentHealth;
             default:
                 Debug.Log("Get Wrong Stats");
                 return -1;
@@ -157,7 +159,10 @@ public class UnitStatsAndStatus : MonoBehaviour
     public int GetUnitAttackTotal() => baseAttack + attack;
     public int GetUnitAttackBase() => baseAttack;
 
-     public bool GetUnitType() => isEnemy;
+    public bool GetUnitType() => isEnemy;
     public void SetUnitType(bool type) {isEnemy = type;}
 
+    public float GetNormalizedHealth() => (float)currentHealth / (float)maxHealth;
+
+    public bool IsDead() => isDead;
 }
