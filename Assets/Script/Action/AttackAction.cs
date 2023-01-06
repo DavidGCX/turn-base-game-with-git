@@ -128,15 +128,17 @@ public class AttackAction : BaseAction
         Vector3 rotateDirection = (TargetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
         Tween a = transform.DOLookAt(TargetUnit.GetWorldPosition(), aimTime);
         yield return a.WaitForCompletion();
-        UseAttackCamera();
         stateComplete = true;
     }
 
     
     private IEnumerator Attacking() {
         insideRoutine = true;
-
-      
+        if(ShouldUseAttackCamera()) {
+            UseAttackCamera();
+        }
+        const float CameraDefaultBlendTime = 0.2f;
+        yield return new WaitForSeconds(CameraDefaultBlendTime * 2);
         yield return SpecificAttack();
          
         stateComplete = true;
@@ -175,7 +177,10 @@ public class AttackAction : BaseAction
         TargetUnit.GetWorldPosition() + height));
     }
 
-    protected virtual void BackToUsualCamera() {
+    // Can be override to decide the conditions for triggering the attack camera
+    protected virtual bool ShouldUseAttackCamera() => true;
+    // Back to the usual camera
+    protected void BackToUsualCamera() {
         OnAttackComplete?.Invoke();
     }
 

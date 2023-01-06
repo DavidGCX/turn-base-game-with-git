@@ -11,6 +11,7 @@ public class CameraManager : MonoBehaviour
     {
         AttackAction.OnAttackActionCameraRequired += AttackAction_OnAttackStart;
         AttackAction.OnAttackComplete += AttackAction_OnAttackComplete;
+        HideActionCamera();
     }
 
     private void AttackAction_OnAttackComplete()

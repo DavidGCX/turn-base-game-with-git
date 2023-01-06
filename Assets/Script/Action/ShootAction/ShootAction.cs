@@ -20,6 +20,14 @@ public class ShootAction : AttackAction
         });
         animator.Play("firing rifle");
         yield return new WaitForSeconds(1f);
-        
+    }
+
+    protected override bool ShouldUseAttackCamera()
+    {
+        if (GetTotalDamage() >= TargetUnit.GetUnitCurrentHealth()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
