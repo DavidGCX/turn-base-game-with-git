@@ -18,7 +18,8 @@ public class ShootAction : AttackAction
             ,
             TargetPosition = TargetUnit.GetWorldPosition()
         });
+        animator.Play("firing rifle");
         yield return new WaitForSeconds(1f);
-        //animator.Play("firing rifle");
+        
     }
 }

@@ -57,5 +57,5 @@ public abstract class BaseAction : MonoBehaviour
 
     public virtual bool HandleUnitState() => true;
     public virtual string GenerateUnitStateErrorMessage() => "";
-    
+    public Unit GetUnit() => unit;
 }

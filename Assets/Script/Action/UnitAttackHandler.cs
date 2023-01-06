@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitAttackAnimator : MonoBehaviour
+public class UnitAttackHandler : MonoBehaviour
 {
     [SerializeField] private Transform bulletPrefab;
     [SerializeField] private Transform Gunfront;

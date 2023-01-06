@@ -97,6 +97,37 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &647451502208998265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 352184407727709170}
+  m_Layer: 7
+  m_Name: ShootActionCameraPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &352184407727709170
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647451502208998265}
+  m_LocalRotation: {x: 0.030211372, y: -0.052216977, z: 0.0026082317, w: 0.99817526}
+  m_LocalPosition: {x: 0.44033262, y: 1.5992774, z: -0.34599996}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1214023236628354059}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &717620782610090394
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,6 +599,7 @@ MonoBehaviour:
   BaseWeaponDamage: 20
   ApWeaponDamage: 10
   DamageRandomRate: 20
+  attackCameraPosition: {fileID: 352184407727709170}
 --- !u!114 &3655494427575583680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2577,6 +2609,7 @@ Transform:
   - {fileID: 1214021041284318721}
   - {fileID: 1213985361380950033}
   - {fileID: 6061974410352394193}
+  - {fileID: 352184407727709170}
   m_Father: {fileID: 1209592109790939584}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

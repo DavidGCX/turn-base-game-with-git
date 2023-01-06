@@ -55,6 +55,21 @@ public class AttackAction : BaseAction
     [SerializeField] private int BaseWeaponDamage = 20;
     [SerializeField] private int ApWeaponDamage = 10;
     [SerializeField] private float DamageRandomRate = 20f;
+    [SerializeField] protected Transform attackCameraPosition;
+
+    public static event EventHandler<AttackActionCameraArgs> OnAttackActionCameraRequired;
+
+    public static event Action OnAttackComplete;
+
+    public class AttackActionCameraArgs : EventArgs {
+        public Vector3 cameraPosition;
+        public Vector3 cameraLookAtPosition;
+        public AttackActionCameraArgs(Vector3 cameraPosition, Vector3 cameraLookAtPosition) {
+            this.cameraPosition = cameraPosition;
+            this.cameraLookAtPosition = cameraLookAtPosition;
+        }
+    }
+
     protected override void Awake() {
         base.Awake();
     }
@@ -113,6 +128,7 @@ public class AttackAction : BaseAction
         Vector3 rotateDirection = (TargetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
         Tween a = transform.DOLookAt(TargetUnit.GetWorldPosition(), aimTime);
         yield return a.WaitForCompletion();
+        UseAttackCamera();
         stateComplete = true;
     }
 
@@ -146,9 +162,23 @@ public class AttackAction : BaseAction
 
     private IEnumerator CoolOff() {
        insideRoutine = true;
+       BackToUsualCamera(); 
        yield return new WaitForSeconds(.3f);
        stateComplete = true;
     }
+
+
+    // Set the attack camera Position and look at angle, can be override with other version
+    protected virtual void UseAttackCamera() {
+        Vector3 height =new Vector3(0, attackCameraPosition.position.y, 0);
+        OnAttackActionCameraRequired?.Invoke(this, new AttackActionCameraArgs(attackCameraPosition.position, 
+        TargetUnit.GetWorldPosition() + height));
+    }
+
+    protected virtual void BackToUsualCamera() {
+        OnAttackComplete?.Invoke();
+    }
+
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         state = State.Aiming;
@@ -242,4 +272,6 @@ public class AttackAction : BaseAction
     public override bool IsAttackAction() => true;
 
     public Unit GetTargetUnit() => TargetUnit;
+
+    public int GetTotalDamage() => BaseWeaponDamage + ApWeaponDamage;
 }
