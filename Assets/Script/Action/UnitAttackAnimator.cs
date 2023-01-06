@@ -8,7 +8,6 @@ public class UnitAttackAnimator : MonoBehaviour
     [SerializeField] private Transform bulletPrefab;
     [SerializeField] private Transform Gunfront;
     [SerializeField] private Transform Gunback;
-    float speed = 10000f;
 
     private void Start() {
         if(TryGetComponent<ShootAction>(out ShootAction shootAction)) {

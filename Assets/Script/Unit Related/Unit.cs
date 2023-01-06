@@ -77,7 +77,7 @@ public class Unit : MonoBehaviour
     }
 
     public void HandleHealth() {
-        unitWorldUI.HandleHealth(unitStatsAndStatus.GetNormalizedHealth());
+        unitWorldUI.HandleHealth(unitStatsAndStatus.GetNormalizedHealthPercentage());
     }
 
 
@@ -138,6 +138,9 @@ public class Unit : MonoBehaviour
     public int GetUnitAttackTotal() => unitStatsAndStatus.GetUnitAttackTotal();
     public int GetUnitAttackBase() => unitStatsAndStatus.GetUnitAttackBase();
 
+
+    public int GetUnitCurrentHealth() => unitStatsAndStatus.GetCurrentHealth();
+    public int GetUnitMaxHealth() => unitStatsAndStatus.GetMaxHealth();
     public bool IsDead() => unitStatsAndStatus.IsDead();
 }
 

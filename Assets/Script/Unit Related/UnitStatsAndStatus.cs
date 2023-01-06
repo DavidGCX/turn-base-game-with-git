@@ -9,7 +9,7 @@ public class UnitStatsAndStatus : MonoBehaviour
     [SerializeField] private int baseAttack = 40;
     [SerializeField] private int armor = 30;
     [SerializeField] private int currentHealth = 100;
-     [SerializeField] private const int maxHealth = 100;
+    [SerializeField] private const int maxHealth = 100;
 
     [SerializeField] private int currentActionPoint = 5;
 
@@ -162,7 +162,10 @@ public class UnitStatsAndStatus : MonoBehaviour
     public bool GetUnitType() => isEnemy;
     public void SetUnitType(bool type) {isEnemy = type;}
 
-    public float GetNormalizedHealth() => (float)currentHealth / (float)maxHealth;
+    public float GetNormalizedHealthPercentage() => (float)currentHealth / (float)maxHealth;
+
+    public int GetMaxHealth() => maxHealth;
+    public int GetCurrentHealth() => currentHealth;
 
     public bool IsDead() => isDead;
 }
