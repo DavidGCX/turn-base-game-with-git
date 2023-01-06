@@ -59,10 +59,15 @@ public class UnitStatsAndStatus : MonoBehaviour
         float randomDamageRate = UnityEngine.Random.Range(- damageRandomRate,  damageRandomRate)/ 100f;
         int totalDamage =  Mathf.RoundToInt((apDamage + CalculateBaseDamageAfterArmor(baseDamage)) * (1 + randomDamageRate));
         Debug.Log($"Total Damage is {totalDamage}");
-        if(health - totalDamage < 0){isDead = true;}
+        if(health - totalDamage < 0){IsDead();}
         health = health - totalDamage < 0? 0 : health - totalDamage;
         Debug.Log($"Current Health is {health}");
         return true;
+    }
+
+    private void IsDead() {
+        isDead = true;
+        Destroy(gameObject);
     }
 
     private int CalculateBaseDamageAfterArmor(int baseDamage) {

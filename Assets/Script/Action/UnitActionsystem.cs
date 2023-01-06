@@ -196,8 +196,16 @@ public class UnitActionSystem : MonoBehaviour
 
 
     // No actual use for now, just to keep track of the units on the place
-    public List<Unit> GetUnitList() => add(totalPlayerUnits, totalEnemyUnits);
-
+    public List<Unit> GetTotalUnitList() => add(totalPlayerUnits, totalEnemyUnits);
+    public List<Unit> GetEnemyUnitList() => totalEnemyUnits;
+    public List<Unit> GetUnitList() => totalPlayerUnits;
+    public void RemoveUnitFromList(Unit unit, bool isEmemy) {
+        if(isEmemy) {
+            totalEnemyUnits.Remove(unit);
+        } else {
+            totalPlayerUnits.Remove(unit);
+        }
+    } 
     public List<Unit> add(List<Unit> a, List<Unit> b) {
         List<Unit> c = new List<Unit>();
         foreach (var item in a)

@@ -53,7 +53,11 @@ public class Unit : MonoBehaviour
         HandleActionPoint();
     }
 
-
+    void OnDestroy()
+    {
+        LevelGrid.instance.RemoveUnitAtGridPosition(lastGridPosition, this);
+        UnitActionSystem.Instance.RemoveUnitFromList(this, GetUnitType());
+    }
 
     
     // Action Point Related:

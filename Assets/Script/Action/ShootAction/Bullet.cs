@@ -17,14 +17,15 @@ public class Bullet : MonoBehaviour
         this.attackFrom = attackAction;
         this.moveDriection = moveDirection;
         this.targetPosition = targetPosition;
-        //GetComponent<Rigidbody>().AddForce(moveDriection * 10000);
+        GetComponent<Rigidbody>().AddForce(moveDriection * 10000);
     }
 
     void Update()
     {  
        
-        float MoveSpeed = 60f;
-        transform.position += MoveSpeed * moveDriection * Time.deltaTime;
+        //float MoveSpeed = 60f;
+        //transform.position += MoveSpeed * moveDriection * Time.deltaTime;
+        transform.LookAt(targetPosition);
         
     }
 
@@ -37,23 +38,27 @@ public class Bullet : MonoBehaviour
         }
          
     }
-    private void OnTriggerEnter(Collider other)
-    { 
-        Instantiate(bulletHitEffectPrefab, transform.position, Quaternion.identity);
-        
-        Debug.Log(other);
-        Destroy(gameObject);
-        /*
-        if(other.tag == "Unit") {
+    void OnCollisionEnter(Collision other)
+    {
+        //Instantiate(bulletHitEffectPrefab, transform.position, Quaternion.identity);
+        if(other.gameObject.tag == "Unit") {
             Debug.Log(other);
-            if(other.TryGetComponent<Unit> (out Unit unit)) {
+            if(other.gameObject.TryGetComponent<Unit> (out Unit unit)) {
                 if (attackFrom.CauseDamage(unit)) {
-                    
+                     Instantiate(bulletHitEffectPrefab, transform.position, Quaternion.identity);
                 }
-                Instantiate(bulletHitEffectPrefab, transform.position, Quaternion.identity);
+               
             }
             
         }
+        //Debug.Log(other);
+        Destroy(gameObject);
+    }
+    private void OnTriggerEnter(Collider other)
+    { 
+        
+        /*
+        
         */
         //Destroy(gameObject);
         
