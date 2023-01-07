@@ -22,6 +22,8 @@ public class AttackAction : BaseAction
 
     ApWeaponDamage (Armor penetration damage)
 
+    gridVisualTypeForRange (The color for grid in range without target, 设置在范围内但无目标的格子的颜色)
+
     DamageRandomRate (伤害随机上下浮动 DamageRandomRate%) (只有这个是浮点数float)
 
     (以下请写在脚本里修改)
@@ -56,6 +58,7 @@ public class AttackAction : BaseAction
     [SerializeField] private int ApWeaponDamage = 10;
     [SerializeField] private float DamageRandomRate = 20f;
     [SerializeField] protected Transform attackCameraPosition;
+    [SerializeField] protected GridSystemVisual.GridVisualType gridVisualTypeForRange;
 
     public static event EventHandler<AttackActionCameraArgs> OnAttackActionCameraRequired;
 
@@ -196,10 +199,9 @@ public class AttackAction : BaseAction
     }
 
     //Show grid in attack range but not the target grid;
-    public List<GridPosition> GetTargetGridPositionList()
+    public List<GridPosition> GetGridPositionListInRange()
     {
-                List<GridPosition> validGridPositionList = new List<GridPosition>();
-        
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
         for (int i = -effectiveDistance; i <=effectiveDistance; i++) {
             for (int j = -effectiveDistance; j <=+effectiveDistance; j++)
             {
@@ -279,4 +281,6 @@ public class AttackAction : BaseAction
     public Unit GetTargetUnit() => TargetUnit;
 
     public int GetTotalDamage() => BaseWeaponDamage + ApWeaponDamage;
+
+    public GridSystemVisual.GridVisualType GetGridVisualTypeForRange() => gridVisualTypeForRange;
 }

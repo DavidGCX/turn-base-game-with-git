@@ -14,7 +14,9 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private int height = 10; 
     public event Action newGridSystemGenerated;
     [SerializeField] private Transform debugContainer;
-    [SerializeField] private GridsystemVisual gridSystemVisual;
+    [SerializeField] private GridSystemVisual gridSystemVisual;
+
+    public event Action OnAnyUnitChangePosition;
     private GridSystem gridSystem;
     private void Awake() {
         if(instance != null) {
@@ -51,6 +53,7 @@ public class LevelGrid : MonoBehaviour
     public void UnitMoveGridPosition(Unit unit, GridPosition from, GridPosition to){
         RemoveUnitAtGridPosition(from, unit);
         AddUnitAtGridPosition(to, unit);
+        OnAnyUnitChangePosition?.Invoke();
     }
 
     public GridPosition GetGridPosition(Vector3 worldpos) => gridSystem.GetGridPosition(worldpos);

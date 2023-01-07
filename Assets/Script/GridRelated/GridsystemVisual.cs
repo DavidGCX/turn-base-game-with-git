@@ -1,16 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridsystemVisual : MonoBehaviour
+public class GridSystemVisual : MonoBehaviour
 {
     private GridSystemVisualSingle[,] visualSingles;
     [SerializeField] private Transform gridSystemVisualSinglePrefab;
     [SerializeField] private Transform visualContainer;
+    [SerializeField] private List<GridVisualTypeMaterial> gridVisualTypeMaterialList;
     // Start is called before the first frame update
     
+    [Serializable]
+    public struct GridVisualTypeMaterial{
+        public GridVisualType gridVisualType;
+        public Material material;
+    }
+
+
+    public enum GridVisualType {
+        White_Default,
+        Yellow_ForInteraction,
+        Blue_ForEffectOnAllies,
+        Red_ForAttackTarget,
+        LightRed_ForAttackInRange
+    }
+
     private void Awake() {
         GridSystemVisualGenerate();
+        HideAllGridPosition();
     }
 
     public void GridSystemVisualGenerate() {
@@ -30,7 +48,21 @@ public class GridsystemVisual : MonoBehaviour
                 
             }
         }
+
+        UnitActionSystem.Instance.OnSelectedActionChange += UnitActionSystem_OnSelectedActionChange;
+        LevelGrid.instance.OnAnyUnitChangePosition += LevelGrid_OnAnyUnitChangePosition;
     }
+
+    private void LevelGrid_OnAnyUnitChangePosition()
+    {
+        UpdateGridVisual();
+    }
+
+    private void UnitActionSystem_OnSelectedActionChange()
+    {
+        UpdateGridVisual();
+    }
+
 
     public void HideAllGridPosition(){
         for (int x = 0; x < LevelGrid.instance.GetWidth(); x++)
@@ -42,34 +74,36 @@ public class GridsystemVisual : MonoBehaviour
         }
     }
 
-    public void ShowGridPositonList(List<GridPosition> gridPositions) {
+    public void ShowGridPositonList(List<GridPosition> gridPositions, Material material) {
         foreach(var obj in gridPositions) {
-            visualSingles[obj.x, obj.z].Show();
+            visualSingles[obj.x, obj.z].Show(material);
         }
     }
-     public void ShowAttackTargetGridPositionList(List<GridPosition> gridPositions) {
-        foreach(var obj in gridPositions) {
-            visualSingles[obj.x, obj.z].ShowtAttackTarget();
-        }
-    }
-
+    //Update Grid visual, if it is an AttackAction, then show the target and range differently
     private void UpdateGridVisual() {
         HideAllGridPosition();
         Unit unit = UnitActionSystem.Instance.GetSelectedUnit();
+        BaseAction baseAction = UnitActionSystem.Instance.GetSelectedAction();
         if(unit == null) {return;}
-        if(UnitActionSystem.Instance.GetSelectedAction() == null) {return;}
-        if(UnitActionSystem.Instance.GetSelectedAction().IsAttackAction()) {
-            AttackAction shootAction = (AttackAction) UnitActionSystem.Instance.GetSelectedAction();
-            ShowGridPositonList(shootAction.GetTargetGridPositionList());
-            ShowAttackTargetGridPositionList(shootAction.GetValidGridPositionList());
+        if(baseAction == null) {return;}
+        if(baseAction.IsAttackAction()) {
+            AttackAction attackAction = (AttackAction) baseAction;
+            ShowGridPositonList(attackAction.GetGridPositionListInRange(), GetGridMaterialFromType(attackAction.GetGridVisualTypeForRange()));
+            ShowGridPositonList(attackAction.GetValidGridPositionList(),  GetGridMaterialFromType(attackAction.GetGridVisualType()));
         } else {
-            ShowGridPositonList(UnitActionSystem.Instance.GetSelectedAction().GetValidGridPositionList());
+            ShowGridPositonList(baseAction.GetValidGridPositionList(), GetGridMaterialFromType(baseAction.GetGridVisualType()));
         }
-        
+    }
+    private Material GetGridMaterialFromType(GridVisualType gridVisualType) {
+        foreach (GridVisualTypeMaterial gridVisualTypeMaterial in gridVisualTypeMaterialList)
+        {
+            if (gridVisualTypeMaterial.gridVisualType == gridVisualType) {
+                return gridVisualTypeMaterial.material;
+            }
+        }
+        Debug.LogError("Could not find the correct material bind to this type");
+        return null;
     }
 
-    private void Update() {
-        UpdateGridVisual();
-    }
 
 }

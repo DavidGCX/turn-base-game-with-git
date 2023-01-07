@@ -520,6 +520,7 @@ MonoBehaviour:
   actionPointRequirement: 1
   effectiveDistance: 4
   nameOfAction: move
+  gridVisualType: 0
   moveSpeed: 3
 --- !u!114 &1697659289
 MonoBehaviour:
@@ -536,6 +537,7 @@ MonoBehaviour:
   actionPointRequirement: 1
   effectiveDistance: 4
   nameOfAction: spin
+  gridVisualType: 2
 --- !u!114 &9105169950951395963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,11 +597,13 @@ MonoBehaviour:
   actionPointRequirement: 1
   effectiveDistance: 4
   nameOfAction: Shoot
+  gridVisualType: 3
   aimTime: 0.5
   BaseWeaponDamage: 20
   ApWeaponDamage: 10
   DamageRandomRate: 20
   attackCameraPosition: {fileID: 352184407727709170}
+  gridVisualTypeForRange: 4
 --- !u!114 &3655494427575583680
 MonoBehaviour:
   m_ObjectHideFlags: 0

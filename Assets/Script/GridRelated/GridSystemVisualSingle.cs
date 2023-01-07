@@ -7,21 +7,16 @@ public class GridSystemVisualSingle : MonoBehaviour
 
     [SerializeField] private MeshRenderer Quad;
 
-    [SerializeField] private MeshRenderer EnemyQuad;
 
 
     // Start is called before the first frame update
 
-    public void Show() {
+    public void Show(Material material) {
         Quad.enabled = true;
+        Quad.material = material;
     }
 
     public void Hide() {
         Quad.enabled = false;
-        EnemyQuad.enabled = false;
     } 
-
-    public void ShowtAttackTarget() {
-        EnemyQuad.enabled = true;
-    }
 }

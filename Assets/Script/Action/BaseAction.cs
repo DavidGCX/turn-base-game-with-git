@@ -8,10 +8,13 @@ public abstract class BaseAction : MonoBehaviour
     [SerializeField] protected int actionPointRequirement = 1;
 
     [SerializeField] protected int effectiveDistance = 4;
+    [SerializeField] protected string nameOfAction;
+
+    [SerializeField] private GridSystemVisual.GridVisualType gridVisualType;
     protected Unit unit;
     protected bool IsActive;
     private float CIRCLE_ADJUST_FACTOR = 0.3f;
-     [SerializeField] protected string nameOfAction;
+   
     protected Animator animator; 
 
     protected Action OnActionComplete;
@@ -58,4 +61,6 @@ public abstract class BaseAction : MonoBehaviour
     public virtual bool HandleUnitState() => true;
     public virtual string GenerateUnitStateErrorMessage() => "";
     public Unit GetUnit() => unit;
+
+    public GridSystemVisual.GridVisualType GetGridVisualType() => gridVisualType;
 }

@@ -16,7 +16,6 @@ public class Unit : MonoBehaviour
 
     private BaseAction[] baseActions;
     private GridPosition lastGridPosition;
-
    
     private void Awake()
     {
@@ -52,8 +51,9 @@ public class Unit : MonoBehaviour
             gridPosition.z = 0;
         }
         if (lastGridPosition != gridPosition) {
-            LevelGrid.instance.UnitMoveGridPosition(this, lastGridPosition, gridPosition);
+            GridPosition oldGriPosition = lastGridPosition;
             lastGridPosition = gridPosition;
+            LevelGrid.instance.UnitMoveGridPosition(this, oldGriPosition, lastGridPosition);
         }  
     }
 
