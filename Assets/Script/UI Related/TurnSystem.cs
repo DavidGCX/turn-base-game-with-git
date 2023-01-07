@@ -6,6 +6,8 @@ public class TurnSystem : MonoBehaviour
 {
     public static TurnSystem instance {get; private set;}
     private int TurnNumber = 0;
+
+    private int flip = 0;
     public event Action OnTurnChange;
 
     private bool PlayersTurn = false;
@@ -21,11 +23,16 @@ public class TurnSystem : MonoBehaviour
         return TurnNumber;
     }
     public void NextTurn(){
-        TurnNumber++;
+        
         PlayersTurn = !PlayersTurn;
+        
+        if (flip == 0) {
+            TurnNumber++;
+            TurnAnimator.gameObject.SetActive(false);
+            TurnAnimator.gameObject.SetActive(true); 
+        }
         OnTurnChange?.Invoke();
-        TurnAnimator.gameObject.SetActive(false);
-        TurnAnimator.gameObject.SetActive(true);    
+        flip = (flip + 1) % 2;     
     }
 
     public bool IsPlayerTurn() => PlayersTurn;

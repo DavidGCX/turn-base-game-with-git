@@ -25,19 +25,14 @@ public class UnitActionSystem : MonoBehaviour
 
 
     // for traking the units, could be use in the future
-    private List<Unit> totalPlayerUnits;
-    private List<Unit> totalEnemyUnits;
-
+    [SerializeField] private List<Unit> totalPlayerUnits;
+    [SerializeField] private List<Unit> totalEnemyUnits;
 
     [SerializeField] private GameObject BusyUI;
     [SerializeField] private Transform Notification;
 
     [SerializeField] private Transform unitPrefab;
 
-
-    // current unit in the plane, for testing purpose, can be added or removed;
-    [SerializeField] Unit testUnitOne;
-    [SerializeField] Unit testUnitTwo;
 
     // for storing the unit, no actual use
     [SerializeField] Transform unitContainer;
@@ -46,12 +41,6 @@ public class UnitActionSystem : MonoBehaviour
         Instance = this;
         totalPlayerUnits = new List<Unit>();
         totalEnemyUnits = new List<Unit>();
-        if (testUnitOne != null) {
-            totalPlayerUnits.Add(testUnitOne);
-        }
-        if (testUnitTwo != null) {
-            totalEnemyUnits.Add(testUnitTwo);
-        }
     }
 
     private void Start() {
@@ -71,7 +60,7 @@ public class UnitActionSystem : MonoBehaviour
         TryHandleUnitSpawn();
         HandleSelectedAction();
         if(Input.GetKeyDown(KeyCode.N)) {
-            LevelGrid.instance.CreateANewGridSystem(testUnitOne.transform);
+            LevelGrid.instance.CreateANewGridSystem(LevelGrid.instance.transform);
         }
     }
 
@@ -83,7 +72,6 @@ public class UnitActionSystem : MonoBehaviour
                 Vector3 spawnPlace = LevelGrid.instance.GetWorldPosition(new GridPosition(0, 0));  
                 Transform newUnit = Instantiate(unitPrefab, spawnPlace, Quaternion.identity, unitContainer);
                 Unit spawnUnit = newUnit.GetComponent<Unit>();
-                totalPlayerUnits.Add(spawnUnit);
                 SetSelectedUnit(spawnUnit);
             } else {
                 SendNotification("Grid has already occupied by a unit");
@@ -178,7 +166,7 @@ public class UnitActionSystem : MonoBehaviour
     }
 
 
-    // Send am actual notification using the bottom notification window, check this in play mode
+    // Send an actual notification using the bottom notification window, check this in play mode
     public void SendNotification(string words) {
         Notification.gameObject.SetActive(true);
         Notification.gameObject.GetComponent<TMP_Text>().text = words;
@@ -208,8 +196,15 @@ public class UnitActionSystem : MonoBehaviour
         } else {
             totalPlayerUnits.Remove(unit);
         }
+    }
+    public void AddUnitToList(Unit unit, bool isEmemy) {
+        if(isEmemy) {
+            totalEnemyUnits.Add(unit);
+        } else {
+            totalPlayerUnits.Add(unit);
+        }
     } 
-    public List<Unit> add(List<Unit> a, List<Unit> b) {
+    private List<Unit> add(List<Unit> a, List<Unit> b) {
         List<Unit> c = new List<Unit>();
         foreach (var item in a)
         {

@@ -23,6 +23,7 @@ public class Unit : MonoBehaviour
         baseActions = GetComponents<BaseAction>();
         unitStatsAndStatus = GetComponent<UnitStatsAndStatus>();
         unitWorldUI = GetComponent<UnitWorldUI>();
+
     }
     
     
@@ -34,6 +35,7 @@ public class Unit : MonoBehaviour
         UnitActionSystem.Instance.OnSelectedActionChange += HandleActionPoint;
         UnitActionSystem.Instance.SelectEvent += HandleActionPoint;
         UnitActionSystem.Instance.OnTakeAction += HandleActionPoint;
+        UnitActionSystem.Instance.AddUnitToList(this, GetUnitType());
         HandleActionPoint();
         HandleHealth();
     }
