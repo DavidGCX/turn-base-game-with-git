@@ -14,11 +14,14 @@ public class UnitActionSystem : MonoBehaviour
     public event Action OnSelectedActionChange;
 
     public event Action OnTakeAction;
+
+    public event Action OnEnemyDestroy;
     
     [SerializeField] private LayerMask UnitySelectLayerMask;
     private Unit selectedUnit;
 
     private BaseAction selectedAction;
+
 
     private bool isBusy = false;
 
@@ -141,9 +144,10 @@ public class UnitActionSystem : MonoBehaviour
                 SendNotification(selectedAction.GenerateUnitStateErrorMessage());
                 return;
             }
-            SetBusy();
+            
             OnTakeAction?.Invoke();
             selectedAction.TakeAction(convertedPosition, ClearBusy);
+            SetBusy();
         }
     }
 
@@ -152,6 +156,7 @@ public class UnitActionSystem : MonoBehaviour
     private void SetBusy() {
         isBusy = true;
         BusyUI.SetActive(true);
+        selectedUnit.UpdateActionPoint(0);
     }
 
 
@@ -159,8 +164,11 @@ public class UnitActionSystem : MonoBehaviour
     private void ClearBusy() {
         isBusy = false;
         //SetSelectedAction(selectedUnit.GetMoveAction());
+        
         if(!selectedUnit.CanSpendActionPoint(selectedAction)){
             SetSelectedAction(null); 
+        } else {
+            SetSelectedAction(selectedAction); 
         }
         BusyUI.SetActive(false);
     }
@@ -193,6 +201,7 @@ public class UnitActionSystem : MonoBehaviour
     public void RemoveUnitFromList(Unit unit, bool isEmemy) {
         if(isEmemy) {
             totalEnemyUnits.Remove(unit);
+            OnEnemyDestroy?.Invoke();
         } else {
             totalPlayerUnits.Remove(unit);
         }

@@ -11,6 +11,8 @@ public class Unit : MonoBehaviour
 {
     private MoveAction moveAction;
 
+    private SpinAction spinAction;
+
     private UnitStatsAndStatus unitStatsAndStatus;
     private UnitWorldUI unitWorldUI;
 
@@ -20,23 +22,24 @@ public class Unit : MonoBehaviour
     private void Awake()
     {
         moveAction = GetComponent<MoveAction>();
+        spinAction = GetComponent<SpinAction>();
         baseActions = GetComponents<BaseAction>();
         unitStatsAndStatus = GetComponent<UnitStatsAndStatus>();
         unitWorldUI = GetComponent<UnitWorldUI>();
 
     }
     
-    
+    public SpinAction GetSpinAction() => spinAction;
     private void Start()
     {
         GridPosition gridPosition = LevelGrid.instance.GetGridPosition(transform.position);
         lastGridPosition = gridPosition;
         LevelGrid.instance.AddUnitAtGridPosition(gridPosition, this);
-        UnitActionSystem.Instance.OnSelectedActionChange += HandleActionPoint;
-        UnitActionSystem.Instance.SelectEvent += HandleActionPoint;
-        UnitActionSystem.Instance.OnTakeAction += HandleActionPoint;
+        UnitActionSystem.Instance.OnSelectedActionChange += HandleActionPointForPlayer;
+        UnitActionSystem.Instance.SelectEvent += HandleActionPointForPlayer;
+        UnitActionSystem.Instance.OnTakeAction += HandleActionPointForPlayer;
         UnitActionSystem.Instance.AddUnitToList(this, GetUnitType());
-        HandleActionPoint();
+        HandleActionPointForPlayer();
         HandleHealth();
     }
     
@@ -61,9 +64,9 @@ public class Unit : MonoBehaviour
 
     void OnDestroy()
     {
-        UnitActionSystem.Instance.OnSelectedActionChange -= HandleActionPoint;
-        UnitActionSystem.Instance.SelectEvent -= HandleActionPoint;
-        UnitActionSystem.Instance.OnTakeAction -= HandleActionPoint;
+        UnitActionSystem.Instance.OnSelectedActionChange -= HandleActionPointForPlayer;
+        UnitActionSystem.Instance.SelectEvent -= HandleActionPointForPlayer;
+        UnitActionSystem.Instance.OnTakeAction -= HandleActionPointForPlayer;
         LevelGrid.instance.RemoveUnitAtGridPosition(lastGridPosition, this);
         UnitActionSystem.Instance.RemoveUnitFromList(this, GetUnitType());
     }
@@ -74,8 +77,16 @@ public class Unit : MonoBehaviour
 
     public bool TrySpendActionPoint(BaseAction baseAction) => unitStatsAndStatus.TrySpendActionPoint(baseAction);
 
-    public void HandleActionPoint() {
-        unitWorldUI.HandleActionPoint();
+    public void HandleActionPointForPlayer() {
+        unitWorldUI.HandleActionPointForPlayer();
+    }
+
+    public void HandleActionPointForEnemy(BaseAction selectedAction) {
+        unitWorldUI.HandleActionPointForEnemy(selectedAction);
+    }
+
+    public void UpdateActionPoint(int selectedAmount) {
+        unitWorldUI.UpdateActionPoint(selectedAmount);
     }
 
     public void HandleHealth() {

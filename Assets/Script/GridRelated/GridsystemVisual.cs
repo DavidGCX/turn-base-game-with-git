@@ -48,9 +48,14 @@ public class GridSystemVisual : MonoBehaviour
                 
             }
         }
-
+        UnitActionSystem.Instance.OnEnemyDestroy += UnitActionSystem_OnEnemyDestroy;
         UnitActionSystem.Instance.OnSelectedActionChange += UnitActionSystem_OnSelectedActionChange;
         LevelGrid.instance.OnAnyUnitChangePosition += LevelGrid_OnAnyUnitChangePosition;
+    }
+
+    private void UnitActionSystem_OnEnemyDestroy()
+    {
+        UpdateGridVisual();
     }
 
     private void LevelGrid_OnAnyUnitChangePosition()

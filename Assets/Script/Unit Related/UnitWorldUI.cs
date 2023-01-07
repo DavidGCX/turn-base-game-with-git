@@ -33,12 +33,24 @@ public class UnitWorldUI : MonoBehaviour
     }
     // Start is called before the first frame update
 
-    public void HandleActionPoint() {
+    public void HandleActionPointForPlayer() {
         if (UnitActionSystem.Instance.GetSelectedUnit() != unit || 
         UnitActionSystem.Instance.GetSelectedAction() == null){
             UpdateActionPoint(0);
         } else{
             UpdateActionPoint(UnitActionSystem.Instance.GetSelectedAction().GetActionSpent());
+        }
+        int currentActionPoint = unit.GetCurrentActionPoint();
+        int maximumActionPoint =unit.GetMaxActionPoint();
+        
+        
+    }
+
+    public void HandleActionPointForEnemy(BaseAction selectedAction) {  
+        if (selectedAction == null) {
+            UpdateActionPoint(0);
+        } else {
+            UpdateActionPoint(selectedAction.GetActionSpent());
         }
         int currentActionPoint = unit.GetCurrentActionPoint();
         int maximumActionPoint =unit.GetMaxActionPoint();
@@ -52,6 +64,11 @@ public class UnitWorldUI : MonoBehaviour
         int used = max - current - selectedAmount;
         //Debug.Log(used);
         if(current >= 0) {
+            if(selectedAmount > 0) {
+                ActionPointCount.text = $"{unit.GetCurrentActionPoint()}-{selectedAmount}/{max} ";
+            } else {
+                ActionPointCount.text = $"{unit.GetCurrentActionPoint()}/{max}";
+            }
             for (int i = 0; i < selectedAmount; i++)
             {
                 Instantiate(ActionPointSelectedPrefab,ActionPointContainer);
