@@ -76,7 +76,7 @@ public class UnitActionSystem : MonoBehaviour
     }
 
 
-    // Used to generate unit
+    // Used to generate unit, will be improved in the future
     private void TryHandleUnitSpawn() {
         if (Input.GetMouseButtonDown(1)) {
             if (!LevelGrid.instance.HasAnyUnitOnGridPosition(new GridPosition(0, 0))) {
