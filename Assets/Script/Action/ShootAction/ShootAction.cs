@@ -1,3 +1,4 @@
+using System.Threading;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class ShootAction : AttackAction
 {
+
+    // unit in baseAction is inherited through selfUnit here. Access it through selfUnit.
     public event EventHandler<ShootEventArgs> OnShoot;
 
     public class ShootEventArgs : EventArgs {
@@ -14,9 +17,9 @@ public class ShootAction : AttackAction
     protected override IEnumerator SpecificAttack()
     {
         OnShoot?.Invoke(this, new ShootEventArgs {
-            shootDirection = (TargetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized
+            shootDirection = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized
             ,
-            TargetPosition = TargetUnit.GetWorldPosition()
+            TargetPosition = targetUnit.GetWorldPosition()
         });
         animator.Play("firing rifle");
         yield return new WaitForSeconds(1f);
@@ -24,7 +27,7 @@ public class ShootAction : AttackAction
 
     protected override bool ShouldUseAttackCamera()
     {
-        if (GetTotalDamage() >= TargetUnit.GetUnitCurrentHealth()) {
+        if (GetTotalDamage() >= targetUnit.GetUnitCurrentHealth()) {
             return true;
         } else {
             return false;

@@ -53,7 +53,9 @@ public class AttackAction : BaseAction
     private bool stateComplete;
 
     private bool insideRoutine;
-    protected Unit TargetUnit;
+    protected Unit targetUnit;
+
+    protected Unit selfUnit;
     [SerializeField] private int BaseWeaponDamage = 20;
     [SerializeField] private int ApWeaponDamage = 10;
     [SerializeField] private float DamageRandomRate = 20f;
@@ -75,6 +77,7 @@ public class AttackAction : BaseAction
 
     protected override void Awake() {
         base.Awake();
+        selfUnit = unit;
     }
     private void Update()
     {
@@ -128,8 +131,8 @@ public class AttackAction : BaseAction
     // Turn to the target
     private IEnumerator Aiming() {
         insideRoutine = true;
-        Vector3 rotateDirection = (TargetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
-        Tween a = transform.DOLookAt(TargetUnit.GetWorldPosition(), aimTime);
+        Vector3 rotateDirection = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
+        Tween a = transform.DOLookAt(targetUnit.GetWorldPosition(), aimTime);
         yield return a.WaitForCompletion();
         stateComplete = true;
     }
@@ -177,7 +180,7 @@ public class AttackAction : BaseAction
     protected virtual void UseAttackCamera() {
         Vector3 height =new Vector3(0, attackCameraPosition.position.y, 0);
         OnAttackActionCameraRequired?.Invoke(this, new AttackActionCameraArgs(attackCameraPosition.position, 
-        TargetUnit.GetWorldPosition() + height));
+        targetUnit.GetWorldPosition() + height));
     }
 
     // Can be override to decide the conditions for triggering the attack camera
@@ -193,7 +196,7 @@ public class AttackAction : BaseAction
         //Debug.Log(state);
         insideRoutine = false;
         stateComplete = false;
-        TargetUnit = LevelGrid.instance.GetUnitAtGridPosition(gridPosition);
+        targetUnit = LevelGrid.instance.GetUnitAtGridPosition(gridPosition);
         
         StartAction(onActionComplete);
     }
@@ -269,7 +272,7 @@ public class AttackAction : BaseAction
     }
 
     public bool CauseDamage() {
-        return TargetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
+        return targetUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
     }
 
     public bool CauseDamage(Unit actualHitUnit) {
@@ -278,7 +281,7 @@ public class AttackAction : BaseAction
 
     public override bool IsAttackAction() => true;
 
-    public Unit GetTargetUnit() => TargetUnit;
+    public Unit GetTargetUnit() => targetUnit;
 
     public int GetTotalDamage() => BaseWeaponDamage + ApWeaponDamage;
 
