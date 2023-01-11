@@ -22,12 +22,12 @@ public class UnitActionSystem : MonoBehaviour
 
     private BaseAction selectedAction;
 
-
+    public event Action OnBusyChange;
     private bool isBusy = false;
 
 
 
-    // for traking the units, could be use in the future
+    // for tracking the units, could be use in the future
     [SerializeField] private List<Unit> totalPlayerUnits;
     [SerializeField] private List<Unit> totalEnemyUnits;
 
@@ -127,7 +127,7 @@ public class UnitActionSystem : MonoBehaviour
         
     }
     
-    // Trigger the acion on valid grid depends on the each action's setting, check each action for 
+    // Trigger the action on valid grid depends on the each action's setting, check each action for 
     // how to get the valid grid position
     private void HandleSelectedAction() {
         if(selectedAction == null) return;
@@ -157,8 +157,9 @@ public class UnitActionSystem : MonoBehaviour
         isBusy = true;
         BusyUI.SetActive(true);
         selectedUnit.UpdateActionPoint(0);
+        OnBusyChange?.Invoke();
     }
-
+    
 
     // use to hide busy ui, when action point is not enough for moving, set the selected action to null
     private void ClearBusy() {
@@ -171,6 +172,7 @@ public class UnitActionSystem : MonoBehaviour
             SetSelectedAction(selectedAction); 
         }
         BusyUI.SetActive(false);
+        OnBusyChange?.Invoke();
     }
 
 
@@ -181,13 +183,13 @@ public class UnitActionSystem : MonoBehaviour
     }
 
 
-    // just to clear the selected unit when turn change, would not affect the selected action since the handle unit selection
+    // just to clear the selected unit when turn change, would not affect the selected action since that will be handled through unit selection
     // could deal with it to avoid problem
-    public void TurnChange() {
+    private void TurnChange() {
         SetSelectedUnit(null);
     }
 
-
+    public bool GetBusyStatus() => isBusy;
 
     public Unit GetSelectedUnit() => selectedUnit;
     public BaseAction GetSelectedAction() => selectedAction;
@@ -198,16 +200,16 @@ public class UnitActionSystem : MonoBehaviour
     public List<Unit> GetTotalUnitList() => add(totalPlayerUnits, totalEnemyUnits);
     public List<Unit> GetEnemyUnitList() => totalEnemyUnits;
     public List<Unit> GetUnitList() => totalPlayerUnits;
-    public void RemoveUnitFromList(Unit unit, bool isEmemy) {
-        if(isEmemy) {
+    public void RemoveUnitFromList(Unit unit, bool isEnemy) {
+        if(isEnemy) {
             totalEnemyUnits.Remove(unit);
             OnEnemyDestroy?.Invoke();
         } else {
             totalPlayerUnits.Remove(unit);
         }
     }
-    public void AddUnitToList(Unit unit, bool isEmemy) {
-        if(isEmemy) {
+    public void AddUnitToList(Unit unit, bool isEnemy) {
+        if(isEnemy) {
             totalEnemyUnits.Add(unit);
         } else {
             totalPlayerUnits.Add(unit);

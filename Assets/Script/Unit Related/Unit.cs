@@ -147,7 +147,7 @@ public class Unit : MonoBehaviour
     public void SetUnitType(bool type) {unitStatsAndStatus.SetUnitType(type);}
 
 
-    // Attack related, check Warharmmer for how this system works
+    // Attack related, check total war Warhammer for how this system works
     public int GetUnitAttackTotal() => unitStatsAndStatus.GetUnitAttackTotal();
     public int GetUnitAttackBase() => unitStatsAndStatus.GetUnitAttackBase();
 

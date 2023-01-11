@@ -43,7 +43,7 @@ public class GridSystemVisual : MonoBehaviour
             {
                 GridPosition gridPosition = new GridPosition(x, z);
                 Transform gridVisualSingleTransform = Instantiate(gridSystemVisualSinglePrefab, LevelGrid.instance.GetWorldPosition(gridPosition), Quaternion.identity, visualContainer);
-                //Debug.Log(gridPosition+" the gridposition");
+                //Debug.Log(gridPosition+" the gridPosition");
                 visualSingles[x, z] = gridVisualSingleTransform.GetComponent<GridSystemVisualSingle>();
                 
             }
