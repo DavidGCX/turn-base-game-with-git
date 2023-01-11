@@ -15,6 +15,8 @@ public class GridSystem
 
     private GridObject[,] gridObjectArray;
     private Transform debugContainer;
+
+    private float CIRCLE_ADJUST_FACTOR = 0.3f;
     
     public GridSystem(int width, int height, int cellSize, Vector3 stVector, Vector3 hgVector, Transform debugContainer) {
         this.cellSize = cellSize;
@@ -66,6 +68,8 @@ public class GridSystem
     public GridObject GetGridObject(GridPosition gridPosition){
         return gridObjectArray[gridPosition.x, gridPosition.z];
     }
+
+    public int GetGridDistance(Vector3 unit, Vector3 target) => Mathf.RoundToInt(Vector3.Distance(unit, target) / cellSize - CIRCLE_ADJUST_FACTOR);
 
     public bool IsAValidGridPosition(GridPosition gridPosition) =>
         !(gridPosition.x < 0 || gridPosition.z < 0) && 

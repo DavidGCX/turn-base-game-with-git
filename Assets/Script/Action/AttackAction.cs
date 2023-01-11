@@ -55,7 +55,7 @@ public class AttackAction : BaseAction
     private bool insideRoutine;
     protected Unit targetUnit;
 
-    protected Unit selfUnit;
+    //protected Unit selfUnit;
     [SerializeField] private int BaseWeaponDamage = 20;
     [SerializeField] private int ApWeaponDamage = 10;
     [SerializeField] private float DamageRandomRate = 20f;
@@ -77,7 +77,7 @@ public class AttackAction : BaseAction
 
     protected override void Awake() {
         base.Awake();
-        selfUnit = unit;
+        //selfUnit = unit;
     }
     private void Update()
     {
