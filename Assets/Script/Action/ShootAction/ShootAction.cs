@@ -16,7 +16,6 @@ public class ShootAction : AttackAction
     }
     protected override IEnumerator SpecificAttack()
     {
-        Debug.Log(LevelGrid.instance.GetGridDistance(targetUnit.GetWorldPosition(), unit.GetWorldPosition()) + " GridDitance away");
         OnShoot?.Invoke(this, new ShootEventArgs {
             shootDirection = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized
             ,

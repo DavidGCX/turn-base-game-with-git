@@ -70,6 +70,8 @@ public class LevelGrid : MonoBehaviour
     public int GetHeight() => gridSystem.Getheight();
 
     public int GetGridDistance(Vector3 unit, Vector3 target) => gridSystem.GetGridDistance(unit, target);
+
+     public int GetGridDistance(Unit unit, Unit target) => gridSystem.GetGridDistance(unit, target);
     
     public int GetCellSize() => cellSize;
 }
