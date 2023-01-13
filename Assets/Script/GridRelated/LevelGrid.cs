@@ -12,7 +12,7 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private int cellSize = 2; 
     [SerializeField] private int width = 10; 
     [SerializeField] private int height = 10; 
-    public event Action newGridSystemGenerated;
+    //public event Action newGridSystemGenerated;
     [SerializeField] private Transform debugContainer;
     [SerializeField] private GridSystemVisual gridSystemVisual;
 

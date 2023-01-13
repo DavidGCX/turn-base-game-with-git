@@ -20,7 +20,7 @@ public class ShootAction : AttackAction
         OnShoot?.Invoke(this, new ShootEventArgs {
             shootDirection = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized
             ,
-            TargetPosition = targetUnit.GetWorldPosition()
+            TargetPosition = targetUnit.GetWorldPosition(),
         });
         animator.Play("firing rifle");
         yield return new WaitForSeconds(1f);
@@ -34,4 +34,6 @@ public class ShootAction : AttackAction
             return false;
         }
     }
+
+    protected override int CalculateEnemyAIActionValue() => 100;
 }

@@ -8,10 +8,7 @@ public class Bullet : MonoBehaviour
     private Vector3 moveDriection;
     private Vector3 targetPosition;
     [SerializeField] GameObject bulletHitEffectPrefab;
-    
-    private void Awake() {
-        attackFrom = (AttackAction) UnitActionSystem.Instance.GetSelectedAction();
-    }
+
 
     public void SetUp(AttackAction attackAction, Vector3 moveDirection, Vector3 targetPosition) {
         this.attackFrom = attackAction;

@@ -6,9 +6,7 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
 
-    private float timer;
     private State state;
-    // Start is called before the first frame update
     private bool insideCoroutine;
 
     private enum State {
@@ -74,20 +72,31 @@ public class EnemyAI : MonoBehaviour
     }
 
     private bool TryTakeAction(Unit enemyUnit, Action OnEnemyActionComplete){
-            GridPosition convertedPosition = enemyUnit.GetGridPosition();
-            BaseAction selectedAction = enemyUnit.GetSpinAction();
-            //enemyUnit.HandleActionPointForEnemy(selectedAction);
-            if(!selectedAction.IsValidMoveGridPosition(convertedPosition)) {
-                return false;
+
+            List<EnemyAIAction> enemyAIActions = new List<EnemyAIAction>();
+            foreach (BaseAction baseAction in enemyUnit.GetBaseActions())
+            {
+                if(enemyUnit.CanSpendActionPoint(baseAction)) {
+                    EnemyAIAction partialBestEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                    if (partialBestEnemyAIAction != null) {
+                        enemyAIActions.Add(baseAction.GetBestEnemyAIAction());
+                    }
+                }
             }
-            if(!enemyUnit.TrySpendActionPoint(selectedAction)){
-                return false;
-            }
-            if(!selectedAction.HandleUnitState()) {
+            if (enemyAIActions.Count == 0) {
                 return false;
             }
             
-            selectedAction.TakeAction(convertedPosition, OnEnemyActionComplete);
+            enemyAIActions.Sort((EnemyAIAction actionOne, EnemyAIAction actionTwo) => actionTwo.actionValue - actionOne.actionValue);
+            EnemyAIAction bestEnemyAiAction = enemyAIActions[0];
+            if(!bestEnemyAiAction.baseAction.HandleUnitState()) {
+                return false;
+            }
+            if(!enemyUnit.TrySpendActionPoint(bestEnemyAiAction.baseAction)){
+                return false;
+            }
+            bestEnemyAiAction.baseAction.TakeAction(bestEnemyAiAction.gridPosition, OnEnemyActionComplete);
+            CameraController.Instance.FocusOnWorldPositon(enemyUnit.GetWorldPosition());
             enemyUnit.HandleActionPointForEnemy(null);
             return true;
     }

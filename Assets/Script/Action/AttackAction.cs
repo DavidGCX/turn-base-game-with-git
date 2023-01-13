@@ -286,4 +286,6 @@ public class AttackAction : BaseAction
     public int GetTotalDamage() => BaseWeaponDamage + ApWeaponDamage;
 
     public GridSystemVisual.GridVisualType GetGridVisualTypeForRange() => gridVisualTypeForRange;
+
+    protected override int CalculateEnemyAIActionValue() => 100;
 }

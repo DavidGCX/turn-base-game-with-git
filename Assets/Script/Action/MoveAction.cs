@@ -90,7 +90,10 @@ public class MoveAction : BaseAction
 
     public override void TakeAction(GridPosition targetPosition, Action ActionComplete)
     {
+        Debug.Log(this);
         StartAction(ActionComplete);
         this.targetPosition  = LevelGrid.instance.GetWorldPosition(targetPosition);
     }
+
+    protected override int CalculateEnemyAIActionValue() => 10;
 }

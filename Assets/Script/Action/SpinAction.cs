@@ -38,4 +38,7 @@ public class SpinAction : BaseAction
 
         return new List<GridPosition>{unitGridPosition};
     }
+
+    
+    protected override int CalculateEnemyAIActionValue() => 0;
 }

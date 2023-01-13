@@ -18,7 +18,7 @@ public abstract class BaseAction : MonoBehaviour
     protected Animator animator; 
 
     protected Action OnActionComplete;
-    // Start is called before the first frame update
+
     protected virtual void Awake()
     {
         unit = GetComponent<Unit>();
@@ -63,4 +63,30 @@ public abstract class BaseAction : MonoBehaviour
     public Unit GetUnit() => unit;
 
     public GridSystemVisual.GridVisualType GetGridVisualType() => gridVisualType;
+
+    public EnemyAIAction GetBestEnemyAIAction() {
+        List<EnemyAIAction> enemyAIActions = new List<EnemyAIAction>();
+        List<GridPosition> validGridPositions = GetValidGridPositionList();
+        foreach (GridPosition gridPosition in validGridPositions)
+        {
+            enemyAIActions.Add(GetEnemyAIAction(gridPosition));
+        }
+        if(enemyAIActions.Count == 0) {
+            return null;
+        }
+        enemyAIActions.Sort((EnemyAIAction actionOne, EnemyAIAction actionTwo) => actionTwo.actionValue - actionOne.actionValue);
+        return enemyAIActions[0];
+    }
+
+    private EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
+        return new EnemyAIAction{
+            baseAction = this,
+            gridPosition = gridPosition,
+            actionValue = CalculateEnemyAIActionValue(),
+        };
+    }
+
+
+    // override this to make your own AI Action Value.
+    protected abstract int CalculateEnemyAIActionValue();
 }
