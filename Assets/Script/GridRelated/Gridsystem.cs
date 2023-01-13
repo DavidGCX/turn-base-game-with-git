@@ -69,6 +69,7 @@ public class GridSystem
         return gridObjectArray[gridPosition.x, gridPosition.z];
     }
 
+    public int GetGridDistance(Unit unit, Unit target) => GetGridDistance(unit.GetWorldPosition(), target.GetWorldPosition());
     public int GetGridDistance(Vector3 unit, Vector3 target) => Mathf.RoundToInt(Vector3.Distance(unit, target) / cellSize - CIRCLE_ADJUST_FACTOR);
 
     public bool IsAValidGridPosition(GridPosition gridPosition) =>
