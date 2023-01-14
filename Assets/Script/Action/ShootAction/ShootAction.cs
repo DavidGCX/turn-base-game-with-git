@@ -6,22 +6,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class ShootAction : AttackAction
 {
+    [SerializeField] private Transform bulletPrefab;
 
-    // unit in baseAction is inherited through selfUnit here. Access it through selfUnit.
-    public event EventHandler<ShootEventArgs> OnShoot;
+    [SerializeField] private Transform gunFront;
 
-    public class ShootEventArgs : EventArgs {
-        public Vector3 shootDirection;
-        public Vector3 TargetPosition;
-    }
+    [SerializeField] private Transform Gunback;
     protected override IEnumerator SpecificAttack()
     {
-        OnShoot?.Invoke(this, new ShootEventArgs {
-            shootDirection = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized
-            ,
-            TargetPosition = targetUnit.GetWorldPosition(),
-        });
         animator.Play("firing rifle");
+        Transform bullet = Instantiate(bulletPrefab, gunFront.position, Quaternion.identity);
+        bullet.GetComponent<Bullet>().SetUp(this, (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized, targetUnit.GetWorldPosition());
         yield return new WaitForSeconds(1f);
     }
 
@@ -35,4 +29,6 @@ public class ShootAction : AttackAction
     }
 
     protected override int CalculateEnemyAIActionValue() => 100;
+
+    
 }

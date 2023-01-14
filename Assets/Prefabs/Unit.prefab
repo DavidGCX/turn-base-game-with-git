@@ -428,7 +428,6 @@ GameObject:
   - component: {fileID: 9105169950951395963}
   - component: {fileID: 622477638968772617}
   - component: {fileID: 2203955925157840244}
-  - component: {fileID: 3655494427575583680}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Unit
@@ -604,21 +603,9 @@ MonoBehaviour:
   DamageRandomRate: 20
   attackCameraPosition: {fileID: 352184407727709170}
   gridVisualTypeForRange: 4
---- !u!114 &3655494427575583680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1209592109790939599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81818b51888fa184db115c85f87f4582, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 9181289917603373735, guid: 0a572c8aeae957144a6ae57d558acace,
     type: 3}
-  Gunfront: {fileID: 3096720166937251828}
+  gunFront: {fileID: 3096720166937251828}
   Gunback: {fileID: 4210868358800448767}
 --- !u!1 &1209972007506803119
 GameObject:
