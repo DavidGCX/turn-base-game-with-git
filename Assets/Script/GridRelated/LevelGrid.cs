@@ -17,14 +17,15 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private GridSystemVisual gridSystemVisual;
 
     public event Action OnAnyUnitChangePosition;
-    private GridSystem gridSystem;
+    private GridSystem<GridObject> gridSystem;
     private void Awake() {
         if(instance != null) {
             Debug.Log("You should delete the old LevelGrid");
             return;
         }
         instance = this;
-        gridSystem = new GridSystem(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), debugContainer);
+        gridSystem = new GridSystem<GridObject>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), 
+            debugContainer, (GridSystem<GridObject> g, GridPosition gridPosition) => new GridObject(g, gridPosition));
         gridSystem.CreateDebugObject(debugPrefab);
     }
 
@@ -33,7 +34,8 @@ public class LevelGrid : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
-        gridSystem = new GridSystem(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), debugContainer);
+        gridSystem = new GridSystem<GridObject>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), 
+        debugContainer, (GridSystem<GridObject> g, GridPosition gridPosition) => new GridObject(g, gridPosition));
         gridSystemVisual.GridSystemVisualGenerate();
         gridSystem.CreateDebugObject(debugPrefab);
     }

@@ -6,9 +6,9 @@ public class GridObject
 {
     private List<Unit> unitList;
     private GridPosition gridPosition;
-    private GridSystem gridSystem;
+    private GridSystem<GridObject> gridSystem;
 
-    public GridObject(GridSystem a, GridPosition b) {
+    public GridObject(GridSystem<GridObject> a, GridPosition b) {
         gridPosition = b;
         gridSystem = a;
         unitList = new List<Unit>();

@@ -13,7 +13,7 @@ public class AttackAction : BaseAction
 
     nameOfAction (the name of that attack) 
 
-    effectiveDistance  (will be like a circle, check it in play mode or use Gizmoz to draw a cirle to view the idea)
+    effectiveDistance  (will be like a circle, check it in play mode or use Gizmos to draw a circle to view the idea)
                         (The actual implementation is in the BaseAction Class, check it for detail or change it)
 
     actionPointRequirement (Action point required)
@@ -29,7 +29,7 @@ public class AttackAction : BaseAction
     (以下请写在脚本里修改)
     
     IEnumerator SpecificAttack() 
-        Include all attack animation, attack effect here. You need to call targetunit.damage inside.
+        Include all attack animation, attack effect here. You need to call targetUnit.damage inside.
         所有攻击的东西都放在这里处理
     
     How to calculate the damage （伤害是怎么计算的)    

@@ -10,7 +10,7 @@ public class ShootAction : AttackAction
 
     [SerializeField] private Transform gunFront;
 
-    [SerializeField] private Transform Gunback;
+    [SerializeField] private Transform gunBack;
     protected override IEnumerator SpecificAttack()
     {
         animator.Play("firing rifle");
