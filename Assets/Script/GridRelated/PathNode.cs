@@ -15,7 +15,6 @@ public class PathNode
     public PathNode(GridPosition gridPosition) {
         this.gridPosition = gridPosition;
         gValue = int.MaxValue;
-        MathF.Min
     }
 
     public override string ToString()
