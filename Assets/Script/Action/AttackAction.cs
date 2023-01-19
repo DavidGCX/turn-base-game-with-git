@@ -196,7 +196,7 @@ public class AttackAction : BaseAction
         //Debug.Log(state);
         insideRoutine = false;
         stateComplete = false;
-        targetUnit = LevelGrid.instance.GetUnitAtGridPosition(gridPosition);
+        targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
         
         StartAction(onActionComplete);
     }
@@ -210,14 +210,14 @@ public class AttackAction : BaseAction
             {
                 GridPosition offsetGridpos = new GridPosition(i,j);
                 GridPosition resultGridpos = unit.GetGridPosition() + offsetGridpos;
-                if (!LevelGrid.instance.IsAValidGridPosition(resultGridpos)) {
+                if (!LevelGrid.Instance.IsAValidGridPosition(resultGridpos)) {
                     continue;
                 }
                 if(InvalidDistance(resultGridpos) && effectiveDistance != 1) {
                     // Not in distance
                     continue;
                 }
-                if (LevelGrid.instance.HasAnyUnitOnGridPosition(resultGridpos)) {
+                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(resultGridpos)) {
                     //has unit
                     continue;
                 }
@@ -236,16 +236,16 @@ public class AttackAction : BaseAction
             {
                 GridPosition offsetGridpos = new GridPosition(i,j);
                 GridPosition resultGridpos = unit.GetGridPosition() + offsetGridpos;
-                if (!LevelGrid.instance.IsAValidGridPosition(resultGridpos)) {
+                if (!LevelGrid.Instance.IsAValidGridPosition(resultGridpos)) {
                     continue;
                 }
                 if(InvalidDistance(resultGridpos) && effectiveDistance != 1) {
                     continue;
                 }
-                if (!LevelGrid.instance.HasAnyUnitOnGridPosition(resultGridpos)) {
+                if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(resultGridpos)) {
                     continue;
                 }
-                Unit targetUnit = LevelGrid.instance.GetUnitAtGridPosition(resultGridpos);
+                Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(resultGridpos);
                 if(targetUnit.GetUnitType() == unit.GetUnitType()) {
                     continue;
                 }

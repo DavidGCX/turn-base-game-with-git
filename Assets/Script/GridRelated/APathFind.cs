@@ -1,3 +1,4 @@
+using System.Net;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Collections;
@@ -14,7 +15,7 @@ public class APathFind : MonoBehaviour
     private List<PathNode> closedNodes;
     private List<PathNode> openNodes;
 
-    private List<GridPosition> blockedPositions;
+    private List<GridPosition> UnBlockedPositions;
 
     private const int DIAGONAL_DISTANCE = 14;
     private const int DISTANCE = 10;
@@ -25,12 +26,13 @@ public class APathFind : MonoBehaviour
 
     private void Awake() {
         Instance = this;
-        gridSystem = LevelGrid.instance.CreateANewGridSystemPathNode();
+        gridSystem = LevelGrid.Instance.CreateANewGridSystemPathNode();
         openNodes = new List<PathNode>();
         closedNodes = new List<PathNode>();
     }
 
-    public List<GridPosition> FindPath(GridPosition startPosition, GridPosition targetPosition) {
+    public List<GridPosition> FindPath(GridPosition startPosition, GridPosition targetPosition, List<GridPosition> UnBlockedGridPosition) {
+        SetUnBlockedGridPosition(UnBlockedGridPosition);
         if (startPosition == targetPosition){
             return null;
         }
@@ -44,9 +46,26 @@ public class APathFind : MonoBehaviour
         while(openNodes.Count > 0) {
             PathNode currentNode = gridSystem.GetGridObject(currentPositon);
             closedNodes.Add(currentNode);
-            HandleNeighborNodes(GetNeighborNodes(GetBestNodeFromOpenListPathNode(openNodes)), currentNode);
+            
+            if(HandleNeighborNodes(GetNeighborNodes(GetBestNodeFromOpenListPathNode(openNodes)), currentNode)) {
+                return GetPath(targetNode);
+            }
+            openNodes.Remove(currentNode);
         }
         return null;
+    }
+
+    private List<GridPosition> GetPath(PathNode targetNode)
+    {
+        PathNode currentNode = targetNode;
+        List<GridPosition> pathList = new List<GridPosition>();
+        pathList.Add(targetNode.GetGridPosition());
+        while (currentNode.GetParentNode().GetGridPosition() != currentNode.GetGridPosition()) {
+            currentNode = currentNode.GetParentNode();
+            pathList.Add(currentNode.GetGridPosition());
+        }
+        pathList.Reverse();
+        return pathList;
     }
 
     private bool HandleNeighborNodes(List<PathNode> pathNodes, PathNode currentNode)
@@ -57,6 +76,9 @@ public class APathFind : MonoBehaviour
                 targetNode.SetParentNode(pathNode);
                 return true;
             }
+            if (closedNodes.Contains(pathNode)) {
+                continue;
+            }
             int newG = CalculateDistance(pathNode, currentNode) + currentNode.GetGValue();
             int newH = CalculateDistance(pathNode, targetNode);
             int newF = newG + newH;
@@ -65,6 +87,7 @@ public class APathFind : MonoBehaviour
                 pathNode.SetGValue(newG);
                 pathNode.SetHValue(newF);
                 pathNode.UpdateFValue();
+                pathNode.SetParentNode(currentNode);
             }
             
         }
@@ -141,9 +164,17 @@ public class APathFind : MonoBehaviour
     }
     private PathNode GetBestNodeFromOpenListPathNode(List<PathNode> pathNodes){
         pathNodes.Sort((PathNode a, PathNode b) => a.GetFValue() - b.GetFValue());
-        return pathNodes[0];
+        if(pathNodes.Count != 0) {
+            return pathNodes[0];
+        } else {
+            return null;
+        }
+       
     }
 
     private bool isNotValidPosition(GridPosition gridPosition) => !gridSystem.IsAValidGridPosition(gridPosition);
-    private bool isBlocked(GridPosition gridPosition) => blockedPositions.Contains(gridPosition);
+    private bool isBlocked(GridPosition gridPosition) => !UnBlockedPositions.Contains(gridPosition);
+    public void SetUnBlockedGridPosition(List<GridPosition> gridPositions){
+        UnBlockedPositions = gridPositions;
+    }
 }

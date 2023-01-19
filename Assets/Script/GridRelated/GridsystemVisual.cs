@@ -36,13 +36,13 @@ public class GridSystemVisual : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
-        visualSingles = new GridSystemVisualSingle[LevelGrid.instance.GetWidth(), LevelGrid.instance.GetWidth()];
-        for (int x = 0; x < LevelGrid.instance.GetWidth(); x++)
+        visualSingles = new GridSystemVisualSingle[LevelGrid.Instance.GetWidth(), LevelGrid.Instance.GetWidth()];
+        for (int x = 0; x < LevelGrid.Instance.GetWidth(); x++)
         {
-            for (int z = 0; z < LevelGrid.instance.GetHeight(); z++)
+            for (int z = 0; z < LevelGrid.Instance.GetHeight(); z++)
             {
                 GridPosition gridPosition = new GridPosition(x, z);
-                Transform gridVisualSingleTransform = Instantiate(gridSystemVisualSinglePrefab, LevelGrid.instance.GetWorldPosition(gridPosition), Quaternion.identity, visualContainer);
+                Transform gridVisualSingleTransform = Instantiate(gridSystemVisualSinglePrefab, LevelGrid.Instance.GetWorldPosition(gridPosition), Quaternion.identity, visualContainer);
                 //Debug.Log(gridPosition+" the gridPosition");
                 visualSingles[x, z] = gridVisualSingleTransform.GetComponent<GridSystemVisualSingle>();
                 
@@ -50,7 +50,7 @@ public class GridSystemVisual : MonoBehaviour
         }
         UnitActionSystem.Instance.OnEnemyDestroy += UnitActionSystem_OnEnemyDestroy;
         UnitActionSystem.Instance.OnSelectedActionChange += UnitActionSystem_OnSelectedActionChange;
-        LevelGrid.instance.OnAnyUnitChangePosition += LevelGrid_OnAnyUnitChangePosition;
+        LevelGrid.Instance.OnAnyUnitChangePosition += LevelGrid_OnAnyUnitChangePosition;
     }
 
     private void UnitActionSystem_OnEnemyDestroy()
@@ -70,9 +70,9 @@ public class GridSystemVisual : MonoBehaviour
 
 
     public void HideAllGridPosition(){
-        for (int x = 0; x < LevelGrid.instance.GetWidth(); x++)
+        for (int x = 0; x < LevelGrid.Instance.GetWidth(); x++)
         {
-            for (int z = 0; z < LevelGrid.instance.GetHeight(); z++)
+            for (int z = 0; z < LevelGrid.Instance.GetHeight(); z++)
             {
                 visualSingles[x,z].Hide();
             }

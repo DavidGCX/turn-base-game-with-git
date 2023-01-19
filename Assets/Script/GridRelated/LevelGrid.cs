@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class LevelGrid : MonoBehaviour
 {
-    public static LevelGrid instance {get; private set;}
+    public static LevelGrid Instance {get; private set;}
     [SerializeField] private Transform debugPrefab;
 
     [SerializeField] private int cellSize = 2; 
@@ -19,11 +19,11 @@ public class LevelGrid : MonoBehaviour
     public event Action OnAnyUnitChangePosition;
     private GridSystem<GridObject> gridSystem;
     private void Awake() {
-        if(instance != null) {
+        if(Instance != null) {
             Debug.Log("You should delete the old LevelGrid");
             return;
         }
-        instance = this;
+        Instance = this;
         gridSystem = new GridSystem<GridObject>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), 
             debugContainer, (GridSystem<GridObject> g, GridPosition gridPosition) => new GridObject(g, gridPosition));
         gridSystem.CreateDebugObject(debugPrefab);

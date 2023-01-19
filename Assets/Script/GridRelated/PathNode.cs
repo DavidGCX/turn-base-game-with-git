@@ -37,7 +37,7 @@ public class PathNode
     public void SetParentNode(PathNode parentNode) {
         this.parentNode = parentNode;
     }
-
+    public PathNode GetParentNode() => parentNode;
     public GridPosition GetGridPosition() {
         return gridPosition;
     }

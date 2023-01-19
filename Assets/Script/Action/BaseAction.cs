@@ -48,9 +48,9 @@ public abstract class BaseAction : MonoBehaviour
     public int GetActionSpent() => actionPointRequirement;
 
     public virtual bool InvalidDistance(GridPosition resultGridPos) {
-        Vector3 testPoint = LevelGrid.instance.GetWorldPosition(resultGridPos);
+        Vector3 testPoint = LevelGrid.Instance.GetWorldPosition(resultGridPos);
         float testDistance = Vector3.Distance(testPoint, unit.GetWorldPosition());
-        return Mathf.RoundToInt(testDistance-CIRCLE_ADJUST_FACTOR) > effectiveDistance * LevelGrid.instance.GetCellSize();
+        return Mathf.RoundToInt(testDistance-CIRCLE_ADJUST_FACTOR) > effectiveDistance * LevelGrid.Instance.GetCellSize();
     }
 
     //private void OnDrawGizmosSelected() {

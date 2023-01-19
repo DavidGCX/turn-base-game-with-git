@@ -32,9 +32,9 @@ public class Unit : MonoBehaviour
     public SpinAction GetSpinAction() => spinAction;
     private void Start()
     {
-        GridPosition gridPosition = LevelGrid.instance.GetGridPosition(transform.position);
+        GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         lastGridPosition = gridPosition;
-        LevelGrid.instance.AddUnitAtGridPosition(gridPosition, this);
+        LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
         UnitActionSystem.Instance.OnSelectedActionChange += HandleActionPointForPlayer;
         UnitActionSystem.Instance.SelectEvent += HandleActionPointForPlayer;
         UnitActionSystem.Instance.OnTakeAction += HandleActionPointForPlayer;
@@ -46,7 +46,7 @@ public class Unit : MonoBehaviour
     void Update()
     {
         //Set the gridPosition for the unit;
-        GridPosition gridPosition = LevelGrid.instance.GetGridPosition(transform.position);
+        GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         if (gridPosition.x < 0) {
             gridPosition.x = 0;
             // Debug.Log($"Out of Boundary, current pos is {LevelGrid.instance.GetGridPosition(transform.position)}");
@@ -58,7 +58,7 @@ public class Unit : MonoBehaviour
         if (lastGridPosition != gridPosition) {
             GridPosition oldGriPosition = lastGridPosition;
             lastGridPosition = gridPosition;
-            LevelGrid.instance.UnitMoveGridPosition(this, oldGriPosition, lastGridPosition);
+            LevelGrid.Instance.UnitMoveGridPosition(this, oldGriPosition, lastGridPosition);
         }  
     }
 
@@ -67,7 +67,7 @@ public class Unit : MonoBehaviour
         UnitActionSystem.Instance.OnSelectedActionChange -= HandleActionPointForPlayer;
         UnitActionSystem.Instance.SelectEvent -= HandleActionPointForPlayer;
         UnitActionSystem.Instance.OnTakeAction -= HandleActionPointForPlayer;
-        LevelGrid.instance.RemoveUnitAtGridPosition(lastGridPosition, this);
+        LevelGrid.Instance.RemoveUnitAtGridPosition(lastGridPosition, this);
         UnitActionSystem.Instance.RemoveUnitFromList(this, GetUnitType());
     }
 
@@ -127,7 +127,7 @@ public class Unit : MonoBehaviour
     // return position in grid base or world base
     public GridPosition GetGridPosition() => lastGridPosition;
 
-    public Vector3 GetWorldPosition() => LevelGrid.instance.GetWorldPosition(lastGridPosition);
+    public Vector3 GetWorldPosition() => LevelGrid.Instance.GetWorldPosition(lastGridPosition);
 
 
     //Use to generate the action button;

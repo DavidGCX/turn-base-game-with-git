@@ -63,7 +63,7 @@ public class UnitActionSystem : MonoBehaviour
         TryHandleUnitSpawn();
         HandleSelectedAction();
         if(Input.GetKeyDown(KeyCode.N)) {
-            LevelGrid.instance.CreateANewGridSystem(LevelGrid.instance.transform);
+            LevelGrid.Instance.CreateANewGridSystem(LevelGrid.Instance.transform);
         }
     }
 
@@ -71,8 +71,8 @@ public class UnitActionSystem : MonoBehaviour
     // Used to generate unit, will be improved in the future
     private void TryHandleUnitSpawn() {
         if (Input.GetMouseButtonDown(1)) {
-            if (!LevelGrid.instance.HasAnyUnitOnGridPosition(new GridPosition(0, 0))) {
-                Vector3 spawnPlace = LevelGrid.instance.GetWorldPosition(new GridPosition(0, 0));  
+            if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(new GridPosition(0, 0))) {
+                Vector3 spawnPlace = LevelGrid.Instance.GetWorldPosition(new GridPosition(0, 0));  
                 Transform newUnit = Instantiate(unitPrefab, spawnPlace, Quaternion.identity, unitContainer);
                 Unit spawnUnit = newUnit.GetComponent<Unit>();
                 SetSelectedUnit(spawnUnit);
@@ -132,7 +132,7 @@ public class UnitActionSystem : MonoBehaviour
     private void HandleSelectedAction() {
         if(selectedAction == null) return;
         if(Input.GetMouseButtonDown(0)) {
-            GridPosition convertedPosition = LevelGrid.instance.GetGridPosition(MouseWorld.GetMousePosition());
+            GridPosition convertedPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetMousePosition());
             if(!selectedAction.IsValidMoveGridPosition(convertedPosition)) {
                 return;
             }
