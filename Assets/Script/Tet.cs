@@ -5,18 +5,15 @@ using UnityEngine;
 
 public class Tet : MonoBehaviour
 {
-    [SerializeField] private Unit unit;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-       
+    class Solution {
+    public string solution(string S, string T) {
+        return null;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public bool CheckForAdd(string S, string T) {
+        return 
+    }
+
+
     }
 }

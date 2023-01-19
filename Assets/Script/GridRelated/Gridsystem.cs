@@ -1,8 +1,6 @@
-using System.Net.Mime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using System;
 
 public class GridSystem<TGridObject>
@@ -60,7 +58,7 @@ public class GridSystem<TGridObject>
                 GridPosition gridPosition = new GridPosition(x, z);
                 Transform debugObject= GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity, debugContainer);
                 GridDebugObject gridDebugObject = debugObject.GetComponent<GridDebugObject>();
-                gridDebugObject.SetGridDebugObject(gridObjectArray[x,z] as GridObject);
+                gridDebugObject.SetGridDebugObject(GetGridObject(gridPosition));
             }
             
         }
@@ -78,6 +76,6 @@ public class GridSystem<TGridObject>
         gridPosition.x < width &&
         gridPosition.z < height;
 
-    public int Getwidth() => width;
-    public int Getheight() => height;
+    public int GetWidth() => width;
+    public int GetHeight() => height;
 }

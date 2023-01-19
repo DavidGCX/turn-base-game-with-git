@@ -2,21 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class GridDebugObject : MonoBehaviour
+public class GridDebugObject: MonoBehaviour
 {
     [SerializeField] private TMP_Text text;
-    private GridObject gridObject;
+    private object gridObject;
 
-    public void SetGridDebugObject(GridObject gridObject) {
+    public virtual void SetGridDebugObject(object gridObject) {
         this.gridObject = gridObject;
     }
 
-    public override string ToString()
-    {
-        return gridObject.ToString();
-    }
-
-    private void Update() {
+    protected virtual void Update() {
         text.text = gridObject.ToString();    
     }
 }

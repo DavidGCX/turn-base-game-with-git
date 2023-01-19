@@ -39,6 +39,13 @@ public class LevelGrid : MonoBehaviour
         gridSystemVisual.GridSystemVisualGenerate();
         gridSystem.CreateDebugObject(debugPrefab);
     }
+
+    public GridSystem<PathNode> CreateANewGridSystemPathNode() {
+        return new GridSystem<PathNode>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), 
+        debugContainer, (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
+    }
+
+
     public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit) {
         GridObject CurrentGridObject = gridSystem.GetGridObject(gridPosition);
         CurrentGridObject.AddUnit(unit);
@@ -58,7 +65,7 @@ public class LevelGrid : MonoBehaviour
         OnAnyUnitChangePosition?.Invoke();
     }
 
-    public GridPosition GetGridPosition(Vector3 worldpos) => gridSystem.GetGridPosition(worldpos);
+    public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition);
 
     public Vector3 GetWorldPosition(GridPosition gridPosition) => gridSystem.GetWorldPosition(gridPosition);
 
@@ -68,8 +75,8 @@ public class LevelGrid : MonoBehaviour
 
     public Unit GetUnitAtGridPosition(GridPosition gridPosition) => GetUnitListAtGridPosition(gridPosition)[0];
 
-    public int GetWidth() => gridSystem.Getwidth();
-    public int GetHeight() => gridSystem.Getheight();
+    public int GetWidth() => gridSystem.GetWidth();
+    public int GetHeight() => gridSystem.GetHeight();
 
     public int GetGridDistance(Vector3 unit, Vector3 target) => gridSystem.GetGridDistance(unit, target);
 
