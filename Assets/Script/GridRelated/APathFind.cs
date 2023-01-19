@@ -1,7 +1,9 @@
+using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class APathFind : MonoBehaviour
 {
@@ -17,6 +19,10 @@ public class APathFind : MonoBehaviour
     private const int DIAGONAL_DISTANCE = 14;
     private const int DISTANCE = 10;
 
+    private PathNode targetNode;
+
+    private GridPosition targetGridPosition;
+
     private void Awake() {
         Instance = this;
         gridSystem = LevelGrid.instance.CreateANewGridSystemPathNode();
@@ -28,19 +34,45 @@ public class APathFind : MonoBehaviour
         if (startPosition == targetPosition){
             return null;
         }
+        targetNode = gridSystem.GetGridObject(targetPosition);
+        this.targetGridPosition = targetPosition;
         GridPosition currentPositon = startPosition;
         PathNode startNode = (PathNode) gridSystem.GetGridObject(startPosition);
+        closedNodes.Add(startNode);
         openNodes.Add(startNode);
 
         while(openNodes.Count > 0) {
-            closedNodes.Add(gridSystem.GetGridObject(currentPositon));
-            GetNeighborNodes(GetBestNodeFromOpenListGridPosition(openNodes));
+            PathNode currentNode = gridSystem.GetGridObject(currentPositon);
+            closedNodes.Add(currentNode);
+            HandleNeighborNodes(GetNeighborNodes(GetBestNodeFromOpenListPathNode(openNodes)), currentNode);
         }
         return null;
     }
 
-    //Get all the valid and unblocked neighbour gridpositions
-    public List<GridPosition> GetNeighborNodes(GridPosition gridPosition) {
+    private bool HandleNeighborNodes(List<PathNode> pathNodes, PathNode currentNode)
+    {
+        foreach (var pathNode in pathNodes)
+        {
+            if (pathNode.GetGridPosition() == targetGridPosition) {
+                targetNode.SetParentNode(pathNode);
+                return true;
+            }
+            int newG = CalculateDistance(pathNode, currentNode) + currentNode.GetGValue();
+            int newH = CalculateDistance(pathNode, targetNode);
+            int newF = newG + newH;
+            if(!openNodes.Contains(pathNode) || pathNode.GetFValue() > newF) {
+                openNodes.Add(pathNode);
+                pathNode.SetGValue(newG);
+                pathNode.SetHValue(newF);
+                pathNode.UpdateFValue();
+            }
+            
+        }
+        return false;
+    }
+
+    //Get all the valid and unblocked neighbor gridPositions
+    private List<GridPosition> GetNeighborNodes(GridPosition gridPosition) {
         GridPosition up = new GridPosition(gridPosition.x, gridPosition.z+1);
         GridPosition down = new GridPosition(gridPosition.x, gridPosition.z-1);
         GridPosition left = new GridPosition(gridPosition.x-1, gridPosition.z);
@@ -65,7 +97,7 @@ public class APathFind : MonoBehaviour
         }
         return temp;
     }
-     public List<PathNode> GetNeighbourNodes(PathNode pathNode) {
+    private List<PathNode> GetNeighborNodes(PathNode pathNode) {
         GridPosition gridPosition = pathNode.GetGridPosition();
         GridPosition up = new GridPosition(gridPosition.x, gridPosition.z+1);
         GridPosition down = new GridPosition(gridPosition.x, gridPosition.z-1);
@@ -94,21 +126,24 @@ public class APathFind : MonoBehaviour
         return tempForPathNode;
     }
 
-    public int CalculateDistance(GridPosition one, GridPosition two) {
+    private int CalculateDistance(PathNode one, PathNode two) {
+        return CalculateDistance(one.GetGridPosition(), two.GetGridPosition());
+    }
+    private int CalculateDistance(GridPosition one, GridPosition two) {
         int hDistance = Mathf.Abs(one.x - two.x);
         int vDistance = Mathf.Abs(one.z - two.z);
         return Mathf.Min(hDistance, vDistance) * DIAGONAL_DISTANCE + Mathf.Abs(hDistance - vDistance) * DISTANCE;
     }
 
-    public GridPosition GetBestNodeFromOpenListGridPosition(List<PathNode> pathNodes){
+    private GridPosition GetBestNodeFromOpenListGridPosition(List<PathNode> pathNodes){
         pathNodes.Sort((PathNode a, PathNode b) => a.GetFValue() - b.GetFValue());
         return pathNodes[0].GetGridPosition();
     }
-    public PathNode GetBestNodeFromOpenListPathNode(List<PathNode> pathNodes){
+    private PathNode GetBestNodeFromOpenListPathNode(List<PathNode> pathNodes){
         pathNodes.Sort((PathNode a, PathNode b) => a.GetFValue() - b.GetFValue());
         return pathNodes[0];
     }
 
-    public bool isNotValidPosition(GridPosition gridPosition) => !gridSystem.IsAValidGridPosition(gridPosition);
-    public bool isBlocked(GridPosition gridPosition) => blockedPositions.Contains(gridPosition);
+    private bool isNotValidPosition(GridPosition gridPosition) => !gridSystem.IsAValidGridPosition(gridPosition);
+    private bool isBlocked(GridPosition gridPosition) => blockedPositions.Contains(gridPosition);
 }

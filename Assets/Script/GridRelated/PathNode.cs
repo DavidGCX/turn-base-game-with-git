@@ -1,3 +1,4 @@
+using System.IO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ public class PathNode
     public PathNode(GridPosition gridPosition) {
         this.gridPosition = gridPosition;
         gValue = int.MaxValue;
+        parentNode = this;
     }
 
     public override string ToString()
@@ -31,6 +33,9 @@ public class PathNode
 
     public void UpdateFValue() {
         fValue = hValue + gValue;
+    }
+    public void SetParentNode(PathNode parentNode) {
+        this.parentNode = parentNode;
     }
 
     public GridPosition GetGridPosition() {
