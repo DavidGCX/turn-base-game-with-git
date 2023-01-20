@@ -9,7 +9,7 @@ This is a turn based game demo, for practising and showing the coding ability, w
 2. UnitActionSystemUI.Instance
 3. LevelGrid.Instance
 4. APathFind.Instance
-5. [CameraController.Instance](./Assets/Script/Camera And Mouse/CameraController.cs)
+5. [CameraController.Instance](./Assets/Script/CameraAndMouse/CameraController.cs)
 6. UnitActionSystem.Instance
 
 
