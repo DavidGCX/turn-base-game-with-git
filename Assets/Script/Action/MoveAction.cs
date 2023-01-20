@@ -9,6 +9,8 @@ public class MoveAction : BaseAction
     //public static MoveAction Instance;
     
     private Vector3 targetPosition;
+
+    private List<GridPosition> path;
     private const float stopDistance = 0.3f;
     private const float turnspeed = 4f;
     private const float stopRotate = 1f;
@@ -42,7 +44,7 @@ public class MoveAction : BaseAction
             //Debug.Log(quaDir); 
             float angle = Quaternion.Angle(transform.rotation, quaDir);
             if (angle > stopRotate) {
-                animator.SetFloat("IdleToRun", -1, 0.1f, Time.deltaTime);
+                //animator.SetFloat("IdleToRun", -1, 0.1f, Time.deltaTime);
                 transform.position += moveDirection * Time.deltaTime * moveSpeed*0.5f;
                 transform.rotation = Quaternion.Lerp(transform.rotation,quaDir,Time.fixedDeltaTime*turnspeed);
             } else {
@@ -53,10 +55,16 @@ public class MoveAction : BaseAction
             }
         } else {
             transform.position = targetPosition;
-            animator.SetFloat("IdleToRun", -1, 0.1f, Time.deltaTime);
-            if (animator.GetFloat("IdleToRun") <=0 ) {
-                EndAction();
+            if (path.Count != 0) {
+                this.targetPosition  = GetWorldPosition(path[0]);
+                path.RemoveAt(0);
+            } else {
+                animator.SetFloat("IdleToRun", -1, 0.1f, Time.deltaTime);
+                if (animator.GetFloat("IdleToRun") <=0 ) {
+                    EndAction();
+                }
             }
+            
             
         }
         
@@ -71,13 +79,36 @@ public class MoveAction : BaseAction
             {
                 GridPosition offsetGridpos = new GridPosition(i,j);
                 GridPosition resultGridpos = unit.GetGridPosition() + offsetGridpos;
-                if (!LevelGrid.instance.IsAValidGridPosition(resultGridpos)) {
+                if (!LevelGrid.Instance.IsAValidGridPosition(resultGridpos)) {
                     continue;
                 }
                  if(InvalidDistance(resultGridpos) && effectiveDistance != 1) {
                     continue;
                 }
-                if (LevelGrid.instance.HasAnyUnitOnGridPosition(resultGridpos)) {
+                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(resultGridpos)) {
+                    continue;
+                }
+                validGridPositionList.Add(resultGridpos);
+            }
+        }
+        return validGridPositionList;
+    }
+
+    public List<GridPosition> GetPotentialValidGridPositionList() {
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
+        
+        for (int i = -effectiveDistance; i <=effectiveDistance; i++) {
+            for (int j = -effectiveDistance; j <=+effectiveDistance; j++)
+            {
+                GridPosition offsetGridpos = new GridPosition(i,j);
+                GridPosition resultGridpos = unit.GetGridPosition() + offsetGridpos;
+                if (!LevelGrid.Instance.IsAValidGridPosition(resultGridpos)) {
+                    continue;
+                }
+                 if(InvalidDistance(resultGridpos) && effectiveDistance != 1) {
+                    continue;
+                }
+                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(resultGridpos)) {
                     continue;
                 }
                 validGridPositionList.Add(resultGridpos);
@@ -90,10 +121,31 @@ public class MoveAction : BaseAction
 
     public override void TakeAction(GridPosition targetPosition, Action ActionComplete)
     {
-        Debug.Log(this);
         StartAction(ActionComplete);
-        this.targetPosition  = LevelGrid.instance.GetWorldPosition(targetPosition);
+        path = APathFind.Instance.FindPath(unit.GetGridPosition(), targetPosition, GetValidGridPositionList());
+        /*foreach (var grid in path)
+        {
+            Debug.Log(grid);
+        }*/
+        this.targetPosition  = GetWorldPosition(path[0]);
+        //Debug.Log(this.targetPosition);
+        path.RemoveAt(0);
     }
+    private Vector3 GetWorldPosition(GridPosition gridPosition) => LevelGrid.Instance.GetWorldPosition(gridPosition);
 
     protected override int CalculateEnemyAIActionValue() => 10;
+
+    /*
+    public IEnumerator testFindPath(GridPosition targetPosition) {
+        Debug.Log("Before path");
+        Debug.Log(APathFind.Instance);
+        List<GridPosition> path = APathFind.Instance.FindPath(unit.GetGridPosition(), targetPosition, GetValidGridPositionList());
+        Debug.Log("Before path");
+        foreach (var grid in path)
+        {
+            Debug.Log(grid);
+        }
+        yield return new WaitForSeconds(0f);
+    }
+    */
 }

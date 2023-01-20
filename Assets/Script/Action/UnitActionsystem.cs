@@ -48,11 +48,11 @@ public class UnitActionSystem : MonoBehaviour
 
     private void Start() {
         //SetSelectedUnit(selectedUnit);
-        TurnSystem.instance.OnTurnChange += TurnChange;
+        TurnSystem.Instance.OnTurnChange += TurnChange;
     }
     private void Update()
     {
-        if(!TurnSystem.instance.IsPlayerTurn()) {
+        if(!TurnSystem.Instance.IsPlayerTurn()) {
             return;
         }
         if(isBusy == true || 

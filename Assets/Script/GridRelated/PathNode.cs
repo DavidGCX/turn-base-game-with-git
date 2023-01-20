@@ -17,8 +17,8 @@ public class PathNode
         this.gridPosition = gridPosition;
         gValue = int.MaxValue;
         parentNode = this;
+        fValue = int.MaxValue;
     }
-
     public override string ToString()
     {
         return gridPosition.ToString();

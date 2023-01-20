@@ -1,3 +1,4 @@
+using System.Dynamic;
 using System.Net;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -8,7 +9,7 @@ using System;
 
 public class APathFind : MonoBehaviour
 {
-    public static APathFind Instance;
+    public static APathFind Instance {get; private set;}
 
     private GridSystem<PathNode> gridSystem;
 
@@ -32,24 +33,24 @@ public class APathFind : MonoBehaviour
     }
 
     public List<GridPosition> FindPath(GridPosition startPosition, GridPosition targetPosition, List<GridPosition> UnBlockedGridPosition) {
+        gridSystem.RefreshAllGridObject();
+        openNodes = new List<PathNode>();
+        closedNodes = new List<PathNode>();
         SetUnBlockedGridPosition(UnBlockedGridPosition);
         if (startPosition == targetPosition){
-            return null;
+            return GetPath(targetNode);
         }
         targetNode = gridSystem.GetGridObject(targetPosition);
         this.targetGridPosition = targetPosition;
-        GridPosition currentPositon = startPosition;
         PathNode startNode = (PathNode) gridSystem.GetGridObject(startPosition);
-        closedNodes.Add(startNode);
         openNodes.Add(startNode);
 
         while(openNodes.Count > 0) {
-            PathNode currentNode = gridSystem.GetGridObject(currentPositon);
-            closedNodes.Add(currentNode);
-            
-            if(HandleNeighborNodes(GetNeighborNodes(GetBestNodeFromOpenListPathNode(openNodes)), currentNode)) {
+            PathNode currentNode = GetBestNodeFromOpenListPathNode(openNodes);
+            if(HandleNeighborNodes(GetNeighborNodes(currentNode), currentNode)) {
                 return GetPath(targetNode);
             }
+            closedNodes.Add(currentNode);
             openNodes.Remove(currentNode);
         }
         return null;
@@ -59,11 +60,17 @@ public class APathFind : MonoBehaviour
     {
         PathNode currentNode = targetNode;
         List<GridPosition> pathList = new List<GridPosition>();
-        pathList.Add(targetNode.GetGridPosition());
+       // Debug.Log(currentNode.GetParentNode().GetGridPosition());
+      //  Debug.Log(currentNode.GetGridPosition());
         while (currentNode.GetParentNode().GetGridPosition() != currentNode.GetGridPosition()) {
-            currentNode = currentNode.GetParentNode();
             pathList.Add(currentNode.GetGridPosition());
+            //Debug.Log("Add" + currentNode.GetGridPosition());
+            currentNode = currentNode.GetParentNode();
         }
+        /*
+        foreach (var nodes in closedNodes) {
+            Debug.Log(nodes.GetGridPosition());
+        }*/
         pathList.Reverse();
         return pathList;
     }
@@ -73,7 +80,7 @@ public class APathFind : MonoBehaviour
         foreach (var pathNode in pathNodes)
         {
             if (pathNode.GetGridPosition() == targetGridPosition) {
-                targetNode.SetParentNode(pathNode);
+                targetNode.SetParentNode(currentNode);
                 return true;
             }
             if (closedNodes.Contains(pathNode)) {
@@ -85,9 +92,10 @@ public class APathFind : MonoBehaviour
             if(!openNodes.Contains(pathNode) || pathNode.GetFValue() > newF) {
                 openNodes.Add(pathNode);
                 pathNode.SetGValue(newG);
-                pathNode.SetHValue(newF);
+                pathNode.SetHValue(newH);
                 pathNode.UpdateFValue();
                 pathNode.SetParentNode(currentNode);
+                //Debug.Log(currentNode);
             }
             
         }
@@ -163,13 +171,14 @@ public class APathFind : MonoBehaviour
         return pathNodes[0].GetGridPosition();
     }
     private PathNode GetBestNodeFromOpenListPathNode(List<PathNode> pathNodes){
-        pathNodes.Sort((PathNode a, PathNode b) => a.GetFValue() - b.GetFValue());
-        if(pathNodes.Count != 0) {
-            return pathNodes[0];
-        } else {
-            return null;
+        PathNode currentNode = pathNodes[0];
+        for (var i = 1; i < pathNodes.Count; i++)
+        {
+            if (pathNodes[i].GetGValue() < currentNode.GetGValue()) {
+                currentNode = pathNodes[i];
+            }
         }
-       
+        return currentNode;
     }
 
     private bool isNotValidPosition(GridPosition gridPosition) => !gridSystem.IsAValidGridPosition(gridPosition);

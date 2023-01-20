@@ -40,7 +40,7 @@ public class UnitStatsAndStatus : MonoBehaviour
     }
     private void Start()
     {
-        TurnSystem.instance.OnTurnChange += NewTurn;
+        TurnSystem.Instance.OnTurnChange += NewTurn;
     }
 
     // Cause baseDamage + apDamage to the unit. with totalAttack hit chance and damageRandomRate to 
@@ -143,8 +143,8 @@ public class UnitStatsAndStatus : MonoBehaviour
     }
 
     public void NewTurn() {
-        if(isEnemy && !TurnSystem.instance.IsPlayerTurn() ||
-        !isEnemy && TurnSystem.instance.IsPlayerTurn()) {
+        if(isEnemy && !TurnSystem.Instance.IsPlayerTurn() ||
+        !isEnemy && TurnSystem.Instance.IsPlayerTurn()) {
             currentActionPoint = maximumActionPoint;
         }
     }

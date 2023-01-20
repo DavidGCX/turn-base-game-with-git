@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 public class TurnSystem : MonoBehaviour
 {
-    public static TurnSystem instance {get; private set;}
+    public static TurnSystem Instance {get; private set;}
     private int TurnNumber = 0;
 
     private int flip = 0;
@@ -17,7 +17,7 @@ public class TurnSystem : MonoBehaviour
     
     private void Awake()
     {
-        instance = this;
+        Instance = this;
     }
     public int GetTurnNumber() {
         return TurnNumber;

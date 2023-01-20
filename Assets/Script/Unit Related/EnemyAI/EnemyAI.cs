@@ -22,12 +22,12 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        TurnSystem.instance.OnTurnChange += TurnSystem_OnTurnChange;
+        TurnSystem.Instance.OnTurnChange += TurnSystem_OnTurnChange;
     }
 
     private void TurnSystem_OnTurnChange()
     {
-        if (!TurnSystem.instance.IsPlayerTurn()) {
+        if (!TurnSystem.Instance.IsPlayerTurn()) {
             state = State.TakingTurn;
         }
     }
@@ -56,7 +56,7 @@ public class EnemyAI : MonoBehaviour
         if (TryEnemyAiAction(OnEnemyActionComplete)) {
             state = State.Busy;
         } else {
-            TurnSystem.instance.NextTurn();
+            TurnSystem.Instance.NextTurn();
             state = State.WaitingForNextTurn;
         }
         
