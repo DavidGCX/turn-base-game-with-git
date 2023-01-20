@@ -278,6 +278,7 @@ SpecificAttack() 范例见[shootAction.cs](Assets/Script/Action/ShootAction/Shoo
 ## Helpul Attributes:
 ### Header: 
 adding a header above fields in the Inspector. 
+
     [Header ("Sphere variable")]
     public GameObject ball;
  
@@ -287,6 +288,7 @@ adding a header above fields in the Inspector.
 
 ### Space: 
 creating a space between fields.
+
     [Space (50)]
     [Header ("======Capsule variable======")]
     [Space (50)]
@@ -316,6 +318,7 @@ Works the same way, as the TextArea to store long text values. The only differen
 
 ### SerializeField: 
 show in inspector
+
     [SerializeField]
     private int objectNumber;
 
@@ -380,4 +383,4 @@ When ExecuteInEditMode attribute applied to a class the script it will perform w
     	    GetComponent<Transform>().localScale = new Vector3(2, 2, 2);
         }
     }
-```
+有待完善
