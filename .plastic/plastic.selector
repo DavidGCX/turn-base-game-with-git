@@ -1,4 +1,0 @@
-repository "turn base game with git@DGCX@cloud"
-  path "/"
-    br "/main"
-    co "/main"
