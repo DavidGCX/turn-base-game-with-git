@@ -83,6 +83,9 @@ public class MoveAction : BaseAction
         postitionPathPairList = new List<postitionPathPair>();
         foreach (var gridPosition in GetPotentialValidGridPositionList()) {
             List<GridPosition> tempPath = APathFind.Instance.FindPath(unit.GetGridPosition(), gridPosition, GetPotentialValidGridPositionList());
+            if(tempPath == null) {
+                return validGridPositionList;
+            }
             if(tempPath.Count <= effectiveDistance) {
                 postitionPathPairList.Add(new postitionPathPair{
                     gridPosition = gridPosition,
