@@ -186,6 +186,7 @@ public class UnitActionSystem : MonoBehaviour
     // could deal with it to avoid problem
     private void TurnChange() {
         SetSelectedUnit(null);
+        SetSelectedAction(null);
     }
 
     public bool GetBusyStatus() => isBusy;
