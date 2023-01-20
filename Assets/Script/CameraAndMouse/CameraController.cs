@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
-    public static CameraController Instance;
+    public static CameraController Instance {get; private set;}
     [SerializeField] private float cameraMoveSpeed = 5f;
     [SerializeField] private float cameraRotateSpeed = 100f;
 
