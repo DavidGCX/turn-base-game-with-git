@@ -53,6 +53,14 @@ public abstract class BaseAction : MonoBehaviour
         return Mathf.RoundToInt(testDistance-CIRCLE_ADJUST_FACTOR) > effectiveDistance * LevelGrid.Instance.GetCellSize();
     }
 
+    /*public virtual bool APathDistance(List<GridPosition> path) {
+        int sum = 0;
+        foreach (var node in path)
+        {
+            sum += Mathf.Min(node)
+        }
+    }*/
+
     //private void OnDrawGizmosSelected() {
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawWireSphere(transform.position + new Vector3(0, 0.1f, 0),effectiveDistance * LevelGrid.instance.GetCellSize());

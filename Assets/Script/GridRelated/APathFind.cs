@@ -183,7 +183,7 @@ public class APathFind : MonoBehaviour
 
     private bool isNotValidPosition(GridPosition gridPosition) => !gridSystem.IsAValidGridPosition(gridPosition);
     private bool isBlocked(GridPosition gridPosition) => !UnBlockedPositions.Contains(gridPosition);
-    public void SetUnBlockedGridPosition(List<GridPosition> gridPositions){
+    private void SetUnBlockedGridPosition(List<GridPosition> gridPositions){
         UnBlockedPositions = gridPositions;
     }
 }

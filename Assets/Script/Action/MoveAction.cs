@@ -1,3 +1,5 @@
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,9 +17,14 @@ public class MoveAction : BaseAction
     private const float turnspeed = 4f;
     private const float stopRotate = 1f;
     [SerializeField] private float moveSpeed;
-
+    private struct postitionPathPair{
+        public GridPosition gridPosition;
+        public List<GridPosition> path;
+    }
+    private List<postitionPathPair> postitionPathPairList;
     protected override void Awake()
     {
+        postitionPathPairList = new List<postitionPathPair>();
         base.Awake();
         targetPosition = transform.position;
         //Instance = this;
@@ -73,28 +80,21 @@ public class MoveAction : BaseAction
 
     public override List<GridPosition> GetValidGridPositionList() {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
-        
-        for (int i = -effectiveDistance; i <=effectiveDistance; i++) {
-            for (int j = -effectiveDistance; j <=+effectiveDistance; j++)
-            {
-                GridPosition offsetGridpos = new GridPosition(i,j);
-                GridPosition resultGridpos = unit.GetGridPosition() + offsetGridpos;
-                if (!LevelGrid.Instance.IsAValidGridPosition(resultGridpos)) {
-                    continue;
-                }
-                 if(InvalidDistance(resultGridpos) && effectiveDistance != 1) {
-                    continue;
-                }
-                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(resultGridpos)) {
-                    continue;
-                }
-                validGridPositionList.Add(resultGridpos);
+        postitionPathPairList = new List<postitionPathPair>();
+        foreach (var gridPosition in GetPotentialValidGridPositionList()) {
+            List<GridPosition> tempPath = APathFind.Instance.FindPath(unit.GetGridPosition(), gridPosition, GetPotentialValidGridPositionList());
+            if(tempPath.Count <= effectiveDistance) {
+                postitionPathPairList.Add(new postitionPathPair{
+                    gridPosition = gridPosition,
+                    path = tempPath,
+                });
+                validGridPositionList.Add(gridPosition);
             }
         }
         return validGridPositionList;
     }
 
-    public List<GridPosition> GetPotentialValidGridPositionList() {
+    private List<GridPosition> GetPotentialValidGridPositionList() {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         
         for (int i = -effectiveDistance; i <=effectiveDistance; i++) {
@@ -122,7 +122,7 @@ public class MoveAction : BaseAction
     public override void TakeAction(GridPosition targetPosition, Action ActionComplete)
     {
         StartAction(ActionComplete);
-        path = APathFind.Instance.FindPath(unit.GetGridPosition(), targetPosition, GetValidGridPositionList());
+        path = SearchForPath(targetPosition);
         /*foreach (var grid in path)
         {
             Debug.Log(grid);
@@ -130,6 +130,16 @@ public class MoveAction : BaseAction
         this.targetPosition  = GetWorldPosition(path[0]);
         //Debug.Log(this.targetPosition);
         path.RemoveAt(0);
+    }
+
+    private List<GridPosition> SearchForPath(GridPosition gridPosition) {
+        foreach (var pair in postitionPathPairList)
+        {
+            if(gridPosition == pair.gridPosition) {
+                return pair.path;
+            }
+        }
+        return null;
     }
     private Vector3 GetWorldPosition(GridPosition gridPosition) => LevelGrid.Instance.GetWorldPosition(gridPosition);
 
