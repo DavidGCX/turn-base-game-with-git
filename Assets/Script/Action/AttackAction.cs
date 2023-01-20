@@ -202,7 +202,7 @@ public class AttackAction : BaseAction
     }
 
     //Show grid in attack range but not the target grid;
-    public List<GridPosition> GetGridPositionListInRange()
+    public virtual List<GridPosition> GetGridPositionListInRange()
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         for (int i = -effectiveDistance; i <=effectiveDistance; i++) {

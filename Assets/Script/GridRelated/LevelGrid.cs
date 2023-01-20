@@ -6,60 +6,68 @@ using UnityEngine.EventSystems;
 
 public class LevelGrid : MonoBehaviour
 {
-    public static LevelGrid Instance {get; private set;}
+    public static LevelGrid Instance { get; private set; }
     [SerializeField] private Transform debugPrefab;
 
-    [SerializeField] private int cellSize = 2; 
-    [SerializeField] private int width = 10; 
-    [SerializeField] private int height = 10; 
+    [SerializeField] private int cellSize = 2;
+    [SerializeField] private int width = 10;
+    [SerializeField] private int height = 10;
     //public event Action newGridSystemGenerated;
     [SerializeField] private Transform debugContainer;
     [SerializeField] private GridSystemVisual gridSystemVisual;
 
     public event Action OnAnyUnitChangePosition;
     private GridSystem<GridObject> gridSystem;
-    private void Awake() {
-        if(Instance != null) {
+    private void Awake()
+    {
+        if (Instance != null)
+        {
             Debug.Log("You should delete the old LevelGrid");
             return;
         }
         Instance = this;
-        gridSystem = new GridSystem<GridObject>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), 
+        gridSystem = new GridSystem<GridObject>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0),
             debugContainer, (GridSystem<GridObject> g, GridPosition gridPosition) => new GridObject(g, gridPosition));
         gridSystem.CreateDebugObject(debugPrefab);
     }
 
-    public void CreateANewGridSystem(Transform transform) {
+    public void CreateANewGridSystem(Transform transform)
+    {
         foreach (GridDebugObject item in debugContainer.GetComponentsInChildren<GridDebugObject>())
         {
             Destroy(item.gameObject);
         }
-        gridSystem = new GridSystem<GridObject>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), 
+        gridSystem = new GridSystem<GridObject>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0),
         debugContainer, (GridSystem<GridObject> g, GridPosition gridPosition) => new GridObject(g, gridPosition));
         gridSystemVisual.GridSystemVisualGenerate();
         gridSystem.CreateDebugObject(debugPrefab);
     }
 
-    public GridSystem<PathNode> CreateANewGridSystemPathNode() {
-        return new GridSystem<PathNode>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0), 
+    public GridSystem<PathNode> CreateANewGridSystemPathNode()
+    {
+        return new GridSystem<PathNode>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0),
         debugContainer, (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
     }
 
 
-    public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit) {
+    public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit)
+    {
         GridObject CurrentGridObject = gridSystem.GetGridObject(gridPosition);
         CurrentGridObject.AddUnit(unit);
     }
-    public List<Unit> GetUnitListAtGridPosition(GridPosition gridPosition) {
+    public List<Unit> GetUnitListAtGridPosition(GridPosition gridPosition)
+    {
         GridObject CurrentGridObject = gridSystem.GetGridObject(gridPosition);
         return CurrentGridObject.GetUnitList();
     }
-    public void RemoveUnitAtGridPosition(GridPosition gridPosition, Unit unit) {
+    public void RemoveUnitAtGridPosition(GridPosition gridPosition, Unit unit)
+    {
         GridObject CurrentGridObject = gridSystem.GetGridObject(gridPosition);
-        CurrentGridObject.RemoveUnit(unit );
+        CurrentGridObject.RemoveUnit(unit);
     }
 
-    public void UnitMoveGridPosition(Unit unit, GridPosition from, GridPosition to){
+    public void UnitMoveGridPosition(Unit unit, GridPosition from, GridPosition to)
+    {
         RemoveUnitAtGridPosition(from, unit);
         AddUnitAtGridPosition(to, unit);
         OnAnyUnitChangePosition?.Invoke();
@@ -80,7 +88,7 @@ public class LevelGrid : MonoBehaviour
 
     public int GetGridDistance(Vector3 unit, Vector3 target) => gridSystem.GetGridDistance(unit, target);
 
-     public int GetGridDistance(Unit unit, Unit target) => gridSystem.GetGridDistance(unit, target);
-    
+    public int GetGridDistance(Unit unit, Unit target) => gridSystem.GetGridDistance(unit, target);
+
     public int GetCellSize() => cellSize;
 }
