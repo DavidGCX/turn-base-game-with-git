@@ -16,6 +16,9 @@ public class MoveAction : BaseAction
     private const float stopDistance = 0.3f;
     private const float turnspeed = 4f;
     private const float stopRotate = 1f;
+
+    [Header("移动速度")]
+    [Range(1f, 10f)]
     [SerializeField] private float moveSpeed;
     private struct postitionPathPair{
         public GridPosition gridPosition;

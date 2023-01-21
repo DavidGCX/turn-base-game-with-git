@@ -7,12 +7,18 @@ using UnityEngine.EventSystems;
 public class LevelGrid : MonoBehaviour
 {
     public static LevelGrid Instance { get; private set; }
-    [SerializeField] private Transform debugPrefab;
 
+    
+    [Header("GridSystem基础参数")]
+    [Tooltip("每个格子的大小")]
     [SerializeField] private int cellSize = 2;
+    [Tooltip("宽度")]
     [SerializeField] private int width = 10;
+    [Tooltip("高度")]
     [SerializeField] private int height = 10;
     //public event Action newGridSystemGenerated;
+    [Header("必要引用")]
+    [SerializeField] private Transform debugPrefab;
     [SerializeField] private Transform debugContainer;
     [SerializeField] private GridSystemVisual gridSystemVisual;
 

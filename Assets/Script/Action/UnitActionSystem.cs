@@ -17,6 +17,7 @@ public class UnitActionSystem : MonoBehaviour
     public event Action OnEnemyDestroy;
     public event Action OnBusyChange;
 
+    [Header("可选择的对象所处Layer")]
     [SerializeField] private LayerMask UnitySelectLayerMask;
     private Unit selectedUnit;
 
@@ -24,9 +25,11 @@ public class UnitActionSystem : MonoBehaviour
 
     private bool isBusy = false;
     // for tracking the units, could be use in the future
+    [Header("敌我方单位列表")]
     [SerializeField] private List<Unit> totalPlayerUnits;
     [SerializeField] private List<Unit> totalEnemyUnits;
 
+    [Header("必要的引用")]
     [SerializeField] private GameObject BusyUI;
     [SerializeField] private Transform Notification;
 
