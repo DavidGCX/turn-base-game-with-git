@@ -331,6 +331,22 @@ SpecificAttack() 范例见[shootAction.cs](Assets/Script/Action/ShootAction/Shoo
 
 
 ## 好用的Attribute：
+[Header](#header)\
+[Space](#space)\
+[Tooltip](#tooltip)\
+[Range](#range)\
+[TextArea](#textarea)\
+[Multiline](#multiline)\
+[SerializeField](#serializefield)\
+[HideInInspector](#hideininspector)\
+[ContextMenuItem](#contextmenuitem)\
+[ContextMenu](#contextmenu)\
+[HelpURL](#helpurl)\
+[RequireComponent](#requirecomponent)\
+[SelectionBase](#selectionbase)\
+[AddComponentMenu](#addcomponentmenu)\
+[ExecuteInEditMode](#executeineditmode)
+
 ### Header: 
 adding a header above fields in the Inspector. 
 
