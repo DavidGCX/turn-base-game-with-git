@@ -26,15 +26,14 @@ public class Unit : MonoBehaviour
         baseActions = GetComponents<BaseAction>();
         unitStatsAndStatus = GetComponent<UnitStatsAndStatus>();
         unitWorldUI = GetComponent<UnitWorldUI>();
-
+        GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        lastGridPosition = gridPosition;
+        LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
     }
     
     public SpinAction GetSpinAction() => spinAction;
     private void Start()
     {
-        GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
-        lastGridPosition = gridPosition;
-        LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
         UnitActionSystem.Instance.OnSelectedActionChange += HandleActionPointForPlayer;
         UnitActionSystem.Instance.SelectEvent += HandleActionPointForPlayer;
         UnitActionSystem.Instance.OnTakeAction += HandleActionPointForPlayer;

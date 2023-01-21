@@ -8,14 +8,14 @@ using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
-    public static CameraController Instance;
+    public static CameraController Instance { get; private set; }
     [SerializeField] private float cameraMoveSpeed = 5f;
     [SerializeField] private float cameraRotateSpeed = 100f;
 
     [SerializeField] private CinemachineVirtualCamera cameraVirtual;
     private CinemachineTransposer cinemachineTransposerCamera;
     [SerializeField] private float zoomAmount = 1f;
-    
+
     //Camera Offset limit
     private const float CAMERA_OFFSET_MIN = 2f;
     private const float CAMERA_OFFSET_MAX = 12f;
@@ -25,26 +25,27 @@ public class CameraController : MonoBehaviour
     private Vector3 targetPosition;
     private float smoothfactor = 5f;
 
-    void Awake()
+    private void Awake()
     {
         Instance = this;
     }
-    void Start()
+    private void Start()
     {
         cinemachineTransposerCamera = cameraVirtual.GetCinemachineComponent<CinemachineTransposer>();
         targetOffset = cinemachineTransposerCamera.m_FollowOffset;
         targetPosition = transform.position;
     }
-    void Update()
+    private void Update()
     {
 
         HandleRotate();
         HandleMove();
         HandleZoom();
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothfactor);     
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothfactor);
     }
 
-    public void FocusOnWorldPositon(Vector3 worldPosition) {
+    public void FocusOnWorldPositon(Vector3 worldPosition)
+    {
         targetPosition = worldPosition + 2 * transform.forward;
     }
 
@@ -53,7 +54,7 @@ public class CameraController : MonoBehaviour
         Vector3 rotationDir = new Vector3(0, 0, 0);
         if (Input.GetKey(KeyCode.Q))
         {
-           rotationDir.y = 1f;
+            rotationDir.y = 1f;
         }
         if (Input.GetKey(KeyCode.E))
         {
@@ -66,23 +67,23 @@ public class CameraController : MonoBehaviour
     {
         Vector3 mouseScreenPosition = TranslateMouseScreenPosition();
 
-        Vector3 inputMoveDir = new Vector3(0, 0, 0);  
+        Vector3 inputMoveDir = new Vector3(0, 0, 0);
         if (Input.GetKey(KeyCode.W))
         {
             inputMoveDir.z = 1;
-        } 
+        }
         if (Input.GetKey(KeyCode.S))
         {
             inputMoveDir.z = -1;
-        } 
+        }
         if (Input.GetKey(KeyCode.A))
         {
             inputMoveDir.x = -1;
-        } 
+        }
         if (Input.GetKey(KeyCode.D))
         {
             inputMoveDir.x = 1;
-        } 
+        }
 
         //Still Optional
         /*if (mouseScreenPosition.magnitude >= 0.8f && !EventSystem.current.IsPointerOverGameObject()) {
@@ -95,14 +96,17 @@ public class CameraController : MonoBehaviour
         //transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothfactor);
     }
 
-    private Vector3 TranslateMouseScreenPosition() => new Vector3((Input.mousePosition.x - Screen.width * 1/2)/(Screen.width * 1/2),0,
-        (Input.mousePosition.y - Screen.height * 1/2)/(Screen.height * 1/2));
+    private Vector3 TranslateMouseScreenPosition() => new Vector3((Input.mousePosition.x - Screen.width * 1 / 2) / (Screen.width * 1 / 2), 0,
+        (Input.mousePosition.y - Screen.height * 1 / 2) / (Screen.height * 1 / 2));
 
     private void HandleZoom()
     {
-        if(Input.mouseScrollDelta.y > 0f || Input.GetKey(KeyCode.C)) {
+        if (Input.mouseScrollDelta.y > 0f || Input.GetKey(KeyCode.C))
+        {
             targetOffset.y -= zoomAmount;
-        } else if (Input.mouseScrollDelta.y < 0f || Input.GetKey(KeyCode.V)) {
+        }
+        else if (Input.mouseScrollDelta.y < 0f || Input.GetKey(KeyCode.V))
+        {
             targetOffset.y += zoomAmount;
         }
         //Debug.Log(targetOffset.y);
@@ -110,11 +114,11 @@ public class CameraController : MonoBehaviour
         //make sure y does go above or below the limit
         targetOffset.y = Mathf.Clamp(targetOffset.y, CAMERA_OFFSET_MIN, CAMERA_OFFSET_MAX);
 
-        cinemachineTransposerCamera.m_FollowOffset = 
-        Vector3.Lerp(cinemachineTransposerCamera.m_FollowOffset, 
+        cinemachineTransposerCamera.m_FollowOffset =
+        Vector3.Lerp(cinemachineTransposerCamera.m_FollowOffset,
         targetOffset, Time.deltaTime * smoothfactor);
 
 
-       // Debug.Log(cinemachineTransposerCamera.m_FollowOffset);
+        // Debug.Log(cinemachineTransposerCamera.m_FollowOffset);
     }
 }

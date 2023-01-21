@@ -4,22 +4,35 @@ using UnityEngine;
 
 public class UnitStatsAndStatus : MonoBehaviour
 { 
+    [Header("单位属性列表")]
+    [Tooltip("单位攻击（命中率百分比），计算时为：单位攻击+基础攻击-防御=最终命中率")]
     [SerializeField] private int attack = 25;
+    [Tooltip("防御（闪避率百分比），计算时为：单位攻击+基础攻击-防御=最终命中率")]
     [SerializeField] private int defense = 0;
+
+    [Tooltip("基础攻击（基础命中率百分比），计算时为：单位攻击+基础攻击-防御=最终命中率")]
     [SerializeField] private int baseAttack = 40;
+
+    [Tooltip("护甲，计算时：护甲/200为减伤率，减伤只减免武器基础伤害，不减免穿甲伤害")]
+    [Range(0f, 200f)]
     [SerializeField] private int armor = 30;
+     [Tooltip("当前生命值")]
     [SerializeField] private int currentHealth = 100;
-    [SerializeField] private const int maxHealth = 100;
-
+    [Tooltip("最大生命值")]
+    [SerializeField] private int maxHealth = 100;
+     [Tooltip("当前行动点数")]
     [SerializeField] private int currentActionPoint = 5;
-
+     [Tooltip("最大行动点数")]
     [SerializeField] private int maximumActionPoint = 5;
 
     private const int MINIMUMATTACK = 10;
     private const int MINIMUMDENFENSE = 10;
+
+    [Header("是否为敌方单位")]
     [SerializeField] private bool isEnemy = false;
 
     private bool isDead = false;
+    [Header("特殊状态列表")]
     [SerializeField]private List<CurrentStatus> statusList;
 
     public enum CurrentStatus {

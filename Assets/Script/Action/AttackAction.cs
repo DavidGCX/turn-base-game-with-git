@@ -56,10 +56,19 @@ public class AttackAction : BaseAction
     protected Unit targetUnit;
 
     //protected Unit selfUnit;
+    [Header("武器威力部分")]
+    [Tooltip("基础武器威力，会被护甲减免")]
     [SerializeField] private int BaseWeaponDamage = 20;
+    [Tooltip("护甲穿透武器威力，不会被护甲减免")]
     [SerializeField] private int ApWeaponDamage = 10;
+    [Tooltip("武器威力总和上下浮动百分比，计算时为：武器威力计算护甲减免后 * random（1 - 浮动率， 1 + 浮动率）")]
     [SerializeField] private float DamageRandomRate = 20f;
+
+    [Header("攻击动作特写镜头位置")]
     [SerializeField] protected Transform attackCameraPosition;
+
+     [Header("攻击范围的格子颜色（攻击目标以外的位置）")]
+     [Tooltip("在GridVisualController的列表中添加更多选项")]
     [SerializeField] protected GridSystemVisual.GridVisualType gridVisualTypeForRange;
 
     public static event EventHandler<AttackActionCameraArgs> OnAttackActionCameraRequired;
@@ -202,7 +211,7 @@ public class AttackAction : BaseAction
     }
 
     //Show grid in attack range but not the target grid;
-    public List<GridPosition> GetGridPositionListInRange()
+    public virtual List<GridPosition> GetGridPositionListInRange()
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         for (int i = -effectiveDistance; i <=effectiveDistance; i++) {

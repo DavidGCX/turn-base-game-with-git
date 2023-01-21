@@ -5,11 +5,18 @@ using UnityEngine;
 
 public abstract class BaseAction : MonoBehaviour
 {
+    [Header("action花费的点数")]
     [SerializeField] protected int actionPointRequirement = 1;
+    
+    [Header("action的最大距离")]
 
+    [Tooltip("默认为近似圆形")]
     [SerializeField] protected int effectiveDistance = 4;
+    [Header("action的名字")]
     [SerializeField] protected string nameOfAction;
 
+    [Header("action对应的格子颜色")]
+    [Tooltip("在GridVisualController的列表中添加更多选项")]
     [SerializeField] private GridSystemVisual.GridVisualType gridVisualType;
     protected Unit unit;
     protected bool IsActive;

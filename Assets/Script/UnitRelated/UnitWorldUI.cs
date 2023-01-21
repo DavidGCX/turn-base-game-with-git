@@ -7,9 +7,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class UnitWorldUI : MonoBehaviour
 {
-
+    [Header("单位头顶可视化行动点数")]
     [SerializeField] private Transform ActionPointContainer;
-
     [SerializeField] private Transform ActionPointReadyPrefab;
     [SerializeField] private Transform ActionPointSelectedPrefab;
 
@@ -17,6 +16,7 @@ public class UnitWorldUI : MonoBehaviour
 
     [SerializeField] private TMP_Text ActionPointCount;
 
+    [Header("血条")]
     [SerializeField] private Image healthBar;
     [SerializeField] private Image healthBarDelay;
     [SerializeField] private TMP_Text healthNumber;

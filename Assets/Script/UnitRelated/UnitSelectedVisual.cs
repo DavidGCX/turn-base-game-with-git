@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitselectedVisual : MonoBehaviour
+public class UnitSelectedVisual : MonoBehaviour
 {
     [SerializeField] private Unit unit;
     [SerializeField] private MeshRenderer meshRenderer;

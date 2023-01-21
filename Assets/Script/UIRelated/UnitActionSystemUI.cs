@@ -18,7 +18,7 @@ public class UnitActionSystemUI : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         DestroyAllButton();
         UnitActionSystem.Instance.SelectEvent += UnitActionSystem_OnSelectionChange;
@@ -52,7 +52,7 @@ public class UnitActionSystemUI : MonoBehaviour
         }
     }
 
-    public  void DestroyAllButton() {
+    public void DestroyAllButton() {
         foreach (Transform item in ButtonUIContainer)
         {
             Destroy(item.gameObject);

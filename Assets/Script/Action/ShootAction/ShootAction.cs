@@ -6,8 +6,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class ShootAction : AttackAction
 {
+    [Header("子弹的prefab")]
     [SerializeField] private Transform bulletPrefab;
-
+    [Header("子弹生成的位置")]
     [SerializeField] private Transform gunFront;
 
     [SerializeField] private Transform gunBack;

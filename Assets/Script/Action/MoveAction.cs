@@ -16,6 +16,9 @@ public class MoveAction : BaseAction
     private const float stopDistance = 0.3f;
     private const float turnspeed = 4f;
     private const float stopRotate = 1f;
+
+    [Header("移动速度")]
+    [Range(1f, 10f)]
     [SerializeField] private float moveSpeed;
     private struct postitionPathPair{
         public GridPosition gridPosition;
@@ -83,6 +86,9 @@ public class MoveAction : BaseAction
         postitionPathPairList = new List<postitionPathPair>();
         foreach (var gridPosition in GetPotentialValidGridPositionList()) {
             List<GridPosition> tempPath = APathFind.Instance.FindPath(unit.GetGridPosition(), gridPosition, GetPotentialValidGridPositionList());
+            if(tempPath == null) {
+                return validGridPositionList;
+            }
             if(tempPath.Count <= effectiveDistance) {
                 postitionPathPairList.Add(new postitionPathPair{
                     gridPosition = gridPosition,
