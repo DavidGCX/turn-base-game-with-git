@@ -67,7 +67,7 @@ public class AttackAction : BaseAction
     [Header("攻击动作特写镜头位置")]
     [SerializeField] protected Transform attackCameraPosition;
 
-     [Header("攻击位置的格子颜色")]
+     [Header("攻击范围的格子颜色（攻击目标以外的位置）")]
      [Tooltip("在GridVisualController的列表中添加更多选项")]
     [SerializeField] protected GridSystemVisual.GridVisualType gridVisualTypeForRange;
 

@@ -6,9 +6,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class ShootAction : AttackAction
 {
-    [TextArea]
-    public string 关于ShootAction;
-
     [Header("子弹的prefab")]
     [SerializeField] private Transform bulletPrefab;
     [Header("子弹生成的位置")]

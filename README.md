@@ -18,7 +18,7 @@
     - [BaseAction.cs](#baseactioncs)
     - [AttackAction.cs](#attackactioncs)
   - [如何创建一个新的自定义单位](#如何创建一个新的自定义单位)
-  - [Helpul Attributes:](#helpul-attributes)
+  - [好用的Attribute：](#好用的attribute)
     - [Header:](#header)
     - [Space:](#space)
     - [Tooltip:](#tooltip)
@@ -289,10 +289,48 @@ SpecificAttack() 范例见[shootAction.cs](Assets/Script/Action/ShootAction/Shoo
 
 [索引](#索引)
 
+
 ## 如何创建一个新的自定义单位
+1. 首先先找到这个unit prefab并复制一份作为独立prefab
 
-## Helpul Attributes:
+![pick](Assets/ScreenShot/Unit.png)
 
+- 高亮选项处可删除并替换自己的模型
+![pick](Assets/ScreenShot/Body.png)
+- 高亮处为animator位置，可在此替换animator controller
+![pick](Assets/ScreenShot/Animator.png)
+  
+2. 检查Inspector, 确保以下脚本中，除了ShootAction, SpinAction外都已经正确添加，单位碰撞体可以自行添加和调整，以符合角色模型的大致形状，注意，Layer一定要选择UnitSelection.
+   
+![pic](Assets/ScreenShot/INspector.png)
+
+3. 对于每一个基础的Action,在面板中编辑花费点数，最大距离，名字和对应格子颜色，剩下的部分也请[SerializeField]到面板中编辑，如此处MoveAction的移动速度，[SerializeField] 为unity中很好用的Attribute, [其他好用的Attribute可点击这里查看](#好用的attribute)
+
+![pic](Assets/ScreenShot/MoveAction.png)
+
+4. 此处配置单位的基础属性， 
+   - Attack为命中率，Defense为防御，Base Attack为基础命中率，命中率计算公式 = Attack + Base Attack - Defense
+   - Armor为护甲，Armor/200为减免非破甲伤害的数值，Armor最高为200、
+   - Max Health为最大生命值，Current Health 为当前生命值
+   - Current/Max Action Point 当前/最大 行动点数
+   - Is Enemy, 此处打勾时单位会被认为是敌方单位无法选中，如果想让敌方单位具有AI,请同时添加[Enemy AI](Assets\Script\UnitRelated\EnemyAI\EnemyAI.cs)脚本，并完成该单位身上所有Action中的CalculateEnemyAIActionValue()方法，EnemyAI会自动采取分数最高的Action，所以可以在计算分数时融入多个考虑因素。
+   
+![pic](Assets/ScreenShot/UnitState.png)
+
+5. 此处为继承AttackAction后相关的配置，所有的攻击行为请继承AttackAction
+   - 基础设置同常规的action,如上面的Move Action
+   - 武器威力部分，分为常规伤害（Base Weapon Damage）和穿甲伤害（AP weapon Damage） 
+     - 计算公式为，攻击判定命中后->常规伤害  * （（1- 护甲减免值）+ 穿甲伤害） * random（1 - 浮动率， 1 + 浮动率）
+   - 攻击镜头特写位置请在模型中创建一个空子物体来设置位置，在脚本中可直接套用
+   - 子弹部分为shoot Action具体实现逻辑的一部分，这一部分根据自己的攻击具体实现逻辑进行调整
+
+
+![pic](Assets/ScreenShot/Shoot.png)
+
+[索引](#索引)
+
+
+## 好用的Attribute：
 ### Header: 
 adding a header above fields in the Inspector. 
 

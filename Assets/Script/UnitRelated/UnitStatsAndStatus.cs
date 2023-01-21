@@ -19,7 +19,7 @@ public class UnitStatsAndStatus : MonoBehaviour
      [Tooltip("当前生命值")]
     [SerializeField] private int currentHealth = 100;
     [Tooltip("最大生命值")]
-    [SerializeField] private const int maxHealth = 100;
+    [SerializeField] private int maxHealth = 100;
      [Tooltip("当前行动点数")]
     [SerializeField] private int currentActionPoint = 5;
      [Tooltip("最大行动点数")]
