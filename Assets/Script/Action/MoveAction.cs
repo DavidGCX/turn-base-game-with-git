@@ -87,7 +87,7 @@ public class MoveAction : BaseAction
         foreach (var gridPosition in GetPotentialValidGridPositionList()) {
             List<GridPosition> tempPath = APathFind.Instance.FindPath(unit.GetGridPosition(), gridPosition, GetPotentialValidGridPositionList());
             if(tempPath == null) {
-                return validGridPositionList;
+                continue;
             }
             if(tempPath.Count <= effectiveDistance) {
                 //Debug.Log(gridPosition);
