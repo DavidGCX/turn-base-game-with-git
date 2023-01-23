@@ -30,10 +30,11 @@ public class APathFind : MonoBehaviour
         gridSystem = LevelGrid.Instance.CreateANewGridSystemPathNode();
         openNodes = new List<PathNode>();
         closedNodes = new List<PathNode>();
+        LevelGrid.Instance.SetIsBlockStatus(gridSystem);
     }
 
     public List<GridPosition> FindPath(GridPosition startPosition, GridPosition targetPosition, List<GridPosition> UnBlockedGridPosition) {
-        gridSystem = LevelGrid.Instance.CreateANewGridSystemPathNode();
+        LevelGrid.Instance.RefreshPathFindObject(gridSystem);
         openNodes = new List<PathNode>();
         closedNodes = new List<PathNode>();
         SetUnBlockedGridPosition(UnBlockedGridPosition);
@@ -122,7 +123,7 @@ public class APathFind : MonoBehaviour
         temp.Add(downLeft);
         temp.Add(downRight);
         foreach(GridPosition gridPos in temp) {
-            if(isBlocked(gridPos) || isNotValidPosition(gridPos)) {
+            if(isBlocked(gridPos) || isNotValidPosition(gridPos) || gridSystem.GetGridObject(gridPos).IsBlock()) {
                 temp.Remove(gridPos);
             }
         }
@@ -156,7 +157,9 @@ public class APathFind : MonoBehaviour
         }
         return tempForPathNode;
     }
-
+    public bool isBlock(GridPosition gridPosition) {
+        return gridSystem.GetGridObject(gridPosition).IsBlock();
+    }
     private int CalculateDistance(PathNode one, PathNode two) {
         return CalculateDistance(one.GetGridPosition(), two.GetGridPosition());
     }

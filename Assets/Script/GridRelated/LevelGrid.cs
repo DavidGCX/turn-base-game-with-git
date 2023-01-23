@@ -21,7 +21,8 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private Transform debugPrefab;
     [SerializeField] private Transform debugContainer;
     [SerializeField] private GridSystemVisual gridSystemVisual;
-
+    
+    [SerializeField] private LayerMask Obstacle;
     public event Action OnAnyUnitChangePosition;
     private GridSystem<GridObject> gridSystem;
     private void Awake()
@@ -51,8 +52,37 @@ public class LevelGrid : MonoBehaviour
 
     public GridSystem<PathNode> CreateANewGridSystemPathNode()
     {
-        return new GridSystem<PathNode>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0),
+        GridSystem<PathNode> gridSystem = new GridSystem<PathNode>(width, height, cellSize, transform.position, new Vector3(0, transform.position.y, 0),
         debugContainer, (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
+        return gridSystem;
+    }
+
+    public void RefreshPathFindObject(GridSystem<PathNode> gridSystem) {
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++)
+            {
+                GridPosition gridPosition = new GridPosition(x, z);
+                gridSystem.GetGridObject(gridPosition).Refresh();
+            }
+        }
+    }
+
+    public void SetIsBlockStatus(GridSystem<PathNode> gridSystem) {
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++)
+            {
+                GridPosition gridPosition = new GridPosition(x, z);
+                Vector3 worldPosition = GetWorldPosition(gridPosition);
+                
+                float groundOffset = 5f;
+                if(Physics.Raycast(worldPosition + groundOffset * Vector3.down, Vector3.up, groundOffset * 2, Obstacle)){
+                    gridSystem.GetGridObject(gridPosition).SetBlock(true);
+                    //Debug.Log(gridPosition);
+                }
+            }
+        }
     }
 
 

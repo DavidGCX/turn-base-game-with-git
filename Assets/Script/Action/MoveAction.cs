@@ -90,6 +90,7 @@ public class MoveAction : BaseAction
                 return validGridPositionList;
             }
             if(tempPath.Count <= effectiveDistance) {
+                //Debug.Log(gridPosition);
                 postitionPathPairList.Add(new postitionPathPair{
                     gridPosition = gridPosition,
                     path = tempPath,
@@ -115,6 +116,9 @@ public class MoveAction : BaseAction
                     continue;
                 }
                 if (LevelGrid.Instance.HasAnyUnitOnGridPosition(resultGridpos)) {
+                    continue;
+                }
+                if (APathFind.Instance.isBlock(resultGridpos)){
                     continue;
                 }
                 validGridPositionList.Add(resultGridpos);

@@ -39,18 +39,6 @@ public class GridSystem<TGridObject>
         }
     }
 
-    public void RefreshAllGridObject() {
-        gridObjectArray = new TGridObject[width, height];
-        for (int x = 0; x < width; x++)
-        {
-            for (int z = 0; z < height; z++)
-            {
-                GridPosition gridPosition = new GridPosition(x, z);
-                gridObjectArray[x,z] = createGridObject(this, gridPosition);
-                //Debug.DrawLine(GetWorldPosition(gridPosition), GetWorldPosition(gridPosition) + Vector3.right *0.3f, Color.red, 1000);
-            }
-        }
-    }
     public Vector3 GetWorldPosition(GridPosition gridPosition) {
         return new Vector3(gridPosition.x, 0, gridPosition.z) * cellSize + standardVector + heightAdjustMent;
     }

@@ -520,7 +520,7 @@ MonoBehaviour:
   effectiveDistance: 4
   nameOfAction: move
   gridVisualType: 0
-  moveSpeed: 3
+  moveSpeed: 4
 --- !u!114 &1697659289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,6 +577,7 @@ MonoBehaviour:
   baseAttack: 40
   armor: 30
   currentHealth: 100
+  maxHealth: 100
   currentActionPoint: 5
   maximumActionPoint: 5
   isEnemy: 0
@@ -606,7 +607,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 9181289917603373735, guid: 0a572c8aeae957144a6ae57d558acace,
     type: 3}
   gunFront: {fileID: 3096720166937251828}
-  Gunback: {fileID: 4210868358800448767}
+  gunBack: {fileID: 0}
 --- !u!1 &1209972007506803119
 GameObject:
   m_ObjectHideFlags: 0
