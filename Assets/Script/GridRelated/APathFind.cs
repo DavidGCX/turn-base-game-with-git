@@ -33,6 +33,10 @@ public class APathFind : MonoBehaviour
         LevelGrid.Instance.SetIsBlockStatus(gridSystem);
     }
 
+    public void ResetIsBlockStatus() {
+        LevelGrid.Instance.SetIsBlockStatus(gridSystem);
+    }
+
     public List<GridPosition> FindPath(GridPosition startPosition, GridPosition targetPosition, List<GridPosition> UnBlockedGridPosition) {
         LevelGrid.Instance.RefreshPathFindObject(gridSystem);
         openNodes = new List<PathNode>();

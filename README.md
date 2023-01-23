@@ -114,6 +114,9 @@ public int GetCellSize();
 ```c#
 //返回从startPosition到targetPosition的路径（按顺序存入列表中，正向遍历即为具体每步移动方向），需传入所有可通行的格点集UnBlockedGridPosition
 public List<GridPosition> FindPath(GridPosition startPosition, GridPosition targetPosition, List<GridPosition> UnBlockedGridPosition);
+
+// 重新检测障碍物，用于地形改变之后
+public void ResetIsBlockStatus(); 
 ```
 [索引](#索引)
 ### CameraController.Instance
