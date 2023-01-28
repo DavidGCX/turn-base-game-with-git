@@ -52,14 +52,7 @@ public class CameraController : MonoBehaviour
     private void HandleRotate()
     {
         Vector3 rotationDir = new Vector3(0, 0, 0);
-        if (Input.GetKey(KeyCode.Q))
-        {
-            rotationDir.y = 1f;
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            rotationDir.y = -1f;
-        }
+        rotationDir.y = InputManager.Instance.GetCameraRotate();
         transform.eulerAngles += rotationDir * cameraRotateSpeed * Time.deltaTime;
     }
 
@@ -67,7 +60,8 @@ public class CameraController : MonoBehaviour
     {
         Vector3 mouseScreenPosition = TranslateMouseScreenPosition();
 
-        Vector3 inputMoveDir = new Vector3(0, 0, 0);
+        Vector2 inputMoveDir = InputManager.Instance.GetCameraMove();
+        /*
         if (Input.GetKey(KeyCode.W))
         {
             inputMoveDir.z = 1;
@@ -83,7 +77,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             inputMoveDir.x = 1;
-        }
+        }*/
 
         //Still Optional
         /*if (mouseScreenPosition.magnitude >= 0.8f && !EventSystem.current.IsPointerOverGameObject()) {
@@ -91,16 +85,17 @@ public class CameraController : MonoBehaviour
             inputMoveDir.z = mouseScreenPosition.z;
         }*/
 
-        Vector3 moveVector = transform.forward * inputMoveDir.z + transform.right * inputMoveDir.x;
+        Vector3 moveVector = transform.forward * inputMoveDir.y + transform.right * inputMoveDir.x;
         targetPosition += moveVector * cameraMoveSpeed * Time.deltaTime;
         //transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothfactor);
     }
 
-    private Vector3 TranslateMouseScreenPosition() => new Vector3((Input.mousePosition.x - Screen.width * 1 / 2) / (Screen.width * 1 / 2), 0,
-        (Input.mousePosition.y - Screen.height * 1 / 2) / (Screen.height * 1 / 2));
+    private Vector3 TranslateMouseScreenPosition() => new Vector3((InputManager.Instance.GetMousePosition().x - Screen.width * 1 / 2) / (Screen.width * 1 / 2), 0,
+        (InputManager.Instance.GetMousePosition().y - Screen.height * 1 / 2) / (Screen.height * 1 / 2));
 
     private void HandleZoom()
     {
+        /*
         if (Input.mouseScrollDelta.y > 0f || Input.GetKey(KeyCode.C))
         {
             targetOffset.y -= zoomAmount;
@@ -109,8 +104,10 @@ public class CameraController : MonoBehaviour
         {
             targetOffset.y += zoomAmount;
         }
+        */
         //Debug.Log(targetOffset.y);
 
+        targetOffset.y += InputManager.Instance.GetCameraZoom();
         //make sure y does go above or below the limit
         targetOffset.y = Mathf.Clamp(targetOffset.y, CAMERA_OFFSET_MIN, CAMERA_OFFSET_MAX);
 

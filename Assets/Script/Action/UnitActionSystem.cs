@@ -75,7 +75,7 @@ public class UnitActionSystem : MonoBehaviour
     // Used to generate unit, will be improved in the future
     private void TryHandleUnitSpawn()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (InputManager.Instance.GetMouseClickRight())
         {
             if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(new GridPosition(0, 0)))
             {
@@ -98,7 +98,7 @@ public class UnitActionSystem : MonoBehaviour
     private bool TryHandleUnitSelection()
     {
 
-        if (Input.GetMouseButtonDown(0))
+        if (InputManager.Instance.GetMouseClick())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit rayCastHit, float.MaxValue, UnitySelectLayerMask))
@@ -150,7 +150,7 @@ public class UnitActionSystem : MonoBehaviour
     private void HandleSelectedAction()
     {
         if (selectedAction == null) return;
-        if (Input.GetMouseButtonDown(0))
+        if (InputManager.Instance.GetMouseClick())
         {
             GridPosition convertedPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetMousePosition());
             if (!selectedAction.IsValidMoveGridPosition(convertedPosition))
