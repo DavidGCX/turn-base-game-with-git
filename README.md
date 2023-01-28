@@ -44,7 +44,7 @@
 4. [APathFind.Instance](Assets/Script/GridRelated/APathFind.cs)
 5. [CameraController.Instance](./Assets/Script/CameraAndMouse/CameraController.cs)
 6. [UnitActionSystem.Instance](Assets/Script/Action/UnitActionSystem.cs)
-7. [Screenshake.Instance](Assets\Script\ScreenShake.cs)
+7. [ScreenShake.Instance](Assets\Script\ScreenShake.cs)
    
 [索引](#索引)
 
@@ -261,7 +261,7 @@ public virtual List<GridPosition> GetGridPositionListInRange();
 //对targetUnit造成伤害
 public bool CauseDamage()；
 
-//对actuaHitUnit造成伤害，一般为可能造成误伤的射击攻击中使用
+//对actualHitUnit造成伤害，一般为可能造成误伤的射击攻击中使用
 public bool CauseDamage(Unit actualHitUnit);
 
 
