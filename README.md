@@ -13,6 +13,7 @@
     - [APathFind.Instance](#apathfindinstance)
     - [CameraController.Instance](#cameracontrollerinstance)
     - [UnitActionSystem.Instance](#unitactionsysteminstance)
+    - [ScreenShake.Instance](#screenshakeinstance)
   - [频繁使用的脚本总集（此处链接到具体脚本，索引列表中链接到文档中的位置）](#频繁使用的脚本总集此处链接到具体脚本索引列表中链接到文档中的位置)
     - [Unit.cs](#unitcs)
     - [BaseAction.cs](#baseactioncs)
@@ -43,6 +44,7 @@
 4. [APathFind.Instance](Assets/Script/GridRelated/APathFind.cs)
 5. [CameraController.Instance](./Assets/Script/CameraAndMouse/CameraController.cs)
 6. [UnitActionSystem.Instance](Assets/Script/Action/UnitActionSystem.cs)
+7. [Screenshake.Instance](Assets\Script\ScreenShake.cs)
    
 [索引](#索引)
 
@@ -168,6 +170,13 @@ public void RemoveUnitFromList(Unit unit, bool isEnemy);
 
 //将unit添加到列表中，根据isEnemy传入的值判断添加到哪个列表中
 public void AddUnitToList(Unit unit, bool isEnemy);
+```
+[索引](#索引)
+
+### ScreenShake.Instance
+```c#
+//屏幕震动，传入震动的强度intensity，默认为0.3，细节和自定义调整需要前往ScreenShake挂载的物体上调整，自定义接收noise需要前往具体的virtual camera调整
+ public void Shake(float intensity = 0.3f)
 ```
 [索引](#索引)
 ## 频繁使用的脚本总集（此处链接到具体脚本，索引列表中链接到文档中的位置）
