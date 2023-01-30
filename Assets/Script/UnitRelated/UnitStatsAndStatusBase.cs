@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitStatsAndStatus : MonoBehaviour
+public class UnitStatsAndStatusBase : MonoBehaviour
 { 
     [Header("单位属性列表")]
     [Tooltip("单位攻击（命中率百分比），计算时为：单位攻击+基础攻击-防御=最终命中率")]
@@ -58,7 +58,7 @@ public class UnitStatsAndStatus : MonoBehaviour
 
     // Cause baseDamage + apDamage to the unit. with totalAttack hit chance and damageRandomRate to 
     // create +- damageRandomRate% random total Damage number
-    public bool Damage(int baseDamage, int apDamage, int totalAttack, float damageRandomRate) {
+    public virtual bool Damage(int baseDamage, int apDamage, int totalAttack, float damageRandomRate) {
         int currentAttack;
         int currentDefense;
         currentDefense = defense < 10 ? MINIMUMDENFENSE : defense;
@@ -81,11 +81,11 @@ public class UnitStatsAndStatus : MonoBehaviour
 
 
     //May have some features when died;
-    private void Dead() {
+    protected virtual void Dead() {
         isDead = true;
     }
 
-    private int CalculateBaseDamageAfterArmor(int baseDamage) {
+    protected virtual int CalculateBaseDamageAfterArmor(int baseDamage) {
         float reduceRate = ((float)armor) / 200f;
         
         float resultDamage = ((float)baseDamage) * (1 - reduceRate);
@@ -155,7 +155,7 @@ public class UnitStatsAndStatus : MonoBehaviour
         }
     }
 
-    public void NewTurn() {
+    public virtual void NewTurn() {
         if(isEnemy && !TurnSystem.Instance.IsPlayerTurn() ||
         !isEnemy && TurnSystem.Instance.IsPlayerTurn()) {
             currentActionPoint = maximumActionPoint;

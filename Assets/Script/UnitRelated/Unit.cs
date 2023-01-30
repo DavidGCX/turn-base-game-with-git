@@ -13,7 +13,7 @@ public class Unit : MonoBehaviour
 
     private SpinAction spinAction;
 
-    private UnitStatsAndStatus unitStatsAndStatus;
+    private UnitStatsAndStatusBase unitStatsAndStatus;
     private UnitWorldUI unitWorldUI;
 
     private BaseAction[] baseActions;
@@ -24,7 +24,7 @@ public class Unit : MonoBehaviour
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
         baseActions = GetComponents<BaseAction>();
-        unitStatsAndStatus = GetComponent<UnitStatsAndStatus>();
+        unitStatsAndStatus = GetComponent<UnitStatsAndStatusBase>();
         unitWorldUI = GetComponent<UnitWorldUI>();
         GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         lastGridPosition = gridPosition;
@@ -106,21 +106,21 @@ public class Unit : MonoBehaviour
         unitStatsAndStatus.ClearStatus();
     }
 
-    public void AddStatus(UnitStatsAndStatus.CurrentStatus unitStatus) {
+    public void AddStatus(UnitStatsAndStatusBase.CurrentStatus unitStatus) {
         unitStatsAndStatus.AddStatus(unitStatus);
     }
 
-    public void RemoveStatus(UnitStatsAndStatus.CurrentStatus unitStatus) {
+    public void RemoveStatus(UnitStatsAndStatusBase.CurrentStatus unitStatus) {
         unitStatsAndStatus.RemoveStatus(unitStatus);
     }
 
-    public void SetStats(int amount, UnitStatsAndStatus.Stats stat){
+    public void SetStats(int amount, UnitStatsAndStatusBase.Stats stat){
         unitStatsAndStatus.SetStats(amount, stat);
     }
 
-    public int GetStats(UnitStatsAndStatus.Stats stat) => unitStatsAndStatus.GetStats(stat);
+    public int GetStats(UnitStatsAndStatusBase.Stats stat) => unitStatsAndStatus.GetStats(stat);
   
-    public bool CheckStatus(UnitStatsAndStatus.CurrentStatus unitStatus) => unitStatsAndStatus.CheckStatus(unitStatus);
+    public bool CheckStatus(UnitStatsAndStatusBase.CurrentStatus unitStatus) => unitStatsAndStatus.CheckStatus(unitStatus);
 
 
     // return position in grid base or world base

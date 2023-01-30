@@ -272,8 +272,8 @@ public class AttackAction : BaseAction
 
     //Check if can shoot or not, you can write like this to use the status system;
     public override bool HandleUnitState(){
-        if(unit.CheckStatus(UnitStatsAndStatus.CurrentStatus.CanNotShoot)) {
-            unit.RemoveStatus(UnitStatsAndStatus.CurrentStatus.CanNotShoot);
+        if(unit.CheckStatus(UnitStatsAndStatusBase.CurrentStatus.CanNotShoot)) {
+            unit.RemoveStatus(UnitStatsAndStatusBase.CurrentStatus.CanNotShoot);
             return false;
         } else {
             return true;

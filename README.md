@@ -18,6 +18,7 @@
     - [Unit.cs](#unitcs)
     - [BaseAction.cs](#baseactioncs)
     - [AttackAction.cs](#attackactioncs)
+    - [UnitStatsAndStatusBase.cs](#unitstatsandstatusbasecs)
   - [如何创建一个新的自定义单位](#如何创建一个新的自定义单位)
   - [好用的Attribute：](#好用的attribute)
     - [Header:](#header)
@@ -184,6 +185,7 @@ public void AddUnitToList(Unit unit, bool isEnemy);
 1. [Unit.cs](Assets/Script/UnitRelated/Unit.cs)
 2. [BaseAction.cs](Assets/Script/Action/BaseAction.cs)
 3. [AttackAction.cs](Assets/Script/Action/AttackAction.cs)
+4. [UnitStatsAndStatusBase.cs](Assets\Script\UnitRelated\UnitStatsAndStatusBase.cs)
 
 [索引](#索引)
 ### Unit.cs
@@ -298,6 +300,27 @@ OnAttackActionCameraRequired?.Invoke(this, new AttackActionCameraArgs(attackCame
 protected virtual IEnumerator SpecificAttack();
 ```
 SpecificAttack() 范例见[shootAction.cs](Assets/Script/Action/ShootAction/ShootAction.cs)
+
+[索引](#索引)
+
+### UnitStatsAndStatusBase.cs
+```c++
+//提供了以下可覆写的方法，使用时先创建子类
+
+//造成伤害，如果不想按照默认计算方法可覆写这个，或者如果单位有百分比/物理/魔法等抗性计算的时候就覆写这个
+public virtual bool Damage(int baseDamage, int apDamage, int totalAttack, float damageRandomRate);
+
+//在单位死亡时如果想要什么效果就覆写这个，例如让单位处生成一个ragdoll或者播放一些特效音效，默认为 什么都没有
+protected virtual void Dead();
+
+//计算基础伤害被护角削减之后的值，可覆写以为特殊单位修改算法
+protected virtual int CalculateBaseDamageAfterArmor(int baseDamage);
+
+//新回合开始时会发生什么，默认仅有补满action point，可覆写添加其他的
+public virtual void NewTurn();
+
+```
+子类案例见[UnitStatsAndStatusForMyUnit.cs](Assets\Script\UnitRelated\UnitStatsAndStatusForMyUnit.cs)
 
 [索引](#索引)
 

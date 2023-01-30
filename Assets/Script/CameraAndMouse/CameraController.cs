@@ -14,7 +14,6 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private CinemachineVirtualCamera cameraVirtual;
     private CinemachineTransposer cinemachineTransposerCamera;
-    [SerializeField] private float zoomAmount = 1f;
 
     //Camera Offset limit
     private const float CAMERA_OFFSET_MIN = 2f;
