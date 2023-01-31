@@ -20,6 +20,7 @@
     - [AttackAction.cs](#attackactioncs)
     - [UnitStatsAndStatusBase.cs](#unitstatsandstatusbasecs)
   - [如何创建一个新的自定义单位](#如何创建一个新的自定义单位)
+  - [如何创建一个新的自定义建筑单位？](#如何创建一个新的自定义建筑单位)
   - [好用的Attribute：](#好用的attribute)
     - [Header:](#header)
     - [Space:](#space)
@@ -364,6 +365,9 @@ public virtual void NewTurn();
 
 [索引](#索引)
 
+## 如何创建一个新的自定义建筑单位？
+1.为建筑添加BuildingUnit脚本，并同单位一样设置碰撞体和layer
+2.添加一个（目前最好就做一个，不然可以当单位制作）继承自BaseAction的Action即可
 
 ## 好用的Attribute：
 [Header](#header)\
