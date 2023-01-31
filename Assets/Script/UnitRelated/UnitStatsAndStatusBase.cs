@@ -25,6 +25,8 @@ public class UnitStatsAndStatusBase : MonoBehaviour
      [Tooltip("最大行动点数")]
     [SerializeField] private int maximumActionPoint = 5;
 
+    [SerializeField] private int cost = 5;
+
     private const int MINIMUMATTACK = 10;
     private const int MINIMUMDENFENSE = 10;
 
@@ -181,4 +183,6 @@ public class UnitStatsAndStatusBase : MonoBehaviour
     public int GetCurrentHealth() => currentHealth;
 
     public bool IsDead() => isDead;
+
+    public int GetCost() => cost;
 }

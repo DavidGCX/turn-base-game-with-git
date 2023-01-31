@@ -154,5 +154,7 @@ public class Unit : MonoBehaviour
     public int GetUnitCurrentHealth() => unitStatsAndStatus.GetCurrentHealth();
     public int GetUnitMaxHealth() => unitStatsAndStatus.GetMaxHealth();
     public bool IsDead() => unitStatsAndStatus.IsDead();
+
+    public int GetCost() => unitStatsAndStatus.GetCost();
 }
 
