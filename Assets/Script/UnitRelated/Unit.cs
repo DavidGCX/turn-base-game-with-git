@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
     private UnitStatsAndStatusBase unitStatsAndStatus;
     private UnitWorldUI unitWorldUI;
 
-    private BaseAction[] baseActions;
+    protected BaseAction[] baseActions;
     protected GridPosition lastGridPosition;
    
     protected virtual void Awake()
@@ -158,5 +158,13 @@ public class Unit : MonoBehaviour
     public int GetCost() => unitStatsAndStatus.GetCost();
 
     public virtual bool IsBuilding() => false;
+
+    public BaseAction GetFirstBaseAction() {
+        if (baseActions.Length > 0) {
+            return baseActions[0];
+        } else {
+            return null;
+        }
+    }
 }
 

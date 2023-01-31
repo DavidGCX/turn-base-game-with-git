@@ -8,6 +8,7 @@ public class BuildingUnit : Unit
     {
         GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         lastGridPosition = gridPosition;
+        baseActions = GetComponents<BaseAction>();
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
     }
     protected override void Start() {

@@ -134,7 +134,7 @@ public class UnitActionSystem : MonoBehaviour
             SetSelectedAction(selectedUnit.GetMoveAction());
             SelectEventForUnit?.Invoke();
         } else {
-            SetSelectedAction(null);
+            SetSelectedAction(selectedUnit.GetFirstBaseAction()? selectedUnit.GetFirstBaseAction() : null);
             SelectEventForBuilding?.Invoke();
         }
         
