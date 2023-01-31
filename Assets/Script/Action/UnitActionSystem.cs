@@ -8,7 +8,9 @@ using TMPro;
 public class UnitActionSystem : MonoBehaviour
 {
     public static UnitActionSystem Instance { get; private set; }
-    public event Action SelectEvent;
+    public event Action SelectEventForUnit;
+
+    public event Action SelectEventForBuilding;
 
     public event Action OnSelectedActionChange;
 
@@ -128,8 +130,14 @@ public class UnitActionSystem : MonoBehaviour
     {
         selectedUnit = unit;
         if (selectedUnit == null) { UnitActionSystemUI.Instance.DestroyAllButton(); return; }
-        SetSelectedAction(selectedUnit.GetMoveAction());
-        SelectEvent?.Invoke();
+        if(!unit.IsBuilding()) {
+            SetSelectedAction(selectedUnit.GetMoveAction());
+            SelectEventForUnit?.Invoke();
+        } else {
+            SetSelectedAction(null);
+            SelectEventForBuilding?.Invoke();
+        }
+        
         CameraController.Instance.FocusOnWorldPositon(selectedUnit.GetWorldPosition());
     }
 

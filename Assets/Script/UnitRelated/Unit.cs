@@ -17,9 +17,9 @@ public class Unit : MonoBehaviour
     private UnitWorldUI unitWorldUI;
 
     private BaseAction[] baseActions;
-    private GridPosition lastGridPosition;
+    protected GridPosition lastGridPosition;
    
-    private void Awake()
+    protected virtual void Awake()
     {
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
@@ -31,18 +31,18 @@ public class Unit : MonoBehaviour
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
     }
     
-    public SpinAction GetSpinAction() => spinAction;
-    private void Start()
+    //public SpinAction GetSpinAction() => spinAction;
+    protected virtual void Start()
     {
         UnitActionSystem.Instance.OnSelectedActionChange += HandleActionPointForPlayer;
-        UnitActionSystem.Instance.SelectEvent += HandleActionPointForPlayer;
+        UnitActionSystem.Instance.SelectEventForUnit += HandleActionPointForPlayer;
         UnitActionSystem.Instance.OnTakeAction += HandleActionPointForPlayer;
         UnitActionSystem.Instance.AddUnitToList(this, GetUnitType());
         HandleActionPointForPlayer();
         HandleHealth();
     }
     
-    void Update()
+    protected void Update()
     {
         //Set the gridPosition for the unit;
         GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
@@ -61,10 +61,10 @@ public class Unit : MonoBehaviour
         }  
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         UnitActionSystem.Instance.OnSelectedActionChange -= HandleActionPointForPlayer;
-        UnitActionSystem.Instance.SelectEvent -= HandleActionPointForPlayer;
+        UnitActionSystem.Instance.SelectEventForUnit -= HandleActionPointForPlayer;
         UnitActionSystem.Instance.OnTakeAction -= HandleActionPointForPlayer;
         LevelGrid.Instance.RemoveUnitAtGridPosition(lastGridPosition, this);
         UnitActionSystem.Instance.RemoveUnitFromList(this, GetUnitType());
@@ -88,7 +88,7 @@ public class Unit : MonoBehaviour
         unitWorldUI.UpdateActionPoint(selectedAmount);
     }
 
-    public void HandleHealth() {
+    private void HandleHealth() {
         unitWorldUI.HandleHealth(unitStatsAndStatus.GetNormalizedHealthPercentage());
     }
 
@@ -142,7 +142,7 @@ public class Unit : MonoBehaviour
 
 
     // Use to check the unit type, if it is enemy or not
-    public bool GetUnitType() => unitStatsAndStatus.GetUnitType();
+    public virtual bool GetUnitType() => unitStatsAndStatus.GetUnitType();
     public void SetUnitType(bool type) {unitStatsAndStatus.SetUnitType(type);}
 
 
@@ -156,5 +156,7 @@ public class Unit : MonoBehaviour
     public bool IsDead() => unitStatsAndStatus.IsDead();
 
     public int GetCost() => unitStatsAndStatus.GetCost();
+
+    public virtual bool IsBuilding() => false;
 }
 

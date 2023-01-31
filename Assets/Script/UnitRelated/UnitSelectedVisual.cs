@@ -9,7 +9,7 @@ public class UnitSelectedVisual : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UnitActionSystem.Instance.SelectEvent += Select;
+        UnitActionSystem.Instance.SelectEventForUnit += Select;
     }
 
     // Update is called once per frame
@@ -24,7 +24,7 @@ public class UnitSelectedVisual : MonoBehaviour
 
     private void OnDestroy()
     {
-        UnitActionSystem.Instance.SelectEvent -= Select;
+        UnitActionSystem.Instance.SelectEventForUnit -= Select;
     }
 
     private void UpdateVisual() {

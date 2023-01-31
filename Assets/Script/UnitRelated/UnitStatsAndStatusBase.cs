@@ -33,6 +33,7 @@ public class UnitStatsAndStatusBase : MonoBehaviour
     [Header("是否为敌方单位")]
     [SerializeField] private bool isEnemy = false;
 
+
     private bool isDead = false;
     [Header("特殊状态列表")]
     [SerializeField]private List<CurrentStatus> statusList;
@@ -183,6 +184,7 @@ public class UnitStatsAndStatusBase : MonoBehaviour
     public int GetCurrentHealth() => currentHealth;
 
     public bool IsDead() => isDead;
+
 
     public int GetCost() => cost;
 }
