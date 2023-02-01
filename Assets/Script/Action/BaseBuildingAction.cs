@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 public class BaseBuildingAction : BaseAction
 {
     // protected override void Awake() {
@@ -41,3 +41,4 @@ public class BaseBuildingAction : BaseAction
     
     protected override int CalculateEnemyAIActionValue() => 0;
 }
+*/

@@ -13,6 +13,7 @@ using System;
 */
 public class BaseBuildingUI : MonoBehaviour
 {   
+    /*
     public GameObject prefab; // This is our prefab obj that will be exposed in the inspector
     public int numberToCreate; // exposed in inspector
 
@@ -25,7 +26,7 @@ public class BaseBuildingUI : MonoBehaviour
             // Randomize color of image
             newObj.GetComponent().color = Random.ColorHSV();
         }
-    }
+    }*/
     // [SerializeField] private TMP_Text text;
     // [SerializeField] private Button button;
 
