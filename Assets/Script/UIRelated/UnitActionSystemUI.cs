@@ -23,6 +23,7 @@ public class UnitActionSystemUI : MonoBehaviour
         DestroyAllButton();
         UnitActionSystem.Instance.SelectEventForUnit += UnitActionSystem_OnSelectionChange;
         UnitActionSystem.Instance.OnSelectedActionChange += UpdateSelectedVisual;
+        UnitActionSystem.Instance.SelectEventForBuilding += DestroyAllButton;
     }
 
     private void CreateUnitActionButton() {
