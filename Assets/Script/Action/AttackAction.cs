@@ -230,6 +230,15 @@ public class AttackAction : BaseAction
                     //has unit
                     continue;
                 }
+                Vector3 resultWorldPosition = LevelGrid.Instance.GetWorldPosition(resultGridpos);
+                Vector3 startPoint = unit.GetWorldPosition() + new Vector3(0,1,0);
+                Vector3 direction = resultWorldPosition - unit.GetWorldPosition();
+                float distance = Vector3.Distance(resultWorldPosition, unit.GetWorldPosition());
+                //Debug.Log(distance);
+                int ObstacleLayer = (1 << 8); // do bitwise operation to the obstacle layer
+                if(Physics.Raycast(startPoint, direction, distance, ObstacleLayer)) {
+                    continue;
+                }
                 validGridPositionList.Add(resultGridpos);
             }
         }
@@ -258,11 +267,20 @@ public class AttackAction : BaseAction
                 if(targetUnit.GetUnitType() == unit.GetUnitType()) {
                     continue;
                 }
+                Vector3 startPoint = unit.GetWorldPosition() + new Vector3(0,1,0);
+                Vector3 direction = targetUnit.GetWorldPosition() - unit.GetWorldPosition();
+                float distance = Vector3.Distance(targetUnit.GetWorldPosition(), unit.GetWorldPosition());
+                //Debug.Log(distance);
+                int ObstacleLayer = (1 << 8); // do bitwise operation to the obstacle layer
+                if(Physics.Raycast(startPoint, direction, distance, ObstacleLayer)) {
+                    continue;
+                }
                 validGridPositionList.Add(resultGridpos);
             }
         }
         return validGridPositionList;
     }
+
 
     //Print a string for printing message
     public override string GenerateUnitStateErrorMessage()

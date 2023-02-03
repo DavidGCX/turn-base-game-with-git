@@ -468,7 +468,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.31622773, y: -3e-45, z: 1e-45, w: 0.9486833}
+  m_LocalRotation: {x: 0.31622776, y: 1e-45, z: -0, w: 0.9486833}
   m_LocalPosition: {x: 9, y: 6, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1062,7 +1062,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 494391531}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2.53}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1906,6 +1906,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8309897368670350248, guid: 63d599ecd2bac45e89b74f23275572f1,
+        type: 3}
+      propertyPath: obLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 8758980485754978805, guid: 63d599ecd2bac45e89b74f23275572f1,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1949,7 +1954,7 @@ PrefabInstance:
     - target: {fileID: 9011135509910415132, guid: 63d599ecd2bac45e89b74f23275572f1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 9011135509910415132, guid: 63d599ecd2bac45e89b74f23275572f1,
         type: 3}
@@ -1959,7 +1964,7 @@ PrefabInstance:
     - target: {fileID: 9011135509910415132, guid: 63d599ecd2bac45e89b74f23275572f1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: 6.09
       objectReference: {fileID: 0}
     - target: {fileID: 9011135509910415132, guid: 63d599ecd2bac45e89b74f23275572f1,
         type: 3}
@@ -2135,7 +2140,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 683302973}
-  m_LocalRotation: {x: 0.31622773, y: -3e-45, z: 1e-45, w: 0.9486833}
+  m_LocalRotation: {x: 0.31622776, y: 1e-45, z: -0, w: 0.9486833}
   m_LocalPosition: {x: 0, y: 6, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3323,6 +3328,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2203955925157840244, guid: c4d020c992b7f4af1bb087749590a9c9,
+        type: 3}
+      propertyPath: obLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 2203955925157840244, guid: c4d020c992b7f4af1bb087749590a9c9,
+        type: 3}
+      propertyPath: ObstacleLayer.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 2302597670316452096, guid: c4d020c992b7f4af1bb087749590a9c9,
         type: 3}
@@ -5612,6 +5627,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 64120248496490320, guid: a2fe7f9dc74a5ff4696014f411430c80,
+        type: 3}
+      propertyPath: m_Convex
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2fe7f9dc74a5ff4696014f411430c80, type: 3}
