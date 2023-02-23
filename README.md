@@ -237,6 +237,8 @@ public bool IsDead();
 ```c#
 //BaseAction为基类，需要继承后使用
 
+//已经在此处获取了animator，后续action中如果需要调用动画，直接放在animation文件夹下的animator中，然后通过这里的animator.Play(“动画名称”)播放动画
+protected Animator animator; 
 
 //如果继承则必须覆写该方法，返回能采取action的有效格点位置列表
 public abstract List<GridPosition> GetValidGridPositionList();
