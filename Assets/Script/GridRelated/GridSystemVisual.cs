@@ -91,13 +91,33 @@ public class GridSystemVisual : MonoBehaviour
         BaseAction baseAction = UnitActionSystem.Instance.GetSelectedAction();
         if(unit == null) {return;}
         if(baseAction == null) {return;}
-        if(baseAction.IsAttackAction()) {
+
+        //更改尝试，将攻击行为改为投掷行为
+        if (baseAction.IsWhatAction() == "GrenadierAction")
+        {
+            GrenadierAction grenadierAction = (GrenadierAction)baseAction;
+            ShowGridPositonList(grenadierAction.GetGridPositionListInRange(), GetGridMaterialFromType(grenadierAction.GetGridVisualTypeForRange()));
+            ShowGridPositonList(grenadierAction.GetValidGridPositionList(), GetGridMaterialFromType(grenadierAction.GetGridVisualType()));
+        }
+        else
+        if (baseAction.IsWhatAction() == "AttackAction")
+        {
+            AttackAction attackAction = (AttackAction)baseAction;
+            ShowGridPositonList(attackAction.GetGridPositionListInRange(), GetGridMaterialFromType(attackAction.GetGridVisualTypeForRange()));
+            ShowGridPositonList(attackAction.GetValidGridPositionList(), GetGridMaterialFromType(attackAction.GetGridVisualType()));
+        }
+        else
+        {
+            ShowGridPositonList(baseAction.GetValidGridPositionList(), GetGridMaterialFromType(baseAction.GetGridVisualType()));
+        }
+        /*
+        if (baseAction.IsAttackAction()) {
             AttackAction attackAction = (AttackAction) baseAction;
             ShowGridPositonList(attackAction.GetGridPositionListInRange(), GetGridMaterialFromType(attackAction.GetGridVisualTypeForRange()));
             ShowGridPositonList(attackAction.GetValidGridPositionList(),  GetGridMaterialFromType(attackAction.GetGridVisualType()));
         } else {
             ShowGridPositonList(baseAction.GetValidGridPositionList(), GetGridMaterialFromType(baseAction.GetGridVisualType()));
-        }
+        }*/
     }
     private Material GetGridMaterialFromType(GridVisualType gridVisualType) {
         foreach (GridVisualTypeMaterial gridVisualTypeMaterial in gridVisualTypeMaterialList)

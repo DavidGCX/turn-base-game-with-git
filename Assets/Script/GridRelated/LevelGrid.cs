@@ -115,6 +115,8 @@ public class LevelGrid : MonoBehaviour
 
     public bool IsAValidGridPosition(GridPosition gridPosition) => gridSystem.IsAValidGridPosition(gridPosition);
 
+    public bool HasAnyWallOnGridPostion(GridPosition gridPosition) => gridSystem.HasAnyWallOnGridPosition(gridPosition);
+
     public bool HasAnyUnitOnGridPosition(GridPosition gridPosition) => GetUnitListAtGridPosition(gridPosition).Count != 0;
 
     public Unit GetUnitAtGridPosition(GridPosition gridPosition) => GetUnitListAtGridPosition(gridPosition)[0];

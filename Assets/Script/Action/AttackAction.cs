@@ -55,6 +55,7 @@ public class AttackAction : BaseAction
     private bool insideRoutine;
     protected Unit targetUnit;
 
+
     //protected Unit selfUnit;
     [Header("武器威力部分")]
     [Tooltip("基础武器威力，会被护甲减免")]
@@ -163,7 +164,7 @@ public class AttackAction : BaseAction
 // Attacking animation and calculation need to go here and override. below is an example
     protected virtual IEnumerator SpecificAttack() {
         //Can play animation like this:
-        animator.Play("firing rifle");
+        //animator.Play("firing rifle");
         // Causing Damage like this:
         
         //CauseDamage();
@@ -172,8 +173,8 @@ public class AttackAction : BaseAction
         yield return new WaitForSeconds(.2f);
         
         //Optional reloading animation
-        animator.Play("reloading");
-        yield return new WaitForSeconds(3f);
+        //animator.Play("reloading");
+        //yield return new WaitForSeconds(3f);
     }
 
 
@@ -267,6 +268,8 @@ public class AttackAction : BaseAction
                 if(targetUnit.GetUnitType() == unit.GetUnitType()) {
                     continue;
                 }
+
+                //遍历到该网格，新建一个从起始点到达该网格的射线，如果射线碰到障碍物，则跳过
                 Vector3 startPoint = unit.GetWorldPosition() + new Vector3(0,1,0);
                 Vector3 direction = targetUnit.GetWorldPosition() - unit.GetWorldPosition();
                 float distance = Vector3.Distance(targetUnit.GetWorldPosition(), unit.GetWorldPosition());
@@ -306,7 +309,9 @@ public class AttackAction : BaseAction
          return actualHitUnit.Damage(BaseWeaponDamage, ApWeaponDamage, unit.GetUnitAttackTotal(), DamageRandomRate);
     }
 
-    public override bool IsAttackAction() => true;
+    //public override bool IsAttackAction() => true;
+
+    public override string IsWhatAction() => "AttackAction";
 
     public Unit GetTargetUnit() => targetUnit;
 

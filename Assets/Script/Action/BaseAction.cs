@@ -37,6 +37,9 @@ public abstract class BaseAction : MonoBehaviour
 
     public virtual bool IsAttackAction() => false;
 
+    //更改，添加了投掷攻击行为，原有函数布尔类型不够表示，更改为string类型
+    public virtual string IsWhatAction() => "BaseAction";
+
     public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
 
     public virtual void StartAction(Action onActionComplete) {

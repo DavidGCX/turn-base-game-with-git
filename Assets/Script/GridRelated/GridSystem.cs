@@ -78,7 +78,20 @@ public class GridSystem<TGridObject>
         !(gridPosition.x < 0 || gridPosition.z < 0) && 
         gridPosition.x < width &&
         gridPosition.z < height;
-
+    public bool HasAnyWallOnGridPosition(GridPosition gridPosition)
+    {
+        Vector3 resultWorldPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+        Vector3 startPoint = resultWorldPosition;
+        Vector3 direction = new Vector3(0,1,0);
+        float distance = 2;
+        //Debug.Log(distance);
+        int ObstacleLayer = (1 << 8); // do bitwise operation to the obstacle layer
+        if (Physics.Raycast(startPoint, direction, distance, ObstacleLayer))
+        {
+            return true;
+        }
+        return false;
+    }
     public int GetWidth() => width;
     public int GetHeight() => height;
 }
