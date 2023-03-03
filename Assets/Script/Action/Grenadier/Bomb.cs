@@ -9,25 +9,28 @@ public class Bomb : MonoBehaviour
     private Vector3 targetPosition;
     [SerializeField] GameObject bulletHitEffectPrefab;
 
-    public void SetUp(AttackAction attackAction, Vector3 moveDirection, Vector3 targetPosition)
+    public void SetUp(AttackAction attackAction,Vector3 moveDriection, Vector3 targetPosition)
     {
         this.attackFrom = attackAction;
-        this.moveDriection = moveDirection;
+        this.moveDriection = moveDriection;
         this.targetPosition = targetPosition;
-        GetComponent<Rigidbody>().AddForce(moveDriection * 10000);
+        Debug.Log(moveDriection);
+
     }
     void Update()
     {
-
+        GetComponent<Rigidbody>().position = GetComponent<Rigidbody>().position + (moveDriection *Time.deltaTime);
         //float MoveSpeed = 60f;
         //transform.position += MoveSpeed * moveDriection * Time.deltaTime;
         transform.LookAt(targetPosition);
 
     }
 
-    /*
+    
     void OnCollisionEnter(Collision other)
     {
+        
+        ScreenShake.Instance.Shake();
         //Instantiate(bulletHitEffectPrefab, transform.position, Quaternion.identity);
         if (other.gameObject.tag == "Unit")
         {
@@ -50,7 +53,7 @@ public class Bomb : MonoBehaviour
         Destroy(gameObject);
         ScreenShake.Instance.Shake();
     }
-    */
+    
     private void OnTriggerEnter(Collider other)
     {
 

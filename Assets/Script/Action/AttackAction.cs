@@ -164,7 +164,7 @@ public class AttackAction : BaseAction
 // Attacking animation and calculation need to go here and override. below is an example
     protected virtual IEnumerator SpecificAttack() {
         //Can play animation like this:
-        //animator.Play("firing rifle");
+        animator.Play("firing rifle");
         // Causing Damage like this:
         
         //CauseDamage();
@@ -173,8 +173,8 @@ public class AttackAction : BaseAction
         yield return new WaitForSeconds(.2f);
         
         //Optional reloading animation
-        //animator.Play("reloading");
-        //yield return new WaitForSeconds(3f);
+        animator.Play("reloading");
+        yield return new WaitForSeconds(3f);
     }
 
 
