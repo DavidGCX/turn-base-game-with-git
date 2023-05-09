@@ -13,6 +13,7 @@ public class ScreenShake : MonoBehaviour
     {
         Instance = this;
         cinemachineImpulseSource = GetComponent<CinemachineImpulseSource>();   
+        
     }
 
     // Update is called once per frame
