@@ -11,10 +11,8 @@ public class ScreenShake : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         Instance = this;
-        cinemachineImpulseSource = GetComponent<CinemachineImpulseSource>();
-        
+        cinemachineImpulseSource = GetComponent<CinemachineImpulseSource>();   
     }
 
     // Update is called once per frame
