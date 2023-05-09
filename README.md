@@ -272,6 +272,7 @@ public bool CauseDamage(Unit actualHitUnit);
 
 
 
+
 // 默认恒返回true，覆写可决定什么时候使用攻击特写镜头
 protected virtual bool ShouldUseAttackCamera();
 
